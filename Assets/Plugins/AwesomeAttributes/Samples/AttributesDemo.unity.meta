@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0d60f5118c2a02445ae53ee87332da42
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 296859
+  packageName: Awesome Attributes
+  packageVersion: 1.0.6
+  assetPath: Assets/Plugins/AwesomeAttributes/Samples/AttributesDemo.unity
+  uploadId: 778639
