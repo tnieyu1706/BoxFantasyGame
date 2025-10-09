@@ -2,12 +2,13 @@ using UnityEngine;
 
 namespace TnieYuPackage.DesignPatterns.Patterns.Singleton
 {
-    public class BehaviorSingleton<T> : MonoBehaviour
+    public class SingletonBehavior<T> : MonoBehaviour
         where T : Component
     {
         private static T instance;
         
         private static bool isQuitting = false;
+        
         /// <summary>
         /// Noted when SingletonBehavior in Disable.
         /// When game Stop/Close, it can stop Singleton before disable call

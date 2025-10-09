@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TnieYuPackage.DesignPatterns.Patterns.Singleton
 {
-    public abstract class ScriptableObjectSingleton<T> : ScriptableObject
+    public abstract class SingletonScriptable<T> : ScriptableObject
         where T : ScriptableObject
     {
         private static T instance;
@@ -16,6 +16,11 @@ namespace TnieYuPackage.DesignPatterns.Patterns.Singleton
 #if UNITY_EDITOR
                     // Trong Editor thì tìm bằng AssetDatabase cho tiện
                     string[] guids = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(T).Name}");
+                    if (guids.Length == 0)
+                    {
+                        Debug.LogError($"No assets found in '{typeof(T).Name}'!");
+                        return null;
+                    }
                     if (guids.Length > 0)
                     {
                         string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
@@ -30,7 +35,7 @@ namespace TnieYuPackage.DesignPatterns.Patterns.Singleton
             }
         }
 
-        void Awake()
+        protected virtual void Awake()
         {
             if (instance == null)
             {
