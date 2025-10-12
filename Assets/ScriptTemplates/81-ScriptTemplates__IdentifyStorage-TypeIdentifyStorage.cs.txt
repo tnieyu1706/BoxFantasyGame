@@ -1,0 +1,17 @@
+using UnityEngine;
+
+namespace Systems.Identify
+{
+    public class #SCRIPTNAME#FlagAttribute : TypeIdentifyStorageFlagAttribute
+    {
+        public #SCRIPTNAME#FlagAttribute(string identify) : base(identify)
+        {
+            
+        }
+    }
+    
+    [CreateAssetMenu(fileName = "#SCRIPTNAME#", menuName = "Scriptable Objects/IdentifyStorage/#SCRIPTNAME#")]
+    public class #SCRIPTNAME# : TypeIdentifyStorage<#SCRIPTNAME#FlagAttribute, #SCRIPTNAME#>
+    {
+    }
+}
