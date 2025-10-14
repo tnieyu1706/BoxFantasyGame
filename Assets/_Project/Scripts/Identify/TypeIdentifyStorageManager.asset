@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f313f2ae179478db6e1ab16bb4e9b00, type: 3}
   m_Name: TypeIdentifyStorageManager
   m_EditorClassIdentifier: 
-  IdentifyStorages: []
+  IdentifyStorages:
+  - _underlyingValue: {fileID: 11400000, guid: 2b72cc67300f34741a22ed688329ac5c, type: 2}

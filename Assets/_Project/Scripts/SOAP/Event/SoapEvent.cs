@@ -5,7 +5,7 @@ using UnityEngine.Events;
 namespace _Project.Scripts.SOAP.Event
 {
     [CreateAssetMenu(fileName = "SOAPVoidEvent", menuName = "Scriptable Objects/SOAP/Event/Void")]
-    public class SOAPEvent : ScriptableObject
+    public class SoapEvent : ScriptableObject
     {
         public UnityEvent @event;
         
@@ -13,7 +13,7 @@ namespace _Project.Scripts.SOAP.Event
         public void Raise() => @event?.Invoke();
     }
 
-    public abstract class SOAPEventGeneric<T> : ScriptableObject
+    public abstract class SoapEventGeneric<T> : ScriptableObject
     {
         public UnityEvent<T> @event;
         

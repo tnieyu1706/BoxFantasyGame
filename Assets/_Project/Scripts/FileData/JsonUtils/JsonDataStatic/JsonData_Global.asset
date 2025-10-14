@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 854326af74444f74a98a9f70f8b0c0ca, type: 3}
-  m_Name: CharonGlobalGameData
+  m_Script: {fileID: 11500000, guid: 6c03146a288a4299bdaedf4ba8d6eaaa, type: 3}
+  m_Name: JsonData_Global
   m_EditorClassIdentifier: 
-  gameDataPath: Assets/_Project/Charon/GameData.gdjs
-  gameDataFormat: 0
+  filePath: Assets\_Project\Scripts\FileData\JsonUtils\JsonDataStatic\JsonDataGlobal.json

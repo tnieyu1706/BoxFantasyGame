@@ -13,7 +13,7 @@ using Void = EditorAttributes.Void;
 
 namespace Systems.SOAP.Data
 {
-    public abstract class SOAPData<T> : ScriptableObject
+    public abstract class SoapData<T> : ScriptableObject
     {
         [SerializeField] [SetProperty(nameof(Value))]
         private T value;
@@ -74,7 +74,7 @@ namespace Systems.SOAP.Data
         }
     }
 
-    public abstract class SOAPInterfaceData<T> : ScriptableObject
+    public abstract class SoapInterfaceData<T> : ScriptableObject
         where T : class
     {
         [SerializeField] [SetProperty(nameof(Value))]

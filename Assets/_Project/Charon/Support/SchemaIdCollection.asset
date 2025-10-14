@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ebcaf643f844699d5a40aa1b0c80f7, type: 3}
   m_Name: SchemaIdCollection
   m_EditorClassIdentifier: 
-  charonNamespace: 
+  charonNamespace: Systems.Charon
   collections:
     _serializedList: []

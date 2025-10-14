@@ -7,8 +7,6 @@ namespace _Project.Scripts.SOAP.Test
 {
     public class LoadSOAPDataBehavior : MonoBehaviour
     {
-        [PropertyDropdown]
-        public SOAPFloatData soapFloatData;
 
         [TypeDropdown]
         public string Type;

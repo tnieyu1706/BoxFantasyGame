@@ -3,6 +3,6 @@ using UnityEngine;
 
 namespace Systems.SOAP.Data
 {
-    [CreateAssetMenu(fileName = "SOAPStringData", menuName = "Scriptable Objects/SOAP/Data/String")]
-    public class SOAPStringData : SOAPData<string> { }
+    [CreateAssetMenu(fileName = "SoapStringData", menuName = "Scriptable Objects/SOAP/Data/String")]
+    public class SoapStringData : SoapData<string> { }
 }

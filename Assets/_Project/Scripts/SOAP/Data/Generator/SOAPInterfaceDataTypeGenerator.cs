@@ -63,7 +63,7 @@ namespace Systems.SOAP.Data.Generator
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
-            string fileName = $"SOAP{name}Data.cs";
+            string fileName = $"Soap{name}Data.cs";
             string filePath = Path.Combine(folderPath, fileName);
 
             if (File.Exists(filePath))
@@ -78,8 +78,8 @@ using UnityEngine;
 
 namespace Systems.SOAP.Data
 {{
-    [CreateAssetMenu(fileName = ""SOAP{name}Data"", menuName = ""Scriptable Objects/SOAP/InterfaceData/{name}"")]
-    public class SOAP{name}Data : SOAPInterfaceData<{type}> {{ }}
+    [CreateAssetMenu(fileName = ""Soap{name}Data"", menuName = ""Scriptable Objects/SOAP/InterfaceData/{name}"")]
+    public class Soap{name}Data : SoapInterfaceData<{type}> {{ }}
 }}";
 
             File.WriteAllText(filePath, code);

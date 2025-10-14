@@ -92,7 +92,7 @@ namespace _Project.Scripts.SOAP.Event.Generator
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
-            string filePath = Path.Combine(folderPath, $"SOAP{name}Event.cs");
+            string filePath = Path.Combine(folderPath, $"Soap{name}Event.cs");
             if (File.Exists(filePath))
             {
                 if (!EditorUtility.DisplayDialog("File Exists", $"File '{filePath}' already exists.\nOverwrite?", "Yes", "No"))
@@ -104,8 +104,8 @@ using UnityEngine;
 
 namespace _Project.Scripts.SOAP.Event
 {{
-    [CreateAssetMenu(fileName = ""SOAP{name}Event"", menuName = ""Scriptable Objects/SOAP/Event/{name}"")]
-    public class SOAP{name}Event : SOAPEventGeneric<{type}> {{ }}
+    [CreateAssetMenu(fileName = ""Soap{name}Event"", menuName = ""Scriptable Objects/SOAP/Event/{name}"")]
+    public class Soap{name}Event : SoapEventGeneric<{type}> {{ }}
 }}";
 
             File.WriteAllText(filePath, code);

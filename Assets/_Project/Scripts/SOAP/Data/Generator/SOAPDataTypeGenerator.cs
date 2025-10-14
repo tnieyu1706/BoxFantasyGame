@@ -23,10 +23,10 @@ namespace Systems.SOAP.Data.Generator
             ("GameObject", "UnityEngine.GameObject")
         };
 
-        [MenuItem("Tools/SOAP/Type Generator")]
+        [MenuItem("Tools/SOAP/Data Type Generator")]
         private static void OpenWindow()
         {
-            var window = GetWindow<SOAPDataTypeGenerator>("SOAP Type Generator");
+            var window = GetWindow<SOAPDataTypeGenerator>("SOAP Data Type Generator");
             window.minSize = new Vector2(420, 250);
             window.Show();
         }
@@ -90,7 +90,7 @@ namespace Systems.SOAP.Data.Generator
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
-            string filePath = Path.Combine(folderPath, $"SOAP{name}Data.cs");
+            string filePath = Path.Combine(folderPath, $"Soap{name}Data.cs");
             if (File.Exists(filePath))
             {
                 if (!EditorUtility.DisplayDialog("File Exists", $"File '{filePath}' already exists.\nOverwrite?", "Yes", "No"))
@@ -102,8 +102,8 @@ using UnityEngine;
 
 namespace Systems.SOAP.Data
 {{
-    [CreateAssetMenu(fileName = ""SOAP{name}Data"", menuName = ""Scriptable Objects/SOAP/Data/{name}"")]
-    public class SOAP{name}Data : SOAPData<{type}> {{ }}
+    [CreateAssetMenu(fileName = ""Soap{name}Data"", menuName = ""Scriptable Objects/SOAP/Data/{name}"")]
+    public class Soap{name}Data : SoapData<{type}> {{ }}
 }}";
 
             File.WriteAllText(filePath, code);
