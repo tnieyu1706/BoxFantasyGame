@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f177c1b762fd16140925a970214ac095
+PackageManifestImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 248593
+  packageName: Bear Data Editor
+  packageVersion: 1.0.10
+  assetPath: Assets/BearDataEditor/package.json
+  uploadId: 723664

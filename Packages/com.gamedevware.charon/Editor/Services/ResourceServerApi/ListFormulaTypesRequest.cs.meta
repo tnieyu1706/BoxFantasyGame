@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 4c1a4fadf78c4d0991b97abd4e9310ff
+timeCreated: 1739369620
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95117
+  packageName: Charon - Game Data Editor
+  packageVersion: 2025.4.1
+  assetPath: Packages/com.gamedevware.charon/Editor/Services/ResourceServerApi/ListFormulaTypesRequest.cs
+  uploadId: 799686

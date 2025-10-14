@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6e8db50a928de644bb344d96546654ae
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 281099
+  packageName: Color Texture Generator
+  packageVersion: 1.2.0
+  assetPath: Assets/Plugins/FewClicksDev/ColorTextureGenerator/Samples/Gradient/gradient_Documentation_02.asset
+  uploadId: 768467

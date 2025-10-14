@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 77be12081e844a7982e138df7db4f4c3
+timeCreated: 1739898903
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95117
+  packageName: Charon - Game Data Editor
+  packageVersion: 2025.4.1
+  assetPath: Packages/com.gamedevware.charon/Editor/Utils/TaskSchedulerExtensions.cs
+  uploadId: 799686

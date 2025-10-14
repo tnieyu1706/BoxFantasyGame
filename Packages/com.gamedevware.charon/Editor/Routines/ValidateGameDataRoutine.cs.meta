@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3114e2ed310be0b458e9510e6ddcef07
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95117
+  packageName: Charon - Game Data Editor
+  packageVersion: 2025.4.1
+  assetPath: Packages/com.gamedevware.charon/Editor/Routines/ValidateGameDataRoutine.cs
+  uploadId: 799686

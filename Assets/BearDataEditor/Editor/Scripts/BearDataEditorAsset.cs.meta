@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 72f7a00d4dcba6741a5cf9b9f8f678af
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 248593
+  packageName: Bear Data Editor
+  packageVersion: 1.0.10
+  assetPath: Assets/BearDataEditor/Editor/Scripts/BearDataEditorAsset.cs
+  uploadId: 723664
