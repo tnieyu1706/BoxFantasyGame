@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using AYellowpaper.SerializedCollections;
@@ -7,7 +6,7 @@ using EditorAttributes;
 using TnieYuPackage.DesignPatterns.Patterns.Singleton;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Void = EditorAttributes.Void;
 
 namespace Systems.Identify
 {
@@ -22,17 +21,24 @@ namespace Systems.Identify
         }
     }
 
-    public abstract class TypeIdentifyStorage<TAttribute, TSingleton> : SingletonScriptable<TSingleton>
+    public interface ITypeIdentifyStorage
+    {
+        void UpdateIdentifyDataStorage();
+    }
+
+    public abstract class TypeIdentifyStorage<TAttribute, TSingleton> : SingletonScriptable<TSingleton>, ITypeIdentifyStorage
         where TSingleton : ScriptableObject
         where TAttribute : TypeIdentifyStorageFlagAttribute
     {
-        [SerializedDictionary("Identify, Type")]
+        [SerializeField, SerializedDictionary("Identify, Type")]
         [ReadOnly]
-        public SerializedDictionary<string, string> datas = new();
+        private SerializedDictionary<string, string> datas = new();
+
+        public SerializedDictionary<string, string> Datas => datas;
 
         private bool ValidateKey(string key)
         {
-            if (datas.ContainsKey(key))
+            if (Datas.ContainsKey(key))
                 return false;
 
             return true;
@@ -60,8 +66,13 @@ namespace Systems.Identify
         //     }
         // }
 
-        [Button("Update Identify Data Storage Manual")]
-        private void UpdateIdentifyDataStorage()
+        [Space(20)]
+        public Void spacing;
+
+        [ButtonField(nameof(UpdateIdentifyDataStorage))]
+        public Void upateIdentifyButton;
+        
+        public void UpdateIdentifyDataStorage()
         {
             var assembly = Assembly.GetExecutingAssembly();
 
@@ -69,7 +80,7 @@ namespace Systems.Identify
                 .Where(ValidateType)
                 .ToList();
 
-            datas.Clear();
+            Datas.Clear();
 
             foreach (var type in validTypes)
             {
@@ -88,7 +99,7 @@ namespace Systems.Identify
                         continue;
                     }
 
-                    datas.Add(attr.Identify, type.AssemblyQualifiedName);
+                    Datas.Add(attr.Identify, type.AssemblyQualifiedName);
                 }
             }
         }
