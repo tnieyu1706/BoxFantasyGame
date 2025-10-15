@@ -1,45 +1,47 @@
 using EditorAttributes;
-using NaughtyAttributes;
 using Systems.Input;
-using TnieYuPackage.GlobalExtensions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Systems.Player
 {
     public class CameraController : MonoBehaviour
     {
         #region PROPERTIES
-        
-        [HideInInspector] [SerializeField, EditorAttributes.Required] private GameObject bodyPlayer;
+
+        [HideInInspector] [SerializeField, EditorAttributes.Required]
+        private GameObject bodyPlayer;
+
+        [HideInInspector] [SerializeField, EditorAttributes.Required]
+        private GameObject headPlayer;
+
+        [HideInInspector] public float yawSensitivity = 1f;
+        [HideInInspector] public float smoothSpeed = 60f;
         [HideInInspector] public float pitchSensitivity = 1f;
-        [HideInInspector] public float smoothSpeed = 10f;
-        [HideInInspector] [EditorAttributes.MinMaxSlider(-5, 5)] 
-        public Vector2Int pitchMin;
+
+        [HideInInspector] [MinMaxSlider(-120, 120)]
+        public Vector2 pitchRange = new Vector2(-70, 70);
 
         [FoldoutGroup(
             "Properties",
             nameof(bodyPlayer),
+            nameof(headPlayer),
+            nameof(yawSensitivity),
             nameof(pitchSensitivity),
             nameof(smoothSpeed),
-            nameof(pitchMin)
+            nameof(pitchRange)
         )]
         public Void propertiesGroup;
 
-        [HideInInspector] [SerializeField, EditorAttributes.ReadOnly] 
+        [SerializeField, ReadOnly]
         private float yaw;
-        [HideInInspector] [SerializeField, EditorAttributes.ReadOnly] 
-        private Quaternion targetRotation;
+        private Quaternion yawTargetRotation;
 
-        [FoldoutGroup(
-            "Read Values",
-            nameof(yaw),
-            nameof(targetRotation)
-        )]
-        public Void readValuesGroup;
+        [SerializeField, ReadOnly]
+        private float pitch;
+        private Quaternion pitchTargetRotation;
 
         #endregion
-        
+
         void OnEnable()
         {
             PlayerInputReader.Instance.Look += Look;
@@ -47,22 +49,42 @@ namespace Systems.Player
 
         void Look(Vector2 lookDelta)
         {
-            if (lookDelta.x == 0) return;
+            LookYawDirection(lookDelta.x);
+            LookPitchDirection(lookDelta.y);
+        }
 
-            if (lookDelta.x > pitchMin.x && lookDelta.x < pitchMin.y)
-            {
-                return;
-            }
+        private void LookYawDirection(float x)
+        {
+            if (x == 0) return;
 
-            yaw += lookDelta.x * pitchSensitivity * Time.deltaTime;
+            yaw += x * yawSensitivity * Time.deltaTime;
 
-            targetRotation = Quaternion.Euler(0f, yaw, 0f);
+            yawTargetRotation = Quaternion.Euler(0f, yaw, 0f);
+            // bodyPlayer.transform.rotation = Quaternion.Slerp(
+            //     bodyPlayer.transform.rotation,
+            //     yawTargetRotation,
+            //     smoothSpeed * Time.deltaTime
+            // );
+            
+            bodyPlayer.transform.localRotation = yawTargetRotation;
+        }
 
-            bodyPlayer.transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRotation,
-                smoothSpeed * Time.deltaTime
-            );
+        private void LookPitchDirection(float y)
+        {
+            if (y == 0) return;
+
+            pitch -= y * pitchSensitivity * Time.deltaTime;
+            
+            pitch = Mathf.Clamp(pitch, pitchRange.x, pitchRange.y);
+
+            pitchTargetRotation = Quaternion.Euler(pitch, 0f, 0f);
+            // headPlayer.transform.rotation = Quaternion.Slerp(
+            //     headPlayer.transform.rotation,
+            //     pitchTargetRotation,
+            //     smoothSpeed * Time.deltaTime
+            // );
+            
+            headPlayer.transform.localRotation = pitchTargetRotation;
         }
 
         void OnDisable()
