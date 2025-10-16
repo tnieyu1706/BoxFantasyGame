@@ -49,7 +49,10 @@ namespace Systems.Input
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            Interact?.Invoke();
+            if (context.started)
+            {
+                Interact?.Invoke();
+            }
         }
 
         public void OnJump(InputAction.CallbackContext context)
