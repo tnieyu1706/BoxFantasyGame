@@ -13,44 +13,60 @@ namespace AYellowpaper.Editor
         private static GUIStyle _normalInterfaceLabelStyle;
         private static bool _isOpeningQueued = false;
 
-        public static void OnGUI(Rect position, SerializedProperty property, GUIContent label, InterfaceObjectArguments args)
+        public static UnityEngine.Object OnGUI(Rect position, SerializedProperty property, GUIContent label, InterfaceObjectArguments args)
         {
             InitializeStyleIfNeeded();
 
             var prevValue = property.objectReferenceValue;
             position.height = EditorGUIUtility.singleLineHeight;
             var prevColor = GUI.backgroundColor;
-            // change visuals if the assigned value doesn't implement the interface (e.g. after removing the interface from the target)
+
+            // Nếu object hiện tại không còn implement interface (VD: mất interface hoặc đổi type)
             if (IsAssignedAndHasWrongInterface(prevValue, args))
             {
                 ShowWrongInterfaceErrorBox(position, prevValue, args);
                 GUI.backgroundColor = Color.red;
             }
 
-            // disable if not assignable from drag and drop
+            // Disable nếu object đang được drag không hợp lệ
             var prevEnabledState = GUI.enabled;
-            if (Event.current.type == EventType.DragUpdated && position.Contains(Event.current.mousePosition) && GUI.enabled && !CanAssign(DragAndDrop.objectReferences, args, true))
+            if (Event.current.type == EventType.DragUpdated &&
+                position.Contains(Event.current.mousePosition) &&
+                GUI.enabled &&
+                !CanAssign(DragAndDrop.objectReferences, args, true))
+            {
                 GUI.enabled = false;
+            }
 
+            // Vẽ ObjectField
             EditorGUI.BeginChangeCheck();
             EditorGUI.ObjectField(position, property, args.ObjectType, label);
             if (EditorGUI.EndChangeCheck())
             {
-                // assign the value from the GameObject if it's dragged in, or reset if the value isn't assignable
                 var newVal = GetClosestAssignableComponent(property.objectReferenceValue, args);
                 if (newVal != null && !CanAssign(newVal, args))
+                {
                     property.objectReferenceValue = prevValue;
-                property.objectReferenceValue = newVal;
+                }
+                else
+                {
+                    property.objectReferenceValue = newVal;
+                }
             }
 
             GUI.backgroundColor = prevColor;
             GUI.enabled = prevEnabledState;
 
+            // Gán nhãn interface name
             var controlID = GUIUtility.GetControlID(FocusType.Passive) - 1;
             bool isHovering = position.Contains(Event.current.mousePosition);
             DrawInterfaceNameLabel(position, prevValue == null || isHovering ? $"({args.InterfaceType.Name})" : "*", controlID);
             ReplaceObjectPickerForControl(property, args, controlID);
+
+            // ✅ Trả về object thật (có thể null)
+            return property.objectReferenceValue;
         }
+
 
         private static void ShowWrongInterfaceErrorBox(Rect position, UnityEngine.Object prevValue, InterfaceObjectArguments args)
         {

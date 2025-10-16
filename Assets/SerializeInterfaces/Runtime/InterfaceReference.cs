@@ -25,29 +25,69 @@ namespace AYellowpaper
 			{
 				if (_underlyingValue == null)
 					return null;
-				var @interface = _underlyingValue as TInterface;
-				Debug.Assert(@interface != null, $"{_underlyingValue} needs to implement interface {nameof(TInterface)}.");
-				return @interface;
+
+				switch (_underlyingValue)
+				{
+					case TInterface i:
+						return i;
+
+					case GameObject go:
+						return go.GetComponent<TInterface>();
+
+					case Component c:
+						return c.GetComponent<TInterface>();
+
+					default:
+						return null;
+				}
 			}
 			set
 			{
 				if (value == null)
-					_underlyingValue = null;
-				else
 				{
-					var newValue = value as UObject;
-					UnityEngine.Debug.Assert(newValue != null, $"{value} needs to be of type {typeof(UObject)}.");
-					_underlyingValue = newValue;
+					_underlyingValue = null;
+					return;
 				}
+
+				if (value is UObject uObj)
+					_underlyingValue = uObj;
+				else if (value is Component comp)
+					_underlyingValue = comp as UObject;
+				else
+					Debug.LogError($"{value} not valid, cannot attach for InterfaceReference<{typeof(TInterface).Name},{typeof(UObject).Name}>");
 			}
 		}
+
 		/// <summary>
 		/// Get the actual UnityEngine.Object that gets serialized.
 		/// </summary>
 		public UObject UnderlyingValue
 		{
 			get => _underlyingValue;
-			set => _underlyingValue = value;
+			set
+			{
+				if (value is GameObject go)
+				{
+					// Nếu người dùng kéo thả GameObject, tự tìm component implement interface
+					var component = go.GetComponent(typeof(TInterface)) as UObject;
+					_underlyingValue = component;
+				}
+				else if (value is UObject uObj)
+				{
+					// Nếu là ScriptableObject hoặc Component trực tiếp
+					if (value is TInterface)
+						_underlyingValue = uObj;
+					else
+					{
+						Debug.LogWarning($"{value.name} does not implement interface {typeof(TInterface).Name}");
+						_underlyingValue = null;
+					}
+				}
+				else
+				{
+					_underlyingValue = null;
+				}
+			}
 		}
 
 		public InterfaceReference() { }
