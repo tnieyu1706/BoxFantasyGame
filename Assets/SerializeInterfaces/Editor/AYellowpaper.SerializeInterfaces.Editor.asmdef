@@ -1,7 +1,8 @@
 {
     "name": "AYellowpaper.SerializeInterfaces.Editor",
     "references": [
-        "GUID:31976cc9e85bdd9459e856fcb40d0d50"
+        "GUID:31976cc9e85bdd9459e856fcb40d0d50",
+        "GUID:24a8bd22a909386489dc095083538aa4"
     ],
     "includePlatforms": [
         "Editor"

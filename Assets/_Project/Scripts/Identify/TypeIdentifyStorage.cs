@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using AYellowpaper.SerializedCollections;
@@ -14,6 +15,7 @@ namespace Systems.Identify
     public abstract class TypeIdentifyStorageFlagAttribute : Attribute
     {
         public string Identify;
+        public const string StorageIdentify = "TypeGlobal";
 
         public TypeIdentifyStorageFlagAttribute(string identify)
         {
@@ -24,17 +26,40 @@ namespace Systems.Identify
     public interface ITypeIdentifyStorage
     {
         void UpdateIdentifyDataStorage();
+
+        string GetStorageIdentify();
     }
 
-    public abstract class TypeIdentifyStorage<TAttribute, TSingleton> : SingletonScriptable<TSingleton>, ITypeIdentifyStorage
-        where TSingleton : ScriptableObject
+    public abstract class TypeIdentifyStorage<TAttribute, TSingleton> : SingletonScriptable<TSingleton>,
+        ITypeIdentifyStorage
         where TAttribute : TypeIdentifyStorageFlagAttribute
+        where TSingleton : ScriptableObject
     {
-        [SerializeField, SerializedDictionary("Identify, Type")]
         [ReadOnly]
+        public string storageIdentify;
+
+        [SerializeField, SerializedDictionary("Identify, Type")] [EditorAttributes.ReadOnly]
         private SerializedDictionary<string, string> datas = new();
 
         public SerializedDictionary<string, string> Datas => datas;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            storageIdentify = GetStorageIdentify();
+        }
+
+        public string GetStorageIdentify()
+        {
+            var identifyStorageField = typeof(TAttribute).GetField(
+                nameof(TypeIdentifyStorageFlagAttribute.StorageIdentify),
+                BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+
+            if (identifyStorageField == null)
+                return string.Empty;
+
+            return identifyStorageField.GetValue(null) as string;
+        }
 
         private bool ValidateKey(string key)
         {
@@ -66,12 +91,11 @@ namespace Systems.Identify
         //     }
         // }
 
-        [Space(20)]
-        public Void spacing;
+        [Space(20)] public Void spacing;
 
         [ButtonField(nameof(UpdateIdentifyDataStorage))]
         public Void upateIdentifyButton;
-        
+
         public void UpdateIdentifyDataStorage()
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -89,7 +113,8 @@ namespace Systems.Identify
                 {
                     if (!ValidateKey(attr.Identify))
                     {
-                        Debug.LogWarning($"your key {attr.Identify} is not valid! - by type {type.AssemblyQualifiedName}");
+                        Debug.LogWarning(
+                            $"your key {attr.Identify} is not valid! - by type {type.AssemblyQualifiedName}");
                         continue;
                     }
 

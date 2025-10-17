@@ -1352,7 +1352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testInterfaceReference:
-    _underlyingValue: {fileID: 0}
+    _underlyingValue: {fileID: 1615608375}
 --- !u!4 &1373312071
 Transform:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217c4fded8a887c499327d0fb0833b5e, type: 3}
   m_Name: TestIdentifyStorage
   m_EditorClassIdentifier: 
+  storageIdentify: Test
   datas:
     _serializedList:
     - Key: Concrete1

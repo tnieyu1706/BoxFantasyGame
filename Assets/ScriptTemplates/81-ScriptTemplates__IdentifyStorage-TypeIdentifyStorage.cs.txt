@@ -4,6 +4,8 @@ namespace Systems.Identify
 {
     public class #SCRIPTNAME#FlagAttribute : TypeIdentifyStorageFlagAttribute
     {
+        public new const string StorageIdentify = "#SCRIPTNAME#";
+        
         public #SCRIPTNAME#FlagAttribute(string identify) : base(identify)
         {
             
