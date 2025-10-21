@@ -5,58 +5,74 @@ using UnityEngine.UIElements;
 
 namespace EditorAttributes.Editor
 {
-	[CustomPropertyDrawer(typeof(FilePathAttribute))]
+    [CustomPropertyDrawer(typeof(FilePathAttribute))]
     public class FilePathDrawer : PropertyDrawerBase
     {
-		public override VisualElement CreatePropertyGUI(SerializedProperty property)
-		{
-			var filePathAttribute = attribute as FilePathAttribute;
-			var root = new VisualElement();
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        {
+            var filePathAttribute = attribute as FilePathAttribute;
+            var root = new VisualElement();
 
-			if (property.propertyType != SerializedPropertyType.String)
-			{
-				root.Add(new HelpBox("The FilePath Attribute can only be attached to a string", HelpBoxMessageType.Error));
-				return root;
-			}
+            if (property.propertyType != SerializedPropertyType.String)
+            {
+                root.Add(new HelpBox("The FilePath Attribute can only be attached to a string", HelpBoxMessageType.Error));
+                return root;
+            }
 
-			var filePath = property.stringValue;
+            var filePath = property.stringValue;
+            var propertyField = CreatePropertyField(property);
+            var button = new Button();
+            var buttonIcon = new Image { image = EditorGUIUtility.IconContent("d_Folder Icon").image };
 
-			var propertyField = CreatePropertyField(property);
-			var button = new Button(() => filePath = EditorUtility.OpenFilePanel("Select file", "Assets", filePathAttribute.Filters));
+            button.style.width = 40f;
+            button.style.height = 20f;
+            propertyField.style.flexGrow = 1f;
+            root.style.flexDirection = FlexDirection.Row;
 
-			var buttonIcon = new Image() { image = EditorGUIUtility.IconContent("d_Folder Icon").image };
+            button.Add(buttonIcon);
+            root.Add(propertyField);
+            root.Add(button);
 
-			button.style.width = 40f;
-			button.style.height = 20f;
-			propertyField.style.flexGrow = 1f;
-			root.style.flexDirection = FlexDirection.Row;
+            // Lấy text field bên trong propertyField (sau khi Unity build xong UI)
+            TextField textField = null;
+            ExecuteLater(propertyField, () => textField = propertyField.Q<TextField>());
 
-			button.Add(buttonIcon);
-			root.Add(propertyField);
-			root.Add(button);
+            // Khi nhấn nút chọn file
+            button.clicked += () =>
+            {
+                var selectedPath = EditorUtility.OpenFilePanel("Select file", "Assets", filePathAttribute.Filters);
+                if (string.IsNullOrEmpty(selectedPath))
+                    return;
 
-			var textField = new TextField();
+                // Convert to relative path nếu có yêu cầu
+                if (filePathAttribute.GetRelativePath && Path.IsPathFullyQualified(selectedPath))
+                {
+                    string projectRoot = Application.dataPath[..^"Assets".Length];
+                    selectedPath = Path.GetRelativePath(projectRoot, selectedPath);
+                }
 
-			ExecuteLater(propertyField, () => textField = propertyField.Q<TextField>());
+                // Chỉ cập nhật nếu khác
+                if (property.stringValue != selectedPath)
+                {
+                    property.stringValue = selectedPath;
+                    property.serializedObject.ApplyModifiedProperties();
 
-			UpdateVisualElement(propertyField, () =>
-			{
-				if (filePathAttribute.GetRelativePath && !string.IsNullOrEmpty(filePath) && Path.IsPathFullyQualified(filePath))
-				{
-					string projectRoot = Application.dataPath[..^"Assets".Length];
+                    if (textField != null)
+                        textField.SetValueWithoutNotify(selectedPath);
+                }
+            };
 
-					filePath = Path.GetRelativePath(projectRoot, filePath);
-				}
+            // Đồng bộ khi load lại Inspector
+            UpdateVisualElement(propertyField, () =>
+            {
+                if (property.hasMultipleDifferentValues)
+                    return;
 
-				if (property.hasMultipleDifferentValues)
-					return;
+                if (textField != null && textField.value != property.stringValue)
+                    textField.SetValueWithoutNotify(property.stringValue);
+            });
 
-				textField.value = filePath;
-				property.stringValue = filePath;
-				property.serializedObject.ApplyModifiedProperties();
-			});
-
-			return root;
-		}
-	}
+            return root;
+        }
+    }
 }

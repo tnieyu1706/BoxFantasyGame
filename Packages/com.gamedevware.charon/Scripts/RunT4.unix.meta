@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 05009a8c2324b4a4db39ad1fcc73f188
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95117
+  packageName: Charon - Game Data Editor
+  packageVersion: 2025.4.1
+  assetPath: Packages/com.gamedevware.charon/Scripts/RunT4.unix
+  uploadId: 799686

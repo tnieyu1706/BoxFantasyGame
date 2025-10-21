@@ -1,0 +1,13 @@
+{
+	"name": "com.collisionbear.beardataeditor",
+	"version": "1.0.10",
+	"description": "Lightweight Unity Editor to work with Scriptable objects and Prefabs",
+	"displayName": "Bear Data Editor",
+	"unity": "2019.4",
+	"unityRelease": "40f1",
+	"licenseUrl": "https://opensource.org/licenses/MIT",
+	"author": {
+		"name": "Collision Bear"
+	}
+}
+	

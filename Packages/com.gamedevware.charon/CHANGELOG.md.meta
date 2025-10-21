@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f7fcac6d0915b77408f563aae1434188
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95117
+  packageName: Charon - Game Data Editor
+  packageVersion: 2025.4.1
+  assetPath: Packages/com.gamedevware.charon/CHANGELOG.md
+  uploadId: 799686

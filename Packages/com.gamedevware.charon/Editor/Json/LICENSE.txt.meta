@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 632eb311eb539a44a95d8ad10d7e6579
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95117
+  packageName: Charon - Game Data Editor
+  packageVersion: 2025.4.1
+  assetPath: Packages/com.gamedevware.charon/Editor/Json/LICENSE.txt
+  uploadId: 799686

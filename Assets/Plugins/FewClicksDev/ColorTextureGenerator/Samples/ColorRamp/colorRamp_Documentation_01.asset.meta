@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1fbb53acf50b6e740a21a7827c164770
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 281099
+  packageName: Color Texture Generator
+  packageVersion: 1.2.0
+  assetPath: Assets/Plugins/FewClicksDev/ColorTextureGenerator/Samples/ColorRamp/colorRamp_Documentation_01.asset
+  uploadId: 768467

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 723d622b84f64d8f8b403d23bd55124c
+timeCreated: 1740342252
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95117
+  packageName: Charon - Game Data Editor
+  packageVersion: 2025.4.1
+  assetPath: Packages/com.gamedevware.charon/Editor/Services/LegacyPluginMigrator.cs
+  uploadId: 799686

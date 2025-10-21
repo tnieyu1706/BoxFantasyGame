@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 303bc1d0a49f62a47a34a9287460bece
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 248593
+  packageName: Bear Data Editor
+  packageVersion: 1.0.10
+  assetPath: Assets/BearDataEditor/Runtime/CollisionBear.BearDataEditor.asmdef
+  uploadId: 723664

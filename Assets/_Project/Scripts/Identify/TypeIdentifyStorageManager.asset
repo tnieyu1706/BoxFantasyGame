@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f313f2ae179478db6e1ab16bb4e9b00, type: 3}
+  m_Name: TypeIdentifyStorageManager
+  m_EditorClassIdentifier: 
+  IdentifyStorages:
+    _serializedList:
+    - Key: GlobalAction
+      Value:
+        _underlyingValue: {fileID: 11400000, guid: c240df1d352c7ee44ab2a0317f192f3b, type: 2}
+    - Key: GlobalSubject
+      Value:
+        _underlyingValue: {fileID: 11400000, guid: 168a18ec439622047b31519dd93defdb, type: 2}
+    - Key: Test
+      Value:
+        _underlyingValue: {fileID: 11400000, guid: 2b72cc67300f34741a22ed688329ac5c, type: 2}

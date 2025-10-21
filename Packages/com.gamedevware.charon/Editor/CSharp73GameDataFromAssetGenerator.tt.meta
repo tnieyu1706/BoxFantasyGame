@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ad7e46299804f5b4cba51e888ada1f4b
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95117
+  packageName: Charon - Game Data Editor
+  packageVersion: 2025.4.1
+  assetPath: Packages/com.gamedevware.charon/Editor/CSharp73GameDataFromAssetGenerator.tt
+  uploadId: 799686
