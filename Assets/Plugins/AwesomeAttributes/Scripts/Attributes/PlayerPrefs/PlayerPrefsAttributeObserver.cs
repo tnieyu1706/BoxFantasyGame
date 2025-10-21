@@ -20,7 +20,7 @@ namespace AwesomeAttributes
 
         private void Awake()
         {
-            sceneObjects = FindObjectsOfType<MonoBehaviour>().ToList();
+            sceneObjects = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).ToList();
             InitializeDictionaries();
             LoadAllFields(onDisableFields);
             LoadAllFields(onDestroyFields);
