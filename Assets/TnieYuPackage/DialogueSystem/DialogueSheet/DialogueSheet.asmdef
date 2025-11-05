@@ -1,0 +1,22 @@
+{
+    "name": "DialogueSheet",
+    "rootNamespace": "",
+    "references": [
+        "TnieYuPackage.Utils",
+        "TnieYuPackage.FileData",
+        "EditorAttributes",
+        "TnieYuPackage.DesignPatterns",
+        "DialogueGraph.Runtime",
+        "Unity.TextMeshPro",
+        "TnieYuPackage.CustomAttributes"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
