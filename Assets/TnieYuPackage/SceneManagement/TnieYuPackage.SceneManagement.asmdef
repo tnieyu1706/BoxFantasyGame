@@ -1,0 +1,16 @@
+{
+    "name": "TnieYuPackage.SceneManagement",
+    "rootNamespace": "",
+    "references": [
+        "Eflatun.SceneReference"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

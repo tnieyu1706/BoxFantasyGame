@@ -39,15 +39,5 @@ namespace TnieYuPackage.GlobalExtensions
         {
             return UnityEngine.Random.Range(vector.x, vector.y);
         }
-
-        public static Vector3 ConvertToVector3(this Vector2 vector)
-        {
-            return new Vector3(vector.x, 0, vector.y);
-        }
-
-        public static Vector3 ConvertToVector3UV(this Vector2 vector)
-        {
-            return new Vector3(vector.x, vector.y, 0);
-        }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-// change follow Charon setting
+// change follow Charon setting - module.
 using Systems.Charon;
 //
 using EditorAttributes;

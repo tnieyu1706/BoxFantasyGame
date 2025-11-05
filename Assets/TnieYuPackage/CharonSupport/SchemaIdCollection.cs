@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using AYellowpaper.SerializedCollections;
 using EditorAttributes;
 using TnieYuPackage.DesignPatterns.Patterns.Singleton;
 using TnieYuPackage.GlobalExtensions;
+using TnieYuPackage.Utils.DictionaryUtil;
 using UnityEngine;
 
 namespace TnieYuPackage.CharonSupport
@@ -22,8 +22,7 @@ namespace TnieYuPackage.CharonSupport
             "Assets._Project.Charon.Formatters"
         };
 
-        [SerializedDictionary("AssemblyName", "SchemaIds"), ReadOnly]
-        public SerializedDictionary<string, List<string>> collections = new();
+        public SerializableDictionary<string, List<string>> collections = new();
 
         [Button("Refresh Schema Collections")]
         public void LoadAllSchemaCollection()
@@ -35,7 +34,7 @@ namespace TnieYuPackage.CharonSupport
 
             var schemaIdTypes = GetStaticIdClasses(charonNamespace, excludedSchemas);
 
-            collections.Clear();
+            collections.data.Clear();
             foreach (var schemaIdType in schemaIdTypes)
             {
                 LoadCollectionType(schemaIdType);
@@ -73,9 +72,9 @@ namespace TnieYuPackage.CharonSupport
             }
 
             string shortAssemblyName = type.GetShortAssemblyName();
-            if (!collections.ContainsKey(shortAssemblyName))
+            if (!collections.Dictionary.ContainsKey(shortAssemblyName))
             {
-                collections.Add(shortAssemblyName, new List<string>());
+                collections.AddOrUpdate(shortAssemblyName, new List<string>());
             }
 
             return collections[shortAssemblyName];
@@ -90,7 +89,7 @@ namespace TnieYuPackage.CharonSupport
             }
 
             string shortAssemblyName = type.GetShortAssemblyName();
-            if (!collections.ContainsKey(shortAssemblyName))
+            if (!collections.Dictionary.ContainsKey(shortAssemblyName))
             {
                 Debug.Log($"{shortAssemblyName} is not valid or not found.");
                 return null;

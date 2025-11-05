@@ -1,0 +1,22 @@
+{
+    "name": "TnieYuPackage.CharonSupport",
+    "rootNamespace": "",
+    "references": [
+        "gamedevware-charon",
+        "TnieYuPackage.Utils",
+        "EditorAttributes",
+        "TnieYuPackage.DesignPatterns",
+        "TnieYuPackage.GlobalExtensions",
+        "TnieYuPackage.CustomAttributes",
+        "_Project.Charon"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
