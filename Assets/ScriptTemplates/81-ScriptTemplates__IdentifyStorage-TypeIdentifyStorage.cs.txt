@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Systems.Identify
+namespace Systems.IdentifySystem.TypeIdentify
 {
     public class #SCRIPTNAME#FlagAttribute : TypeIdentifyStorageFlagAttribute
     {

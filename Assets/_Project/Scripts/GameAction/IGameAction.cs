@@ -1,5 +1,7 @@
 using System;
-using Systems.Identify;
+using System.Reflection;
+using Systems.IdentifySystem.ObjectIdentify;
+using Systems.IdentifySystem.TypeIdentify;
 
 namespace Systems.GameAction
 {
@@ -8,16 +10,32 @@ namespace Systems.GameAction
     /// </summary>
     public interface IGameAction : IIdentifyFlagSupport
     {
-        void Execute(IGameActionSubject sender, IGameActionSubject target);
+        void Execute(IObjectIdentify sender, IObjectIdentify target);
     }
+
+    // public static class InterfaceGameActionExtensions
+    // {
+    //     public static string GetActionIdentify(this IGameAction gameAction)
+    //     {
+    //         var attr = gameAction.GetType()
+    //             .GetCustomAttribute(typeof(ActionIdentifyStorageFlagAttribute));
+    //
+    //         if (attr != null && attr is ActionIdentifyStorageFlagAttribute actionFlagAttr)
+    //         {
+    //             return actionFlagAttr.Identify;
+    //         }
+    //
+    //         return null;
+    //     }
+    // }
 
     [ActionIdentifyStorageFlag("_Action")]
     [Serializable]
     public abstract class GameAction<TSender, TTarget> : IGameAction
-        where TSender : IGameActionSubject
-        where TTarget : IGameActionSubject
+        where TSender : IObjectIdentify
+        where TTarget : IObjectIdentify
     {
-        public void Execute(IGameActionSubject sender, IGameActionSubject target)
+        public void Execute(IObjectIdentify sender, IObjectIdentify target)
         {
             Execute((TSender)sender, (TTarget)target);
         }

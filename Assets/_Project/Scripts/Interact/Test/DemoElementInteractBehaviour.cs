@@ -16,7 +16,7 @@ namespace Systems.Interact.Test
 
         private void DebugLog()
         {
-            Debug.Log("ElementInteractBehaviour");
+            Debug.Log($"ElementInteractBehaviour_{gameObject.name}");
         }
     }
 }

@@ -1,5 +1,5 @@
 using System;
-using TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Generals;
+using Systems.GeneralSystem.ObjectDataSystem;
 using TnieYuPackage.Utils;
 using UnityEngine;
 

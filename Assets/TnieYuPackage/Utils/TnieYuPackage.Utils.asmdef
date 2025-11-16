@@ -2,7 +2,8 @@
     "name": "TnieYuPackage.Utils",
     "rootNamespace": "",
     "references": [
-        "TnieYuPackage.CustomAttributes"
+        "TnieYuPackage.CustomAttributes",
+        "TnieYuPackage.GlobalExtensions"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

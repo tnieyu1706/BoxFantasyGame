@@ -1,0 +1,10 @@
+{
+  "foldouts": {
+    "62566_ActionIdentifyStorage (Systems.IdentifySystem.TypeIdentify.ActionIdentifyStorage)_CallLoadEvent_String": true
+  },
+  "parameterValues": {
+    "62566_ActionIdentifyStorage (Systems.IdentifySystem.TypeIdentify.ActionIdentifyStorage)_CallLoadEvent_String": [
+      "DoSomething"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "foldouts": {
+    "62470_FieldRequirementManager (Systems.GeneralSystem.RequirementSystem.FieldRequirementManager)_CallOnValueLoad_String": true
+  },
+  "parameterValues": {
+    "62470_FieldRequirementManager (Systems.GeneralSystem.RequirementSystem.FieldRequirementManager)_CallOnValueLoad_String": [
+      "TotalMoney"
+    ]
+  }
+}

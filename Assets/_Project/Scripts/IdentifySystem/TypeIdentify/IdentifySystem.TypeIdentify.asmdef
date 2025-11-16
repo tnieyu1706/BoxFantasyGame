@@ -1,0 +1,19 @@
+{
+    "name": "IdentifySystem.TypeIdentify",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2ba248b6ce15a4d4fa0e82e92860b336",
+        "GUID:4a79d53ef816e2e4fa777adc13eeb431",
+        "GUID:febaf25a60dafbd44941357b21678606",
+        "GUID:31976cc9e85bdd9459e856fcb40d0d50"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

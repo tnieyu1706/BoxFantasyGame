@@ -1,7 +1,6 @@
 using System;
-using TnieYuPackage.DialogueSystem.DialogueGraph.Runtime;
-using TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Generals;
 using JetBrains.Annotations;
+using Systems.GeneralSystem.ObjectDataSystem;
 using TnieYuPackage.Utils;
 using UnityEngine;
 

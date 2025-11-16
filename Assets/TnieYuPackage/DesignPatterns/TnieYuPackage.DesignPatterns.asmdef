@@ -1,3 +1,16 @@
 {
-	"name": "TnieYuPackage.DesignPatterns"
+    "name": "TnieYuPackage.DesignPatterns",
+    "rootNamespace": "",
+    "references": [
+        "EditorAttributes"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

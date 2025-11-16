@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-845590427589791233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca04699f4b0d46b893fa44b4293637e5, type: 3}
+  m_Name: step_1
+  m_EditorClassIdentifier: QuestSystem.QuestData::Systems.QuestSystem.QuestData.QuestStep
+  stepId: step_1
+  quest: {fileID: 11400000}
+  shortName: Quest4_Step1
+  describe: Day la Quest4_Step1
+  hint: hello step1 tu quest4
+  actionCatchings:
+  - checkedValue: 1
+    validatedData:
+      rid: 3644543792385360247
+    keyName: DoSomething2
+    step: {fileID: -845590427589791233}
+  openEffects:
+  - rid: 3644543792385360248
+  closedEffects:
+  - rid: 3644543792385360249
+  - rid: 3644543792385360250
+  references:
+    version: 2
+    RefIds:
+    - rid: 3644543792385360247
+      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
+      data:
+        sender: {fileID: 11400000, guid: 45b77f96398867e44b1050037166f00a, type: 2}
+        target: {fileID: 0}
+        actionName: DoSomething2
+    - rid: 3644543792385360248
+      type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
+      data:
+        content: Open Quest4_Step1
+    - rid: 3644543792385360249
+      type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
+      data:
+        content: Close Quest4_Step1
+    - rid: 3644543792385360250
+      type: {class: CloseQuestBackgroundEffect, ns: Systems.QuestSystem.BackgroundEffect, asm: QuestSystem}
+      data:
+        quest: {fileID: 11400000}
+        questFlow: {fileID: 2841676755933307327, guid: 95adf22f602a955408b260b53d38a63c, type: 3}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd4af847f63a43648a6a331034860720, type: 3}
+  m_Name: Quest_4
+  m_EditorClassIdentifier: QuestSystem.QuestData::Systems.QuestSystem.QuestData.Quest
+  subAssetName: step_1
+  deletingSubAsset: {fileID: 0}
+  id:
+    value: cda5c96f-c83a-49fb-b1db-463bf68011ee
+  title: Day la quest thu 4
+  description: xin chao lai lan nua quest 4 ----- 4
+  state:
+    rid: 3644543847062569206
+  questType: 1
+  awards:
+    data:
+    - key: Level
+      value:
+        rid: 3644543794999984687
+  steps:
+  - {fileID: -845590427589791233}
+  currentStep: {fileID: 0}
+  currentProcessing: Step_end
+  requirements: []
+  openEffects: []
+  closedEffects: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3644543794999984687
+      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
+      data:
+        value: 1
+    - rid: 3644543847062569206
+      type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        quest: {fileID: 11400000}

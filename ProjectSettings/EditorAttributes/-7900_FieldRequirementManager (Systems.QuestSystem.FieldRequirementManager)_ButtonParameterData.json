@@ -1,0 +1,10 @@
+{
+  "foldouts": {
+    "-7900_FieldRequirementManager (Systems.QuestSystem.FieldRequirementManager)_CallOnValueLoad_String": true
+  },
+  "parameterValues": {
+    "-7900_FieldRequirementManager (Systems.QuestSystem.FieldRequirementManager)_CallOnValueLoad_String": [
+      "TotalMoney"
+    ]
+  }
+}

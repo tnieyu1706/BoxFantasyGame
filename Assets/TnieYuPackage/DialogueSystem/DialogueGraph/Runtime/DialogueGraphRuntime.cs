@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Generals;
+using Systems.GeneralSystem.ObjectDataSystem;
 using TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Nodes;
 using TnieYuPackage.Utils;
 using TnieYuPackage.Utils.DictionaryUtil;

@@ -1,4 +1,4 @@
-using TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Generals;
+using Systems.GeneralSystem.ObjectDataSystem;
 using TnieYuPackage.GTKExtensions;
 using Unity.GraphToolkit.Editor;
 
