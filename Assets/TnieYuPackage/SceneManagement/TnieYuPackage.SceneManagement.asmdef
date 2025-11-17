@@ -2,7 +2,9 @@
     "name": "TnieYuPackage.SceneManagement",
     "rootNamespace": "",
     "references": [
-        "Eflatun.SceneReference"
+        "Eflatun.SceneReference",
+        "TnieYuPackage.Utils",
+        "TnieYuPackage.DesignPatterns"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace Systems.Interact
 {
-    public class ScreenInteractTracking : SingletonBehavior<ScreenInteractTracking>
+    public class ScreenInteractTracking : SceneSingletonBehaviour<ScreenInteractTracking>
     {
         public float maxDistanceTracking = 2f;
         [TnieLayerMaskDropdown] public int layerMaskTracking;
 
         public bool raycastDebug = false;
 
-        private Camera mainCamera;
+        [SerializeField] private Camera playerCamera;
         private Collider lastTrackingCollider;
 
         private Ray ray;
@@ -22,12 +22,12 @@ namespace Systems.Interact
         public Action<Collider> OnTrackingStay;
         public Action<Collider> OnTrackingExit;
 
-        protected override void Awake()
+        void Start()
         {
-            base.Awake();
-            mainCamera = Camera.main;
+            if (playerCamera == null)
+                playerCamera = Camera.main;
         }
-        
+
         #region DebugTest
 
         void OnEnable()
@@ -51,12 +51,14 @@ namespace Systems.Interact
         {
             Debug.Log($"Exit - {collider.gameObject.name}");
         }
-        
+
         #endregion
 
         void Tracking()
         {
-            ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            if (playerCamera == null) return;
+
+            ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
             if (Physics.Raycast(ray, out hit, 2f, layerMaskTracking))
             {
                 if (hit.collider != lastTrackingCollider)
@@ -79,8 +81,8 @@ namespace Systems.Interact
 
             if (raycastDebug)
                 Debug.DrawLine(
-                    mainCamera.transform.position,
-                    mainCamera.transform.position + mainCamera.transform.forward * maxDistanceTracking,
+                    playerCamera.transform.position,
+                    playerCamera.transform.position + playerCamera.transform.forward * maxDistanceTracking,
                     Color.cyan
                 );
         }
