@@ -1,0 +1,16 @@
+{
+    "name": "TnieYuPackage.AvailablePackageExtensions",
+    "rootNamespace": "",
+    "references": [
+        "TnieYuPackage.DesignPatterns"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

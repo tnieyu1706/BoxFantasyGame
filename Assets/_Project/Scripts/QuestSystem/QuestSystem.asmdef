@@ -1,0 +1,27 @@
+{
+    "name": "QuestSystem",
+    "rootNamespace": "",
+    "references": [
+        "TnieYuPackage.DesignPatterns",
+        "TnieYuPackage.CustomAttributes",
+        "GeneralSystem.BackgroundEffect",
+        "GeneralSystem.Requirement",
+        "EditorAttributes",
+        "TnieYuPackage.Utils",
+        "GeneralSystem.ObjectData",
+        "GameAction",
+        "Unity.GraphToolkit.Common.Editor",
+        "Unity.GraphToolkit.Editor",
+        "Unity.GraphToolkit.Utility.Editor",
+        "TnieYuPackage.GTKExtensions"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

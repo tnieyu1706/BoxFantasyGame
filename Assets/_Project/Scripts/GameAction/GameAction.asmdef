@@ -1,0 +1,20 @@
+{
+    "name": "GameAction",
+    "rootNamespace": "",
+    "references": [
+        "IdentifySystem.ObjectIdentify",
+        "IdentifySystem.TypeIdentify",
+        "TnieYuPackage.Utils",
+        "TnieYuPackage.DesignPatterns",
+        "EditorAttributes"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

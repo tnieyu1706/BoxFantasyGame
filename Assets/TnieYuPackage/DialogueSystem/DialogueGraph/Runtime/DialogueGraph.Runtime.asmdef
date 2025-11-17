@@ -1,0 +1,21 @@
+{
+    "name": "DialogueGraph.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "EditorAttributes",
+        "TnieYuPackage.Utils",
+        "TnieYuPackage.DesignPatterns",
+        "GeneralSystem.ObjectData"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

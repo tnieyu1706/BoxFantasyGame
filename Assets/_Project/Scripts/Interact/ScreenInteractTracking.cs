@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace Systems.Interact
 {
-    public class ScreenInteractTracking : SingletonBehavior<ScreenInteractTracking>
+    public class ScreenInteractTracking : SceneSingletonBehaviour<ScreenInteractTracking>
     {
         public float maxDistanceTracking = 2f;
         [TnieLayerMaskDropdown] public int layerMaskTracking;
 
         public bool raycastDebug = false;
 
-        private Camera mainCamera;
+        [SerializeField] private Camera playerCamera;
         private Collider lastTrackingCollider;
-        
+
         private Ray ray;
         private RaycastHit hit;
 
@@ -22,11 +22,13 @@ namespace Systems.Interact
         public Action<Collider> OnTrackingStay;
         public Action<Collider> OnTrackingExit;
 
-        protected override void Awake()
+        void Start()
         {
-            base.Awake();
-            mainCamera = Camera.main;
+            if (playerCamera == null)
+                playerCamera = Camera.main;
         }
+
+        #region DebugTest
 
         void OnEnable()
         {
@@ -50,22 +52,24 @@ namespace Systems.Interact
             Debug.Log($"Exit - {collider.gameObject.name}");
         }
 
+        #endregion
+
         void Tracking()
         {
-            ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            if (playerCamera == null) return;
+
+            ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
             if (Physics.Raycast(ray, out hit, 2f, layerMaskTracking))
             {
-                if (lastTrackingCollider == null)
+                if (hit.collider != lastTrackingCollider)
                 {
-                    HandleTrackingEnter(hit.collider);
-                }
-                else if (lastTrackingCollider != hit.collider)
-                {
-                    HandleTrackingExit(lastTrackingCollider);
-                    HandleTrackingEnter(hit.collider);
-                }
+                    if (lastTrackingCollider != null)
+                        HandleTrackingExit(hit.collider);
 
-                OnTrackingStay?.Invoke(hit.collider);
+                    HandleTrackingEnter(hit.collider);
+                }
+                else
+                    OnTrackingStay?.Invoke(hit.collider);
             }
             else
             {
@@ -77,21 +81,21 @@ namespace Systems.Interact
 
             if (raycastDebug)
                 Debug.DrawLine(
-                    mainCamera.transform.position,
-                    mainCamera.transform.position + mainCamera.transform.forward * maxDistanceTracking,
+                    playerCamera.transform.position,
+                    playerCamera.transform.position + playerCamera.transform.forward * maxDistanceTracking,
                     Color.cyan
                 );
         }
 
-        private void HandleTrackingEnter(Collider collider)
+        private void HandleTrackingEnter(Collider target)
         {
-            OnTrackingEnter?.Invoke(hit.collider);
-            lastTrackingCollider = hit.collider;
+            OnTrackingEnter?.Invoke(target);
+            lastTrackingCollider = target;
         }
 
-        private void HandleTrackingExit(Collider collider)
+        private void HandleTrackingExit(Collider target)
         {
-            OnTrackingExit?.Invoke(lastTrackingCollider);
+            OnTrackingExit?.Invoke(target);
             lastTrackingCollider = null;
         }
 

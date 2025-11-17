@@ -19,7 +19,7 @@ namespace TnieYuPackage.GlobalExtensions
             {
                 if (resizedCount > 0)
                 {
-                    list.RemoveLast();
+                    list.RemoveAt(list.Count - 1);
                     resizedCount--;
                 }
                 else
@@ -27,14 +27,6 @@ namespace TnieYuPackage.GlobalExtensions
                     list.Add(default(T));
                     resizedCount++;
                 }
-            }
-        }
-
-        public static void RemoveLast<T>(this List<T> list)
-        {
-            if (list != null && list.Count > 0)
-            {
-                list.RemoveAt(list.Count - 1);
             }
         }
     }

@@ -1,0 +1,192 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 61
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 790b4d75d92f4b0984310a268dbd952f, type: 3}
+  m_Name: DialogueGraph_1
+  m_EditorClassIdentifier: Unity.GraphToolkit.Editor::Unity.GraphToolkit.Editor.Implementation.GraphObjectImp
+  m_GraphModel:
+    rid: 4756950746222297100
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 3644543610333692164
+      type: {class: DialogueGraph, ns: TnieYuPackage.DialogueSystem.DialogueGraph.Editor.Model, asm: DialogueGraph.Editor}
+      data: 
+    - rid: 3644543610333692165
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation, asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 3223540948900310400
+          m_Value1: 4175379909443475871
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 80ed20fa6951bc2c9f59aed0e7edf139
+        m_Version: 2
+        m_Position: {x: 194.67203, y: 37.71774}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_IsBackup
+          m_ValueList:
+          - rid: 3644543610333692166
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 3644543610333692167
+    - rid: 3644543610333692166
+      type: {class: 'Constant`1[[System.Boolean, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: 0
+    - rid: 3644543610333692167
+      type: {class: StartNode, ns: TnieYuPackage.DialogueSystem.DialogueGraph.Editor.Model.Nodes, asm: DialogueGraph.Editor}
+      data: 
+    - rid: 4756950746222297100
+      type: {class: GraphModelImp, ns: Unity.GraphToolkit.Editor.Implementation, asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 10523014691085774534
+          m_Value1: 3542622612341833886
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: c66e62b41b4209929ec0e60d7fec2931
+        m_Name: 
+        m_GraphNodeModels:
+        - rid: 3644543610333692165
+        m_GraphWireModels: []
+        m_GraphStickyNoteModels: []
+        m_GraphPlacematModels: []
+        m_GraphVariableModels:
+        - rid: 4756950746222297115
+        - rid: 4756950746222297117
+        m_GraphPortalModels: []
+        m_SectionModels:
+        - rid: 4756950746222297101
+        m_LocalSubgraphs: []
+        m_LastKnownBounds:
+          serializedVersion: 2
+          x: 195.2
+          y: 37.6
+          width: 120.8
+          height: 120.799995
+        m_GraphElementMetaData:
+        - m_Guid:
+            m_Value0: 4589340567694622384
+            m_Value1: 2762648021427709169
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: b03eba52ee9cb03ff164a204bde55626
+          m_Category: 1
+          m_Index: 0
+        - m_Guid:
+            m_Value0: 3053364708954160838
+            m_Value1: 15306471625983563424
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: c63eed7e06bb5f2aa09658bfd8826bd4
+          m_Category: 1
+          m_Index: 1
+        - m_Guid:
+            m_Value0: 3223540948900310400
+            m_Value1: 4175379909443475871
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 80ed20fa6951bc2c9f59aed0e7edf139
+          m_Category: 0
+          m_Index: 0
+        m_EntryPoint:
+          rid: 3644543610333692165
+        m_Graph:
+          rid: 3644543610333692164
+    - rid: 4756950746222297101
+      type: {class: SectionModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 11095853040089056657
+          m_Value1: 10801431697659328385
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 914572368d63fc9981f7a08ce664e695
+        m_Version: 2
+        m_Items:
+        - rid: 4756950746222297115
+        - rid: 4756950746222297117
+        m_Title: 
+    - rid: 4756950746222297115
+      type: {class: VariableDeclarationModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 4589340567694622384
+          m_Value1: 2762648021427709169
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: b03eba52ee9cb03ff164a204bde55626
+        m_Version: 2
+        m_Name: Chracter1
+        m_UniqueId: 
+        m_DataType:
+          m_Identification: System.String, System.Private.CoreLib, Version=4.0.0.0,
+            Culture=neutral, PublicKeyToken=b77a5c561934e089
+        m_IsExposed: 0
+        m_Scope: 0
+        m_ShowOnInspectorOnly: 0
+        m_Tooltip: 
+        m_InitializationValue:
+          rid: 4756950746222297116
+        m_Modifiers: 1
+        m_VariableFlags: 0
+    - rid: 4756950746222297116
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Vy
+    - rid: 4756950746222297117
+      type: {class: VariableDeclarationModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 3053364708954160838
+          m_Value1: 15306471625983563424
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: c63eed7e06bb5f2aa09658bfd8826bd4
+        m_Version: 2
+        m_Name: Character2
+        m_UniqueId: 
+        m_DataType:
+          m_Identification: System.String, System.Private.CoreLib, Version=4.0.0.0,
+            Culture=neutral, PublicKeyToken=b77a5c561934e089
+        m_IsExposed: 0
+        m_Scope: 0
+        m_ShowOnInspectorOnly: 0
+        m_Tooltip: 
+        m_InitializationValue:
+          rid: 4756950746222297118
+        m_Modifiers: 1
+        m_VariableFlags: 0
+    - rid: 4756950746222297118
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Nam

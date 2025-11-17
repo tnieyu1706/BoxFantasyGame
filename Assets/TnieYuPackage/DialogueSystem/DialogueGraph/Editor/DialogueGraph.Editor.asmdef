@@ -1,0 +1,25 @@
+{
+    "name": "DialogueGraph.Editor",
+    "rootNamespace": "",
+    "references": [
+        "Unity.GraphToolkit.Common.Editor",
+        "Unity.GraphToolkit.Editor",
+        "Unity.GraphToolkit.Utility.Editor",
+        "DialogueGraph.Runtime",
+        "TnieYuPackage.GTKExtensions",
+        "TnieYuPackage.Utils",
+        "AYellowpaper.SerializedCollections",
+        "GeneralSystem.ObjectData"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

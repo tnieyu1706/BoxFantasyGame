@@ -16,13 +16,10 @@ namespace Systems.GameAction
 
         void Update()
         {
-            if (queue.Count > 0)
+            while (queue.Count > 0)
             {
-                while (queue.Count > 0)
-                {
-                    commandTrigger = queue.Dequeue();
-                    commandTrigger.Trigger();
-                }
+                commandTrigger = queue.Dequeue();
+                commandTrigger.Trigger();
             }
         }
     }

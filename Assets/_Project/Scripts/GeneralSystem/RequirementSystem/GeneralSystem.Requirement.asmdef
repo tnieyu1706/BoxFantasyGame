@@ -1,0 +1,23 @@
+{
+    "name": "GeneralSystem.Requirement",
+    "rootNamespace": "",
+    "references": [
+        "GeneralSystem.ObjectData",
+        "TnieYuPackage.Utils",
+        "TnieYuPackage.DesignPatterns",
+        "TnieYuPackage.CustomAttributes",
+        "IdentifySystem.ObjectIdentify",
+        "EditorAttributes",
+        "GameAction",
+        "IdentifySystem.TypeIdentify"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

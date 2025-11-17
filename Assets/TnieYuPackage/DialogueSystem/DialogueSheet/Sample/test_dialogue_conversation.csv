@@ -1,0 +1,13 @@
+Id,CharacterName,Content,Choice1,Choice2,Choice3,Next,ActionName
+1,Vy,Xin chao,,,,2,
+2,Nam,Chao cai cho gi,,,,3,
+3,Vy,Thi t chao hoi thoi ma?,,,,4,
+4,Nam,Chao cc deo chao hoi gi o day het.,,,,5,
+5,Nam,Gio m lua chon 1 trong 2 option sau di r t voi m noi chuyen,Option1: Thang ngu#12,Option2: Thang cho#9,,,
+12,Nam,M lua chon option1 dung ko ?,,,,6,
+6,Vy,T chon thang ngu dung chua?,,,,7,
+7,Nam,Sai roi thang cho ngu a`,,,,8,FalseMethod
+8,Vy,Con me the ma cung noi dc suc vat that,,,,-1,
+9,Vy,T chon thang cho dung chua?,,,,10,
+10,Nam,Dung r do thang cho ngu,,,,11,TrueMethod
+11,Vy,Ok cam on nhieu ko co gi dau con cho ngu a`.,,,,-1,

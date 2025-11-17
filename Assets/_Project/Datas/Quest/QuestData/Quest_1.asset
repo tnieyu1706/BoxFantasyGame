@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6225380762305771579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca04699f4b0d46b893fa44b4293637e5, type: 3}
+  m_Name: step_1
+  m_EditorClassIdentifier: Assembly-CSharp::Systems.QuestSystem.QuestStep
+  stepId: step_1
+  quest: {fileID: 0}
+  shortName: Step1-Test
+  describe: hello xin chao moi nguoi minh ten la truong lam gia vy
+  hint: <b>xin chao moi nguoi</b>
+  actionCatchings:
+  - checkedValue: 1
+    validatedData:
+      rid: 3644543773784146320
+    keyName: DoSomething2
+    step: {fileID: -6225380762305771579}
+  openEffects:
+  - rid: 3644543773784146322
+  closedEffects:
+  - rid: 3644543773784146323
+  - rid: 3644543792385360243
+  references:
+    version: 2
+    RefIds:
+    - rid: 3644543773784146320
+      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
+      data:
+        sender: {fileID: 0}
+        target: {fileID: 0}
+        actionName: DoSomething2
+    - rid: 3644543773784146322
+      type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
+      data:
+        content: Begin Quest1_Step1
+    - rid: 3644543773784146323
+      type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
+      data:
+        content: Close Quest1_Step1
+    - rid: 3644543792385360243
+      type: {class: MoveNextQuestBackgroundEffect, ns: Systems.QuestSystem.BackgroundEffect, asm: QuestSystem}
+      data:
+        quest: {fileID: 11400000}
+        nextStepId: step_2
+--- !u!114 &-2096398407324912174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca04699f4b0d46b893fa44b4293637e5, type: 3}
+  m_Name: step_2
+  m_EditorClassIdentifier: Assembly-CSharp::Systems.QuestSystem.QuestStep
+  stepId: step_2
+  quest: {fileID: 0}
+  shortName: Step2-Begin
+  describe: Begin new something
+  hint: Hello xin chao <p>hello</p>
+  actionCatchings:
+  - checkedValue: 1
+    validatedData:
+      rid: 3644543773784146321
+    keyName: DoSomething
+    step: {fileID: -2096398407324912174}
+  openEffects:
+  - rid: 3644543773784146325
+  closedEffects:
+  - rid: 3644543773784146326
+  - rid: 3644543792385360244
+  references:
+    version: 2
+    RefIds:
+    - rid: 3644543773784146321
+      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
+      data:
+        sender: {fileID: 11400000, guid: 6334cb9b33aede04e97edac2db451981, type: 2}
+        target: {fileID: 0}
+        actionName: DoSomething
+    - rid: 3644543773784146325
+      type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
+      data:
+        content: Begin Quest1_Step2
+    - rid: 3644543773784146326
+      type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
+      data:
+        content: Close Quest1_Step2
+    - rid: 3644543792385360244
+      type: {class: CloseQuestBackgroundEffect, ns: Systems.QuestSystem.BackgroundEffect, asm: QuestSystem}
+      data:
+        quest: {fileID: 11400000}
+        questFlow: {fileID: 2841676755933307327, guid: 95adf22f602a955408b260b53d38a63c, type: 3}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd4af847f63a43648a6a331034860720, type: 3}
+  m_Name: Quest_1
+  m_EditorClassIdentifier: Assembly-CSharp::Systems.QuestSystem.Quest
+  subAssetName: step_3
+  deletingSubAsset: {fileID: 0}
+  id:
+    value: 2849d70f-0d1f-4c4f-b3f3-69e235bc4969
+  title: Test Quest 1
+  description: 'day la quest dau tien
+
+    test xem thu co dung ko
+
+    "xin chao
+    moi nguoi
+
+    minh ten la truong lam gia vy
+
+    TestQuest_1".'
+  state:
+    rid: 3644543847062569204
+  questType: 1
+  awards:
+    data:
+    - key: TotalMoney
+      value:
+        rid: 3644543773784146318
+    - key: Level
+      value:
+        rid: 3644543773784146319
+  steps:
+  - {fileID: -6225380762305771579}
+  - {fileID: -2096398407324912174}
+  currentStep: {fileID: 0}
+  currentProcessing: Step_end
+  requirements:
+  - rid: 3644543794999984722
+  openEffects: []
+  closedEffects: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3644543773784146318
+      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
+      data:
+        value: 40
+    - rid: 3644543773784146319
+      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
+      data:
+        value: 1
+    - rid: 3644543794999984722
+      type: {class: QuestActionRequirement, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        checkedValue: 1
+        validatedData:
+          rid: 3644543794999984723
+        keyName: DoSomething2
+        quest: {fileID: 11400000}
+    - rid: 3644543794999984723
+      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
+      data:
+        sender: {fileID: 11400000, guid: 45b77f96398867e44b1050037166f00a, type: 2}
+        target: {fileID: 0}
+        actionName: DoSomething2
+    - rid: 3644543847062569204
+      type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        quest: {fileID: 11400000}

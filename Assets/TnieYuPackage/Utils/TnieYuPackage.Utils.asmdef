@@ -1,0 +1,17 @@
+{
+    "name": "TnieYuPackage.Utils",
+    "rootNamespace": "",
+    "references": [
+        "TnieYuPackage.CustomAttributes",
+        "TnieYuPackage.GlobalExtensions"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

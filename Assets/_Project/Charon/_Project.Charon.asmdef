@@ -1,0 +1,17 @@
+{
+    "name": "_Project.Charon",
+    "rootNamespace": "",
+    "references": [
+        "gamedevware-charon",
+        "gamedevware-charon-editor"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

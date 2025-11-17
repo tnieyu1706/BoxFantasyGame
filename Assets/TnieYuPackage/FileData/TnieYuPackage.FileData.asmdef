@@ -1,0 +1,17 @@
+{
+    "name": "TnieYuPackage.FileData",
+    "rootNamespace": "",
+    "references": [
+        "GUID:febaf25a60dafbd44941357b21678606",
+        "GUID:8452ef6fd632e624db379b67c71c0e7d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -21,9 +21,10 @@ namespace TnieYuPackage.SceneManagement
     public class SceneData
     {
         public SceneReference Reference;
-        public string Name => Reference.Name;
         public SceneType SceneType;
+        public string Name => Reference.Name;
     }
+    
     public enum SceneType
     {
         SceneActive,
