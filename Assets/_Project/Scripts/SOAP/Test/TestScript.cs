@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using _Project.Scripts.SOAP.Event;
+using TnieYuPackage.SOAP.Event;
 using EditorAttributes;
 using UnityEngine;
 

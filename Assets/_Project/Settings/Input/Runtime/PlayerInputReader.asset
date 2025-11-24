@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c066574d41843f99e43d3e08fed00b2, type: 3}
+  m_Name: PlayerInputReader
+  m_EditorClassIdentifier: 
+  interact:
+    inputName: Interact
+    inputIcon: {fileID: 21300000, guid: 56b8ff1778b58b94f8070ea7a5bd677c, type: 3}
+    inputReader:
+      _underlyingValue: {fileID: 11400000}
+    toggle: 0
+  drop:
+    inputName: Drop
+    inputIcon: {fileID: 21300000, guid: 6815f1a3013517c45a04a917e2cc6d27, type: 3}
+    inputReader:
+      _underlyingValue: {fileID: 11400000}
+    toggle: 1
+  pickUp:
+    inputName: Pick Up
+    inputIcon: {fileID: 21300000, guid: 47f5b36ed5ed2f84fbd7080b89a9edec, type: 3}
+    inputReader:
+      _underlyingValue: {fileID: 11400000}
+    toggle: 1
+  primaryAction:
+    inputName: Left Mouse
+    inputIcon: {fileID: 21300000, guid: 2d8560a953e566e42a1e31661785802a, type: 3}
+    inputReader:
+      _underlyingValue: {fileID: 11400000}
+    toggle: 1
+  secondaryAction:
+    inputName: Right Mouse
+    inputIcon: {fileID: 21300000, guid: 5fcc703a837bed840a3c2fbf3992fcc2, type: 3}
+    inputReader:
+      _underlyingValue: {fileID: 11400000}
+    toggle: 1

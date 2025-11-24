@@ -2,14 +2,14 @@
     "name": "GeneralSystem.Requirement",
     "rootNamespace": "",
     "references": [
-        "GeneralSystem.ObjectData",
         "TnieYuPackage.Utils",
         "TnieYuPackage.DesignPatterns",
         "TnieYuPackage.CustomAttributes",
         "IdentifySystem.ObjectIdentify",
         "EditorAttributes",
         "GameAction",
-        "IdentifySystem.TypeIdentify"
+        "IdentifySystem.TypeIdentify",
+        "TnieYuPackage.ObjectData"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

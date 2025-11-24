@@ -1,7 +1,7 @@
 using System;
 using Systems.GameAction;
-using Systems.GeneralSystem.ObjectDataSystem;
 using Systems.GeneralSystem.RequirementSystem;
+using TnieYuPackage.ObjectDataSystem;
 using UnityEngine;
 
 namespace Systems.QuestSystem.QuestData

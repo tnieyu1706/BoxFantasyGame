@@ -18,7 +18,7 @@ MonoBehaviour:
   describe: Day la Quest4_Step1
   hint: hello step1 tu quest4
   actionCatchings:
-  - checkedValue: 1
+  - checkedValue: 0
     validatedData:
       rid: 3644543792385360247
     keyName: DoSomething2
@@ -69,28 +69,28 @@ MonoBehaviour:
   title: Day la quest thu 4
   description: xin chao lai lan nua quest 4 ----- 4
   state:
-    rid: 3644543847062569206
+    rid: 3644543917074153737
   questType: 1
   awards:
     data:
     - key: Level
       value:
-        rid: 3644543794999984687
+        rid: 3644543917074153712
   steps:
   - {fileID: -845590427589791233}
-  currentStep: {fileID: 0}
-  currentProcessing: Step_end
+  currentStep: {fileID: -845590427589791233}
+  currentProcessing: step_1
   requirements: []
   openEffects: []
   closedEffects: []
   references:
     version: 2
     RefIds:
-    - rid: 3644543794999984687
-      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
+    - rid: 3644543917074153712
+      type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
         value: 1
-    - rid: 3644543847062569206
-      type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+    - rid: 3644543917074153737
+      type: {class: UnlockedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
         quest: {fileID: 11400000}

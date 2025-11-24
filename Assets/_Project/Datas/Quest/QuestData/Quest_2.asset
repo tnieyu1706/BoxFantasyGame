@@ -69,13 +69,13 @@ MonoBehaviour:
   title: Quest thu 2
   description: day la quest thu 2
   state:
-    rid: 3644543847062569205
+    rid: 3644543917074153734
   questType: 1
   awards:
     data:
     - key: TotalMoney
       value:
-        rid: 3644543794999984685
+        rid: 3644543917074153710
   steps:
   - {fileID: -5515768649642253822}
   currentStep: {fileID: 0}
@@ -86,11 +86,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3644543794999984685
-      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
+    - rid: 3644543917074153710
+      type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
-        value: 25
-    - rid: 3644543847062569205
+        value: 35
+    - rid: 3644543917074153734
       type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
         quest: {fileID: 11400000}

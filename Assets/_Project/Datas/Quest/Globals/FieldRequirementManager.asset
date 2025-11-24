@@ -17,19 +17,19 @@ MonoBehaviour:
     - key: Level
       value:
         value:
-          rid: 3644543773784145920
+          rid: 3644543917074153715
     - key: TotalMoney
       value:
         value:
-          rid: 3644543773784145921
+          rid: 3644543917074153717
   references:
     version: 2
     RefIds:
-    - rid: 3644543773784145920
-      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
+    - rid: 3644543917074153715
+      type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
-        value: 5
-    - rid: 3644543773784145921
-      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
+        value: 4
+    - rid: 3644543917074153717
+      type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
-        value: 270
+        value: 360

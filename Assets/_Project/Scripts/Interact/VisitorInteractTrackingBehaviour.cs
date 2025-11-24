@@ -11,7 +11,7 @@ namespace Systems.Interact
         {
             ScreenInteractTracking.Instance.OnTrackingEnter += TrackingEnter;
             ScreenInteractTracking.Instance.OnTrackingExit += TrackingExit;
-            PlayerInputReader.Instance. Interact+= visitor.Event.Invoke;
+            PlayerInputReader.Instance.interact.Event += visitor.Event.Invoke;
         }
 
         void OnDisable()
@@ -24,7 +24,7 @@ namespace Systems.Interact
 
             if (PlayerInputReader.Instance != null)
             {
-                PlayerInputReader.Instance.Interact -= visitor.Event.Invoke;
+                PlayerInputReader.Instance.interact.Event -= visitor.Event.Invoke;
             }
         }
 
@@ -38,6 +38,8 @@ namespace Systems.Interact
             }
 
             element.SubscribeEvent(visitor);
+            
+            InputUIManager.Instance.ShowInput(PlayerInputReader.Instance.interact.InputName);
         }
 
         void TrackingExit(Collider target)
@@ -50,6 +52,8 @@ namespace Systems.Interact
             }
 
             element.UnsubscribeEvent(visitor);
+            
+            InputUIManager.Instance.HideInput(PlayerInputReader.Instance.interact.InputName);
         }
     }
 }

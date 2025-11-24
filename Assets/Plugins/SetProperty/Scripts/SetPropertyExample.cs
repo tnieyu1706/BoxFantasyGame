@@ -1,121 +1,124 @@
 ﻿// Copyright (c) 2014 Luminary LLC
 // Licensed under The MIT License (See LICENSE for full text)
-using UnityEngine;
-using System.Collections;
+
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class SetPropertyExample : MonoBehaviour 
+namespace Amirebrahimi.SetProperty.Scripts
 {
-	[System.Serializable]
-	public class VanillaClass
+	public class SetPropertyExample : MonoBehaviour 
 	{
-		public enum ExtraType
+		[System.Serializable]
+		public class VanillaClass
 		{
-			None,
-			HotFudge,
-			Mint,
+			public enum ExtraType
+			{
+				None,
+				HotFudge,
+				Mint,
+			}
+
+			[SerializeField, SetProperty("Extra")]
+			private ExtraType extra;
+			public ExtraType Extra
+			{
+				get
+				{
+					return extra;
+				}
+				set
+				{
+					extra = value;
+
+					// For illustrative purposes
+					if (value == ExtraType.None)
+					{
+						Debug.Log("Simple!");
+					}
+					else
+					{
+						Debug.Log ("Yummy!");
+					}
+				}
+			}
 		}
 
-		[SerializeField, SetProperty("Extra")]
-		private ExtraType extra;
-		public ExtraType Extra
+		[SerializeField, SetProperty("Number")]
+		private float number;
+		public float Number
 		{
 			get
 			{
-				return extra;
+				return number;
+			}
+			private set
+			{
+				number = Mathf.Clamp01(value);
+			}
+		}
+
+		[SerializeField, SetProperty("Text")]
+		private string text;
+		public string Text
+		{
+			get
+			{
+				return text;
 			}
 			set
 			{
-				extra = value;
-
-				// For illustrative purposes
-				if (value == ExtraType.None)
-				{
-					Debug.Log("Simple!");
-				}
-				else
-				{
-					Debug.Log ("Yummy!");
-				}
+				text = value.ToUpper();
 			}
 		}
-	}
 
-	[SerializeField, SetProperty("Number")]
-	private float number;
-	public float Number
-	{
-		get
+		[SerializeField, SetProperty("Sprite")]
+		private Sprite sprite;
+		public Sprite Sprite
 		{
-			return number;
-		}
-		private set
-		{
-			number = Mathf.Clamp01(value);
-		}
-	}
-
-	[SerializeField, SetProperty("Text")]
-	private string text;
-	public string Text
-	{
-		get
-		{
-			return text;
-		}
-		set
-		{
-			text = value.ToUpper();
-		}
-	}
-
-	[SerializeField, SetProperty("Sprite")]
-    private Sprite sprite;
-    public Sprite Sprite
-    {
-        get
-        {
-            return sprite;
-        }
-        set
-        {
-            sprite = value;
-            Debug.Log($"The sprite {sprite.name} is a {sprite.texture.width}x{sprite.texture.height} image.");
-        }
-    }
-
-	[SerializeField, SetProperty("RealNumbers")]
-	private List<float> realNumbers;
-	public List<float> RealNumbers { 
-		get
-		{
-			return realNumbers;
-		}
-		set
-		{
-			for (int i = 0; i < value.Count; i++)
+			get
 			{
-				value[i] = Mathf.Clamp01(value[i]);
+				return sprite;
 			}
-			realNumbers = value;
+			set
+			{
+				sprite = value;
+				Debug.Log($"The sprite {sprite.name} is a {sprite.texture.width}x{sprite.texture.height} image.");
+			}
 		}
+
+		[SerializeField, SetProperty("RealNumbers")]
+		private List<float> realNumbers;
+		public List<float> RealNumbers { 
+			get
+			{
+				return realNumbers;
+			}
+			set
+			{
+				for (int i = 0; i < value.Count; i++)
+				{
+					value[i] = Mathf.Clamp01(value[i]);
+				}
+				realNumbers = value;
+			}
+		}
+
+		[SerializeField, SetProperty("Objects")]
+		private GameObject[] objects;
+		public GameObject[] Objects { 
+			get
+			{
+				return objects;
+			}
+			set
+			{
+				objects = value;
+				Debug.Log($"You have {objects.Length} entries and {objects.Count(o => o == null)} unassigned in your array.");
+			}
+		}
+
+
+		public VanillaClass vanilla;
 	}
-
-	[SerializeField, SetProperty("Objects")]
-	private GameObject[] objects;
-	public GameObject[] Objects { 
-		get
-		{
-			return objects;
-		}
-		set
-		{
-			objects = value;
-			Debug.Log($"You have {objects.Length} entries and {objects.Count(o => o == null)} unassigned in your array.");
-		}
-	}
-
-
-	public VanillaClass vanilla;
 }

@@ -46,6 +46,11 @@ namespace Systems.Player
         {
             PlayerInputReader.Instance.Look += Look;
         }
+        
+        void OnDisable()
+        {
+            PlayerInputReader.Instance.Look -= Look;
+        }
 
         void Look(Vector2 lookDelta)
         {
@@ -85,11 +90,6 @@ namespace Systems.Player
             // );
             
             headPlayer.transform.localRotation = pitchTargetRotation;
-        }
-
-        void OnDisable()
-        {
-            PlayerInputReader.Instance.Look -= Look;
         }
     }
 }

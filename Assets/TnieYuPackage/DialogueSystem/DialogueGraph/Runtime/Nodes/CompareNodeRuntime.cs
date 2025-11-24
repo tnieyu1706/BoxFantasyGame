@@ -1,6 +1,6 @@
 using System;
-using Systems.GeneralSystem.ObjectDataSystem;
 using TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Generals;
+using TnieYuPackage.ObjectDataSystem;
 using TnieYuPackage.Utils;
 using UnityEngine;
 

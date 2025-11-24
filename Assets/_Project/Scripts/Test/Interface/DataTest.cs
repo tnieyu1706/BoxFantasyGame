@@ -1,4 +1,7 @@
+using Backbone;
+using EditorAttributes;
 using UnityEngine;
+using Logger = Backbone.Logger;
 
 namespace _Project.Scripts.Test.Interface
 {
@@ -7,15 +10,12 @@ namespace _Project.Scripts.Test.Interface
         void ShowInfo();
     }
 
-    public class DataTest : MonoBehaviour, IDataTest
+    public class DataTest : MonoBehaviour
     {
-        public string value1;
-        public int value2;
-        public Vector3 value3;
-
-        public void ShowInfo()
+        [Button]
+        private void ShowLog()
         {
-            Debug.Log(value1);
+            Logger.Log("Test log", LogLevel.Info, "Debug");
         }
     }
 }

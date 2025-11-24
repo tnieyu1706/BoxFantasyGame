@@ -69,13 +69,13 @@ MonoBehaviour:
   title: Day la quest thu 3
   description: Quest thu 3 nay con cho ngu a`
   state:
-    rid: 3644543847062569207
+    rid: 3644543917074153736
   questType: 1
   awards:
     data:
     - key: TotalMoney
       value:
-        rid: 3644543794999984686
+        rid: 3644543917074153711
   steps:
   - {fileID: -4046759039761210005}
   currentStep: {fileID: 0}
@@ -92,18 +92,18 @@ MonoBehaviour:
       data:
         checkedValue: 1
         validatedData:
-          rid: 3644543794999984129
+          rid: 3644543917074153716
         keyName: Level
         quest: {fileID: 11400000}
-    - rid: 3644543794999984129
-      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
+    - rid: 3644543917074153711
+      type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
+      data:
+        value: 35
+    - rid: 3644543917074153716
+      type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
         value: 4
-    - rid: 3644543794999984686
-      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
-      data:
-        value: 45
-    - rid: 3644543847062569207
+    - rid: 3644543917074153736
       type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
         quest: {fileID: 11400000}
