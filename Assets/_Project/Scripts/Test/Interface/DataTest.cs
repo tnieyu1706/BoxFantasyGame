@@ -1,7 +1,6 @@
-using Backbone;
+using TnieCustomPackage.BackboneLogger;
 using EditorAttributes;
 using UnityEngine;
-using Logger = Backbone.Logger;
 
 namespace _Project.Scripts.Test.Interface
 {
@@ -10,12 +9,13 @@ namespace _Project.Scripts.Test.Interface
         void ShowInfo();
     }
 
-    public class DataTest : MonoBehaviour
+    public class DataTest : MonoBehaviour, IDataTest
     {
+        public string testValue;
+        
         [Button]
-        private void ShowLog()
+        public void ShowInfo()
         {
-            Logger.Log("Test log", LogLevel.Info, "Debug");
         }
     }
 }

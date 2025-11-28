@@ -9,7 +9,7 @@ namespace _Project.Scripts.Test.PackageTest.InterfaceSerialize
 {
     public class TestInterfaceReferenceProp : MonoBehaviour
     {
-        [FormerlySerializedAs("testInterfaceReference")] public InterfaceReferenceProp<IDataTest, MonoBehaviour> testInterfaceReferenceProp;
+        public InterfaceReferenceProp<IDataTest, MonoBehaviour> testInterfaceReferenceProp;
 
         [Button]
         private void ButtonCheck()

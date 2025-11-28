@@ -1,5 +1,4 @@
 using System;
-using TnieYuPackage.DesignPatterns.Patterns.Singleton;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

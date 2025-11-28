@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LocationGlobalConfig
   m_EditorClassIdentifier: TnieYuPackage.SceneManagement::TnieYuPackage.SceneManagement.SceneLoaderData
   currentLocation: {fileID: 11400000, guid: 35a7d60759a3a60458b5227fa44f9163, type: 2}
-  currentPosition: {x: 1.201794, y: 1, z: 2.384222}
+  currentPosition: {x: 1.2017938, y: 1.0000001, z: 2.3842216}
   isLoadingBootstrapperInitialized: 0
   loader: {fileID: 0}
   playerGameObject: {fileID: 0}

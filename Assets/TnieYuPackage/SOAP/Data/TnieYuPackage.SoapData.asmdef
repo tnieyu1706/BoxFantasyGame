@@ -4,7 +4,8 @@
     "references": [
         "EditorAttributes",
         "SetProperty",
-        "TnieCustomPackage.SerializeInterface"
+        "TnieCustomPackage.SerializeInterface",
+        "TnieYuPackage.CustomAttributes"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

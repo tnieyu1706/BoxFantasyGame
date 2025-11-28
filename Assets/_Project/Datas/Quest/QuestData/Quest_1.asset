@@ -128,7 +128,7 @@ MonoBehaviour:
 
     TestQuest_1".'
   state:
-    rid: 3644543917074153729
+    rid: 3644544087621370537
   questType: 1
   awards:
     data:
@@ -145,11 +145,14 @@ MonoBehaviour:
   currentProcessing: Step_end
   requirements:
   - rid: 3644543794999984722
+  - rid: 3644544102087786713
   openEffects: []
   closedEffects: []
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 3644543794999984722
       type: {class: QuestActionRequirement, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
@@ -172,7 +175,15 @@ MonoBehaviour:
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
         value: 40
-    - rid: 3644543917074153729
+    - rid: 3644544087621370537
       type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
         quest: {fileID: 11400000}
+    - rid: 3644544102087786713
+      type: {class: QuestFieldRequirement, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        checkedValue: 0
+        validatedData:
+          rid: -2
+        keyName: 
+        quest: {fileID: 0}

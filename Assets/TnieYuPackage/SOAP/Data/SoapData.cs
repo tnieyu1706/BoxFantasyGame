@@ -1,61 +1,53 @@
+using System;
 using EditorAttributes;
-using Amirebrahimi.SetProperty.Scripts;
-using TnieCustomPackage.SerializeInterface;
+using TnieYuPackage.CustomAttributes;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
-using Object = UnityEngine.Object;
 
 namespace TnieYuPackage.SOAP.Data
 {
-    public abstract class SoapData<T> : ScriptableObject
+    public interface ISoapData<T>
     {
-        [SerializeField] [SetProperty(nameof(Value))]
-        private T value;
+        public T Value { get; set; }
+        public Action<T> OnValueChange { get; set; }
+    }
 
-        public virtual T Value
+
+    [Serializable]
+    public struct SoapData<T> : ISoapData<T>
+    {
+        [SerializeField] private T value;
+
+        public T Value
         {
             get => value;
             set
             {
                 this.value = value;
-                onValueChanged?.Invoke(value);
+                OnValueChange?.Invoke(value);
             }
         }
 
+        public Action<T> OnValueChange { get; set; }
+    }
+
+    public abstract class SoapDataSo<TData, T> : ScriptableObject
+        where TData : struct, ISoapData<T>
+    {
+        public TData data;
+
+        #region ResetOnPlay
+
         [SerializeField] private bool resetOnPlay = false;
 
-        [SerializeField, ShowField(nameof(resetOnPlay)), IndentProperty]
+        [SerializeField] [ShowField(nameof(resetOnPlay))]
         private T defaultValue;
-
-        public UnityEvent<T> onValueChanged;
 
         protected virtual void OnDisable()
         {
             if (resetOnPlay)
-            {
-                Value = defaultValue;
-            }
-        }
-    }
-
-    public abstract class SoapInterfaceData<T> : ScriptableObject
-        where T : class
-    {
-        [FormerlySerializedAs("valueReference")] [SerializeField] [SetProperty(nameof(Value))]
-        private InterfaceReferenceProp<T, Object> valueReferenceProp;
-
-        public T Value
-        {
-            get => valueReferenceProp.Value;
-            set
-            {
-                onValueChanged?.Invoke(value);
-                valueReferenceProp.Value = value;
-            }
+                data.Value = defaultValue;
         }
 
-        public UnityEvent<T> onValueChanged;
+        #endregion
     }
-    
 }

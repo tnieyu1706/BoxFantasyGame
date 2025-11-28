@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using EditorAttributes;
 using TnieYuPackage.DesignPatterns.Patterns.Singleton;
 using UnityEngine;
-using Logger = Backbone.Logger;
+using Logger = TnieCustomPackage.BackboneLogger.Logger;
 
 namespace Systems.Input
 {

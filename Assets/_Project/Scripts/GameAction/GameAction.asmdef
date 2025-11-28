@@ -6,7 +6,8 @@
         "IdentifySystem.TypeIdentify",
         "TnieYuPackage.Utils",
         "TnieYuPackage.DesignPatterns",
-        "EditorAttributes"
+        "EditorAttributes",
+        "LoggingSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

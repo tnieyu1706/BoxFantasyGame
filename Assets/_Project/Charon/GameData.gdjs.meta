@@ -15,7 +15,8 @@ ScriptedImporter:
     gameDataNamespace: Systems.Charon
     gameDataDocumentClassName: Document
     defineConstants: 
-    publishLanguages: []
+    publishLanguages:
+    - '{en-US}'
     publishFormat: 0
     optimizations: 0
     lineEnding: 0

@@ -9,6 +9,9 @@ namespace TnieYuPackage.Utils.DictionaryUtil
     public abstract class BaseSerializableDictionary<TKeyPair, TKey, TValue> : ISerializationCallbackReceiver
         where TKeyPair : BaseSerializableKeyPair<TKey, TValue>, new()
     {
+        /// <summary>
+        /// data is the real data
+        /// </summary>
         public List<TKeyPair> data = new();
         private Dictionary<TKey, TValue> dictionary;
 

@@ -1,8 +1,9 @@
 #if UNITY_EDITOR
+using System;
+using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using System.IO;
-using System.Collections.Generic;
 
 namespace TnieYuPackage.SOAP.Event.Generator
 {
@@ -11,11 +12,13 @@ namespace TnieYuPackage.SOAP.Event.Generator
         private string folderPath = "Assets/";
         private DefaultAsset folderAsset;
 
-        private string customTypeName = "";
-        private string customType = "";
+        private string customTypeName = "";  // Generated class name (Int, Float...)
+        private string customType = "";      // Namespace.Class, Assembly
+        private string checkResult = "";
+        private string resolvedFullName = "";
+
         private int selectedPresetIndex = 0;
 
-        // Preset type list
         private readonly (string name, string type)[] presets =
         {
             ("Int", "int"),
@@ -32,7 +35,7 @@ namespace TnieYuPackage.SOAP.Event.Generator
         private static void OpenWindow()
         {
             var window = GetWindow<SoapEventTypeGenerator>("SOAP Event Type Generator");
-            window.minSize = new Vector2(420, 250);
+            window.minSize = new Vector2(480, 300);
             window.Show();
         }
 
@@ -40,26 +43,36 @@ namespace TnieYuPackage.SOAP.Event.Generator
         {
             GUILayout.Space(10);
             EditorGUILayout.LabelField("SOAP Event Type Generator", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox("Generate new SOAPEventGeneric<T> event types easily.", MessageType.Info);
+            EditorGUILayout.HelpBox("Generate SoapEvent<T> + SoapEventSo<TData, T> types automatically.", MessageType.Info);
 
             GUILayout.Space(10);
 
-            // ===============================
-            //     FOLDER SELECTION SECTION
-            // ===============================
+            DrawFolderSelection();
+            GUILayout.Space(10);
+
+            DrawPresetType();
+            GUILayout.Space(10);
+
+            DrawCustomTypeInput();
+            GUILayout.Space(15);
+
+            DrawGenerateButton();
+        }
+
+        // ------------------------------------------------------------------
+        // FOLDER SELECTION
+        // ------------------------------------------------------------------
+        private void DrawFolderSelection()
+        {
             EditorGUILayout.LabelField("Output Folder:", EditorStyles.boldLabel);
 
-            // Drag & drop folder
             EditorGUI.BeginChangeCheck();
             folderAsset = (DefaultAsset)EditorGUILayout.ObjectField("Folder", folderAsset, typeof(DefaultAsset), false);
             if (EditorGUI.EndChangeCheck() && folderAsset != null)
             {
-                string assetPath = AssetDatabase.GetAssetPath(folderAsset);
-
-                if (AssetDatabase.IsValidFolder(assetPath))
-                {
-                    folderPath = assetPath;
-                }
+                string path = AssetDatabase.GetAssetPath(folderAsset);
+                if (AssetDatabase.IsValidFolder(path))
+                    folderPath = path;
                 else
                 {
                     Debug.LogWarning("Selected object is not a folder!");
@@ -67,93 +80,154 @@ namespace TnieYuPackage.SOAP.Event.Generator
                 }
             }
 
-            // Manual path input + browse button
             EditorGUILayout.BeginHorizontal();
             folderPath = EditorGUILayout.TextField(folderPath);
 
             if (GUILayout.Button("...", GUILayout.Width(30)))
             {
                 string selected = EditorUtility.OpenFolderPanel("Select Output Folder", "Assets", "");
-                if (!string.IsNullOrEmpty(selected))
+                if (!string.IsNullOrEmpty(selected) && selected.StartsWith(Application.dataPath))
                 {
-                    if (selected.StartsWith(Application.dataPath))
-                    {
-                        folderPath = "Assets" + selected.Substring(Application.dataPath.Length);
-                        folderAsset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(folderPath);
-                    }
-                    else
-                        Debug.LogWarning("Selected folder must be inside Assets/");
+                    folderPath = "Assets" + selected.Substring(Application.dataPath.Length);
+                    folderAsset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(folderPath);
                 }
             }
 
             EditorGUILayout.EndHorizontal();
+        }
 
-            GUILayout.Space(8);
+        // ------------------------------------------------------------------
+        // PRESET SELECTION
+        // ------------------------------------------------------------------
+        private void DrawPresetType()
+        {
+            EditorGUILayout.LabelField("Preset Type:", EditorStyles.boldLabel);
+            selectedPresetIndex = EditorGUILayout.Popup(selectedPresetIndex, presets.Select(p => p.name).ToArray());
+        }
 
-            // ===============================
-            //        TYPE PRESET UI
-            // ===============================
-            EditorGUILayout.LabelField("Select Preset Type:", EditorStyles.boldLabel);
-            selectedPresetIndex = EditorGUILayout.Popup(selectedPresetIndex, GetPresetNames());
-            var (presetName, presetType) = presets[selectedPresetIndex];
+        // ------------------------------------------------------------------
+        // CUSTOM TYPE INPUT
+        // ------------------------------------------------------------------
+        private void DrawCustomTypeInput()
+        {
+            EditorGUILayout.LabelField("Custom Type Name (Generated Class Name):", EditorStyles.boldLabel);
+            customTypeName = EditorGUILayout.TextField("Type Name", customTypeName);
 
             GUILayout.Space(5);
-            EditorGUILayout.LabelField("Or define custom type:", EditorStyles.boldLabel);
-            customTypeName = EditorGUILayout.TextField("Type Name", customTypeName);
-            customType = EditorGUILayout.TextField("C# Type", customType);
 
-            GUILayout.Space(15);
+            EditorGUILayout.LabelField("Custom C# Type (Namespace.Class, Assembly):", EditorStyles.boldLabel);
+            customType = EditorGUILayout.TextField("Type, Assembly", customType);
 
+            if (GUILayout.Button("Check Type"))
+                CheckCustomType();
+
+            if (!string.IsNullOrEmpty(checkResult))
+            {
+                EditorGUILayout.HelpBox(
+                    checkResult,
+                    checkResult.StartsWith("✔") ? MessageType.Info : MessageType.Error
+                );
+            }
+        }
+
+        // ------------------------------------------------------------------
+        // CHECK TYPE VIA REFLECTION
+        // ------------------------------------------------------------------
+        private void CheckCustomType()
+        {
+            checkResult = "";
+            resolvedFullName = "";
+
+            if (string.IsNullOrWhiteSpace(customType))
+            {
+                checkResult = "❌ Please enter: Namespace.Class, Assembly";
+                return;
+            }
+
+            string[] parts = customType.Split(',');
+            if (parts.Length != 2)
+            {
+                checkResult = "❌ Format must be: Namespace.Class, AssemblyName";
+                return;
+            }
+
+            string typeName = parts[0].Trim();
+            string asmName = parts[1].Trim();
+
+            var asm = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => a.GetName().Name == asmName);
+
+            if (asm == null)
+            {
+                checkResult = $"❌ Assembly '{asmName}' not found.";
+                return;
+            }
+
+            var type = asm.GetType(typeName);
+
+            if (type == null)
+            {
+                checkResult = $"❌ Type '{typeName}' not found in '{asmName}'.";
+                return;
+            }
+
+            resolvedFullName = type.FullName;
+            checkResult = $"✔ Found Type: {resolvedFullName}";
+        }
+
+        // ------------------------------------------------------------------
+        // GENERATE BUTTON
+        // ------------------------------------------------------------------
+        private void DrawGenerateButton()
+        {
             if (GUILayout.Button("Generate Event Type", GUILayout.Height(30)))
             {
-                if (string.IsNullOrEmpty(folderPath))
-                {
-                    EditorUtility.DisplayDialog("Error", "Please select output folder.", "OK");
-                    return;
-                }
+                string presetName = presets[selectedPresetIndex].name;
+                string presetType = presets[selectedPresetIndex].type;
 
                 string typeName = string.IsNullOrEmpty(customTypeName) ? presetName : customTypeName;
-                string typeCs = string.IsNullOrEmpty(customType) ? presetType : customType;
+
+                string typeCs = !string.IsNullOrEmpty(resolvedFullName)
+                    ? resolvedFullName
+                    : (string.IsNullOrEmpty(customType) ? presetType : customType);
 
                 GenerateEventFile(typeName, typeCs);
             }
         }
 
-        // FILE GENERATION
+        // ------------------------------------------------------------------
+        // GENERATE FILE
+        // ------------------------------------------------------------------
         private void GenerateEventFile(string name, string type)
         {
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
-            string filePath = Path.Combine(folderPath, $"Soap{name}Event.cs");
+            string fileName = $"{name}SoapEventSo";
+            string filePath = Path.Combine(folderPath, $"{fileName}.cs");
+
             if (File.Exists(filePath))
             {
-                if (!EditorUtility.DisplayDialog("File Exists", $"File '{filePath}' already exists.\nOverwrite?", "Yes",
-                        "No"))
+                if (!EditorUtility.DisplayDialog("File Exists", $"{fileName} already exists.\nOverwrite?", "Yes", "No"))
                     return;
             }
 
+            // Generate the event script
             string code = $@"
 using UnityEngine;
 
 namespace TnieYuPackage.SOAP.Event
 {{
-    [CreateAssetMenu(fileName = ""Soap{name}Event"", menuName = ""TnieYuPackage/SOAP/Event/{name}"")]
-    public class Soap{name}Event : SoapEventGeneric<{type}> {{ }}
+    [CreateAssetMenu(fileName = ""{name}"", menuName = ""TnieYuPackage/Soap/Event/{name}"")]
+    public class {fileName} : SoapEventSo<{type}>
+    {{
+    }}
 }}";
 
             File.WriteAllText(filePath, code);
             AssetDatabase.Refresh();
 
             Debug.Log($"✅ Generated SOAP Event Type: {filePath}");
-        }
-
-        private string[] GetPresetNames()
-        {
-            var list = new List<string>();
-            foreach (var (name, _) in presets)
-                list.Add(name);
-            return list.ToArray();
         }
     }
 }

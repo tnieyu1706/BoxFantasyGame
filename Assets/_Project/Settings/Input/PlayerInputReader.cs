@@ -10,7 +10,7 @@ namespace Systems.Input
         public Action<Vector2> Move;
         public Action Jump;
         public Action<Vector2> Look;
-        
+
         public InputInfo<Action> interact;
         public InputInfo<Action> drop;
         public InputInfo<Action> pickUp;
@@ -66,12 +66,14 @@ namespace Systems.Input
 
         public void OnPrimaryAction(InputAction.CallbackContext context)
         {
-            primaryAction.Event?.Invoke();
+            if (context.started)
+                primaryAction.Event?.Invoke();
         }
 
         public void OnSecondaryAction(InputAction.CallbackContext context)
         {
-            secondaryAction.Event?.Invoke();
+            if (context.started)
+                secondaryAction.Event?.Invoke();
         }
     }
 }

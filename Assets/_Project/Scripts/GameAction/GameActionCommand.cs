@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.LoggingSystem;
 using JetBrains.Annotations;
 using Systems.GameAction.Editor;
 using Systems.IdentifySystem.ObjectIdentify;
@@ -28,18 +29,22 @@ namespace Systems.GameAction
         public void Trigger()
         {
             action.Execute(sender, target);
+            GameLogger.Instance?.Log(
+                action.GetIdentify(),
+                $"{action.GetIdentify()}: {sender?.ObjectName ?? "None"} -> {target?.ObjectName ?? "None"}"
+            );
 
             //sau & neu co the thi check luon la co dc check hay ko ? (Execute -> bool)
-            Debug.Log($"action identify current: {action.GetIdentify()}");
+
             if (ActionIdentifyStorage.Instance.TryToGetLoadEvent(action.GetIdentify(), out var triggerAction))
             {
-                Debug.Log("find action identify");
                 ConvertToDto(out dtoTemp);
                 if (dtoTemp == null)
                 {
                     Debug.LogWarning("action is not valid.");
                     return;
                 }
+
                 triggerAction.Invoke(dtoTemp);
             }
             else
@@ -64,16 +69,16 @@ namespace Systems.GameAction
                 dto = null;
                 return;
             }
-            
+
             dto = new GameActionCommandStaticDto()
             {
                 actionName = actionName
             };
 
-            if (sender is StaticObjectIdentify senderStatic )
+            if (sender is StaticObjectIdentify senderStatic)
                 dto.sender = senderStatic;
-            
-            if (target is StaticObjectIdentify targetStatic) 
+
+            if (target is StaticObjectIdentify targetStatic)
                 dto.target = targetStatic;
         }
 

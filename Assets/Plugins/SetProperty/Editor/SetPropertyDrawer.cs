@@ -1,73 +1,88 @@
-﻿// Copyright (c) 2014 Luminary LLC
-// Licensed under The MIT License (See LICENSE for full text)
-
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Reflection;
-using Amirebrahimi.SetProperty.Scripts;
 using UnityEditor;
 using UnityEngine;
+using Amirebrahimi.SetProperty.Scripts;
 
 namespace Amirebrahimi.SetProperty.Editor
 {
-	[CustomPropertyDrawer(typeof(SetPropertyAttribute))]
-	public class SetPropertyDrawer : PropertyDrawer
-	{
-		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-		{
-			SetPropertyAttribute setProperty = attribute as SetPropertyAttribute;
+    [CustomPropertyDrawer(typeof(SetPropertyAttribute))]
+    public class SetPropertyDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            SetPropertyAttribute setProp = (SetPropertyAttribute)attribute;
+            object target = property.serializedObject.targetObject;
 
-			// Rely on the default inspector GUI
-			EditorGUI.BeginChangeCheck ();
-			EditorGUI.PropertyField(position, property, label);
+            // Backup value cũ (deep copy)
+            object oldValue = GetValue(target, property);
 
-			// Update only when necessary
-			if (EditorGUI.EndChangeCheck())
-			{
-				object parent = GetParentObjectOfProperty(property.propertyPath, property.serializedObject.targetObject);
-				Type type = parent.GetType();
-				PropertyInfo pi = type.GetProperty(setProperty.Name);
-				if (pi == null)
-				{
-					Debug.LogError("Invalid property name: " + setProperty.Name + "\nCheck your [SetProperty] attribute");
-				}
-				else
-				{
-					// When a SerializedProperty is modified the actual field does not have the current value set (i.e.  
-					// FieldInfo.GetValue() will return the prior value that was set) until after this OnGUI call has 
-					// completed. Therefore, we need to schedule a delayed call to set the property value.
+            EditorGUI.BeginChangeCheck();
+            EditorGUI.PropertyField(position, property, label, true);
 
-					// Use FieldInfo instead of the SerializedProperty accessors as we'd have to deal with every 
-					// SerializedPropertyType and use the correct accessor
-					EditorApplication.delayCall += () => pi.SetValue(parent, fieldInfo.GetValue(parent), null);
-				}
-			} 
-		}
-	
-		private object GetParentObjectOfProperty(string path, object obj)
-		{
-			string[] fields = path.Split('.');
+            if (EditorGUI.EndChangeCheck())
+            {
+                // Áp lại serialized property vào object thật
+                property.serializedObject.ApplyModifiedProperties();
 
-			// We've finally arrived at the final object that contains the property
-			if (fields.Length == 1)
-			{
-				return obj;
-			}
+                object newValue = GetValue(target, property);
 
-			// We may have to walk public or private fields along the chain to finding our container object, so we have to allow for both
-			FieldInfo fi = obj.GetType().GetField(fields[0], BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);		
-			var child = fi.GetValue(obj);
+                // Gọi setter của property thay vì field
+                CallSetProperty(target, setProp.Name, newValue);
+            }
+        }
 
-			// If we have a list, then there is no need to keep walking the object chain -- return the parent.
-			var childType = child.GetType();
-			if (childType.IsArray || childType.IsGenericType && (childType.GetGenericTypeDefinition() == typeof(List<>)))
-			{
-				return obj;
-			}
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUI.GetPropertyHeight(property, label, true);
+        }
 
+        // -------------------------------------------------------------
+        // Lấy giá trị field thực từ object
+        // -------------------------------------------------------------
+        private object GetValue(object target, SerializedProperty prop)
+        {
+            string[] parts = prop.propertyPath.Split('.');
+            object current = target;
 
-			// Keep searching for our object that contains the property
-			return GetParentObjectOfProperty(string.Join(".", fields, 1, fields.Length - 1), child);
-		}
-	}
+            for (int i = 0; i < parts.Length; i++)
+            {
+                FieldInfo field = current.GetType().GetField(
+                    parts[i],
+                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
+                );
+
+                if (field == null) return null;
+                current = field.GetValue(current);
+            }
+
+            return current;
+        }
+
+        // -------------------------------------------------------------
+        // Trigger property setter
+        // -------------------------------------------------------------
+        private void CallSetProperty(object target, string propName, object newValue)
+        {
+            PropertyInfo pi = target.GetType().GetProperty(
+                propName,
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
+            );
+
+            if (pi == null)
+            {
+                Debug.LogError($"[SetProperty] Cannot find property '{propName}'");
+                return;
+            }
+
+            try
+            {
+                pi.SetValue(target, newValue, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[SetProperty] Failed to set '{propName}': {ex.Message}");
+            }
+        }
+    }
 }

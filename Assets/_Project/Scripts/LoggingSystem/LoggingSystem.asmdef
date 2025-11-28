@@ -1,0 +1,19 @@
+{
+    "name": "LoggingSystem",
+    "rootNamespace": "",
+    "references": [
+        "TnieYuPackage.DesignPatterns",
+        "TaskManager",
+        "Unity.TextMeshPro",
+        "TnieCustomPackage.BackboneLogger"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

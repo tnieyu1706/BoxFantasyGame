@@ -37,11 +37,12 @@ namespace Systems.Charon
 	public partial class GameData
 	{
 		public const string GeneratorName = "Charon";
-		public const string GeneratorVersion = "2025.4.2.0";
+		public const string GeneratorVersion = "2025.4.4.0";
 
 		private class DocumentCollections
 		{
 			public DocumentCollection<System.String,ProjectSetting> ProjectSettingsList = DocumentCollection<System.String,ProjectSetting>.Empty;
+			public DocumentCollection<System.String,TestSchema> TestSchemas = DocumentCollection<System.String,TestSchema>.Empty;
 		}
 
 		#region Formula fields
@@ -49,6 +50,7 @@ namespace Systems.Charon
 		{
 				typeof(GameData),
 				typeof(ProjectSetting),
+				typeof(TestSchema),
 		};
 #if USE_DYNAMIC_EXPRESSIONS
 		public static readonly GameDevWare.Dynamic.Expressions.ITypeResolver TypeResolver = new GameDevWare.Dynamic.Expressions.KnownTypeResolver(FormulaTypes);
@@ -64,6 +66,8 @@ namespace Systems.Charon
 
 		#region Schema collections
 		public ProjectSetting ProjectSettings => this.GetOne<ProjectSetting>(this.rootDocuments.ProjectSettingsList.AsList);
+		public DocumentCollection<System.String,TestSchema> AllTestSchemas => this.allDocuments.TestSchemas;
+		public DocumentCollection<System.String,TestSchema> TestSchemas => this.rootDocuments.TestSchemas;
 		#endregion
 
 		private ReadOnlyCollection<String> languages;
@@ -153,6 +157,8 @@ namespace Systems.Charon
 			{
 				case "ProjectSettings":
 				case "55a4f32faca22e191098f3d9": return this.allDocuments.ProjectSettingsList.Values.Select(document => ChangeType<string>(document.Id));
+				case "TestSchema":
+				case "692742cf6f67fb0ad0adfa60": return this.allDocuments.TestSchemas.Values.Select(document => ChangeType<string>(document.Id));
 			}
 #pragma warning restore 1522
 			throw new System.ArgumentException(string.Format("Unable find Schema with id '{0}'.", schemaNameOrId) , nameof(schemaNameOrId));
@@ -161,6 +167,7 @@ namespace Systems.Charon
 		public IEnumerable<string> GetDocumentSchemaNames()
 		{
 			yield return "ProjectSettings";
+			yield return "TestSchema";
 		}
 
 		private DocumentT GetOne<DocumentT>(IReadOnlyCollection<DocumentT> documents) where DocumentT : Document
@@ -182,6 +189,8 @@ namespace Systems.Charon
 			{
 				case "ProjectSettings":
 				case "55a4f32faca22e191098f3d9": return this.allDocuments.ProjectSettingsList.Get(ChangeType<System.String>(id));
+				case "TestSchema":
+				case "692742cf6f67fb0ad0adfa60": return this.allDocuments.TestSchemas.Get(ChangeType<System.String>(id));
 			}
 #pragma warning restore 1522
 			throw new System.ArgumentException(string.Format("Unable find Schema with id '{0}'.", schemaId) , nameof(schemaId));
@@ -196,6 +205,11 @@ namespace Systems.Charon
 			{
 				yield return ProjectSettingsList[i];
 			}
+			var TestSchemasList = this.allDocuments.TestSchemas.AsList;
+			for (i = 0, end = TestSchemasList.Count; i < end; i++)
+			{
+				yield return TestSchemasList[i];
+			}
 			yield break;
 		}
 
@@ -207,6 +221,11 @@ namespace Systems.Charon
 			for (i = 0, end = ProjectSettingsList.Count; i < end; i++)
 			{
 				yield return ProjectSettingsList[i];
+			}
+			var TestSchemasList = this.rootDocuments.TestSchemas.AsList;
+			for (i = 0, end = TestSchemasList.Count; i < end; i++)
+			{
+				yield return TestSchemasList[i];
 			}
 
 			yield break;
@@ -288,6 +307,26 @@ namespace Systems.Charon
 							var collectionName = reader.ReadMember();
 							switch (collectionName.Length)
 							{
+								case 10:
+									switch(collectionName)
+									{
+										case "692742cf6f67fb0ad0adfa60":
+										case "TestSchema":
+										{
+											if (reader.IsNull())
+											{
+												reader.NextToken();
+												break;
+											}
+
+											this.rootDocuments.TestSchemas = this.ReadTestSchemaCollection(reader, 100);
+											break;
+										}
+										default:
+											reader.SkipAny();
+											break;
+									}
+									break;
 								case 15:
 									switch(collectionName)
 									{
@@ -598,9 +637,155 @@ namespace Systems.Charon
 				}
 			}
 			reader.ReadObjectEnd();
-
 			var __ProjectSetting = new ProjectSetting(_id__, _name__, _primaryLanguage__, _languages__, _copyright__, _version__, _extensions__);
 			return __ProjectSetting;
+		}
+
+		private DocumentCollection<System.String,TestSchema> ReadTestSchemaCollection(Formatters.GameDataReader reader, int capacity = 0)
+		{
+			if (reader.IsNull())
+			{
+				return DocumentCollection<System.String,TestSchema>.Empty;
+			}
+
+			var isByIdCollection = reader.Token == Formatters.ReaderToken.BeginObject;
+			var collection = default(List<TestSchema>);
+
+			if (isByIdCollection)
+			{
+				reader.ReadObjectBegin();
+			}
+			else
+			{
+				reader.ReadArrayBegin();
+			}
+			while (reader.Token != Formatters.ReaderToken.EndOfArray &&
+					reader.Token != Formatters.ReaderToken.EndOfObject)
+			{
+				if (isByIdCollection)
+				{
+					var _ = reader.ReadMember(); // skip id
+				}
+
+				if (reader.IsNull())
+				{
+					reader.NextToken();
+					continue;
+				}
+
+				var document = this.ReadTestSchema(reader);
+				if (collection == null)
+				{
+					collection = new List<TestSchema>(capacity > 0 ? capacity : 10);
+				}
+
+				collection.Add(document);
+			}
+			if (isByIdCollection)
+			{
+				reader.ReadObjectEnd();
+			}
+			else
+			{
+				reader.ReadArrayEnd();
+			}
+
+			if (collection == null)
+			{
+				return DocumentCollection<System.String,TestSchema>.Empty;
+			}
+			else
+			{
+				return new DocumentCollection<System.String,TestSchema>(collection, document => document.Id);
+			}
+		}
+
+		private TestSchema ReadTestSchema(Formatters.GameDataReader reader)
+		{
+#pragma warning disable 0168 // The variable is declared but never used
+			var _id__ = default(System.String);
+			var _value__ = default(System.String);
+			var _number__ = default(System.Single);
+#pragma warning restore 0168
+			reader.ReadObjectBegin();
+			while (reader.Token != Formatters.ReaderToken.EndOfObject)
+			{
+				var propertyName = reader.ReadMember();
+				switch (propertyName.Length)
+				{
+					case 2:
+					{
+						switch (propertyName)
+						{
+							case "Id":
+							{
+								reader.ThrowIfNull("value of Text type", "Id", "TestSchema");
+								reader.ThrowIfNotValue();
+
+								_id__ = (System.String)reader.ValueAsString;
+								reader.NextToken();
+								break;
+							}
+							default:
+							{
+								reader.SkipAny();
+								break;
+							}
+						}
+						break;
+					}
+					case 5:
+					{
+						switch (propertyName)
+						{
+							case "Value":
+							{
+								reader.ThrowIfNull("value of Text type", "Value", "TestSchema");
+								reader.ThrowIfNotValue();
+
+								_value__ = (System.String)reader.ValueAsString;
+								reader.NextToken();
+								break;
+							}
+							default:
+							{
+								reader.SkipAny();
+								break;
+							}
+						}
+						break;
+					}
+					case 6:
+					{
+						switch (propertyName)
+						{
+							case "Number":
+							{
+								reader.ThrowIfNull("value of Number type", "Number", "TestSchema");
+								reader.ThrowIfNotValue();
+
+								_number__ = (System.Single)reader.ValueAsSingle;
+								reader.NextToken();
+								break;
+							}
+							default:
+							{
+								reader.SkipAny();
+								break;
+							}
+						}
+						break;
+					}
+					default:
+					{
+						reader.SkipAny();
+						break;
+					}
+				}
+			}
+			reader.ReadObjectEnd();
+			var __TestSchema = new TestSchema(_id__, _value__, _number__);
+			return __TestSchema;
 		}
 		private LocalizedText ReadLocalizedText(Formatters.GameDataReader reader)
 		{
@@ -761,6 +946,27 @@ namespace Systems.Charon
 							newCollections["ProjectSettings"] = MergeDocumentCollection<ProjectSetting>(gameDataDocumentCollection, patchDocumentCollection, purgeRest: false);
 						}
 						break;
+					case "692742cf6f67fb0ad0adfa60":
+					case "TestSchema":
+						visitedSchemas.Add("692742cf6f67fb0ad0adfa60");
+						visitedSchemas.Add("TestSchema");
+
+						if (!gameDataCollections.TryGetValue("692742cf6f67fb0ad0adfa60", out gameDataDocumentCollection)) {
+							gameDataCollections.TryGetValue("TestSchema", out gameDataDocumentCollection);
+						}
+						if (!patchCollections.TryGetValue("692742cf6f67fb0ad0adfa60", out patchDocumentCollection)) {
+							patchCollections.TryGetValue("TestSchema", out patchDocumentCollection);
+						}
+
+						if (gameDataDocumentCollection == null || patchDocumentCollection == null)
+						{
+							newCollections["TestSchema"] = gameDataDocumentCollection ?? patchDocumentCollection;
+						}
+						else
+						{
+							newCollections["TestSchema"] = MergeDocumentCollection<TestSchema>(gameDataDocumentCollection, patchDocumentCollection, purgeRest: false);
+						}
+						break;
 				}
 #pragma warning restore 1522
 
@@ -856,6 +1062,12 @@ namespace Systems.Charon
 				MergePropertyValue<object>(mergedDocument, originalDocument, modifiedDocument, "Copyright");
 				MergePropertyValue<object>(mergedDocument, originalDocument, modifiedDocument, "Version");
 				MergePropertyValue<object>(mergedDocument, originalDocument, modifiedDocument, "Extensions");
+			}
+			if (typeof(DocumentT) == typeof(TestSchema))
+			{
+				MergePropertyValue<object>(mergedDocument, originalDocument, modifiedDocument, "Id");
+				MergePropertyValue<object>(mergedDocument, originalDocument, modifiedDocument, "Value");
+				MergePropertyValue<object>(mergedDocument, originalDocument, modifiedDocument, "Number");
 			}
 			return mergedDocument;
 		}
@@ -1067,6 +1279,10 @@ namespace Systems.Charon
 			{
 				this.allDocuments.ProjectSettingsList = new DocumentCollection<System.String,ProjectSetting>(findingVisitor.AllProjectSettings, document => document.Id);
 			}
+			if (findingVisitor.AllTestSchema?.Count > 0)
+			{
+				this.allDocuments.TestSchemas = new DocumentCollection<System.String,TestSchema>(findingVisitor.AllTestSchema, document => document.Id);
+			}
 		}
 
 		public class Visitor
@@ -1081,11 +1297,20 @@ namespace Systems.Charon
 					this.Visit(__ProjectSetting);
 				}
 				else
+				if (document is TestSchema __TestSchema)
+				{
+					this.Visit(__TestSchema);
+				}
+				else
 				{
 					throw new ArgumentException($"Unknown document type '{document.GetType()}'.", nameof(document));
 				}
 			}
 			public virtual void Visit(ProjectSetting document)
+			{
+				if (document == null) throw new ArgumentNullException(nameof(document));
+			}
+			public virtual void Visit(TestSchema document)
 			{
 				if (document == null) throw new ArgumentNullException(nameof(document));
 			}
@@ -1095,6 +1320,7 @@ namespace Systems.Charon
 		private class FindingVisitor : Visitor
 		{
 			public List<ProjectSetting> AllProjectSettings;
+			public List<TestSchema> AllTestSchema;
 			#region Visit Methods
 
 			public override void Visit(ProjectSetting document)
@@ -1107,6 +1333,16 @@ namespace Systems.Charon
 
 				base.Visit(document);
 			}
+			public override void Visit(TestSchema document)
+			{
+				if (this.AllTestSchema == null)
+				{
+					this.AllTestSchema = new List<TestSchema>(50);
+				}
+				this.AllTestSchema.Add(document);
+
+				base.Visit(document);
+			}
 			#endregion
 		}
 
@@ -1115,6 +1351,10 @@ namespace Systems.Charon
 			#region Visit Methods
 
 			public override void Visit(ProjectSetting document)
+			{
+				base.Visit(document);
+			}
+			public override void Visit(TestSchema document)
 			{
 				base.Visit(document);
 			}

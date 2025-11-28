@@ -49,7 +49,7 @@ namespace Systems.Charon
 		[SerializeField, HideInInspector]
 		private GameDataFormat format;
 		[NonSerialized, HideInInspector]
-		public GameData GameData;
+		public Systems.Charon.GameData GameData;
 
 		/// <inheritdoc />
 		public override string RevisionHash => this.GameData?.RevisionHash;
@@ -124,11 +124,11 @@ namespace Systems.Charon
 			switch (format)
 			{
 				case GameDataFormat.Json:
-					this.GameData = new GameData(gameDataStream, new Formatters.GameDataLoadOptions { Format = Formatters.GameDataFormat.Json });
+					this.GameData = new Systems.Charon.GameData(gameDataStream, new Formatters.GameDataLoadOptions { Format = Formatters.GameDataFormat.Json });
 					success = true;
 					break;
 				case GameDataFormat.MessagePack:
-					this.GameData = new GameData(gameDataStream, new Formatters.GameDataLoadOptions { Format = Formatters.GameDataFormat.MessagePack });
+					this.GameData = new Systems.Charon.GameData(gameDataStream, new Formatters.GameDataLoadOptions { Format = Formatters.GameDataFormat.MessagePack });
 					success = true;
 					break;
 				default:

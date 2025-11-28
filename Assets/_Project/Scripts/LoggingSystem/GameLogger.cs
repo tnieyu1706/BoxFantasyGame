@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
+using _Project.Scripts.TaskManager;
 using TnieYuPackage.DesignPatterns.Patterns.Singleton;
 using UnityEngine;
-using Logger = Backbone.Logger;
+using Logger = TnieCustomPackage.BackboneLogger.Logger;
 
 namespace _Project.Scripts.LoggingSystem
 {
@@ -14,6 +16,7 @@ namespace _Project.Scripts.LoggingSystem
         [SerializeField] int maxLogElements;
 
         [SerializeField] float displaySeconds = 1.5f;
+        [SerializeField] private int loggingDelayMs = 200;
 
         #endregion
 
@@ -51,6 +54,8 @@ namespace _Project.Scripts.LoggingSystem
         private LogStackData logDataTemp;
         private readonly List<string> removingStack = new();
 
+        private Guid loggerBgTaskId = Guid.Empty;
+
         #endregion
 
         protected override void Awake()
@@ -60,29 +65,49 @@ namespace _Project.Scripts.LoggingSystem
             InitializeLogElements();
         }
 
+        private void OnEnable()
+        {
+            loggerBgTaskId = BackgroundTaskManager.Instance.RegistryBgTask(Updating, loggingDelayMs);
+        }
+
+        private void OnDisable()
+        {
+            if (loggerBgTaskId == Guid.Empty)
+            {
+                Debug.LogWarning("Game Logger Background Task not found.");
+                return;
+            }
+
+            if (BackgroundTaskManager.Instance != null)
+                if (BackgroundTaskManager.Instance.StopBgTask(loggerBgTaskId))
+                {
+                    Logger.Log("Completed stop logger background task.", category: "Runtime");
+                }
+        }
+
         /// <summary>
         /// Auto handle logStack expire & timeLife.
         /// </summary>
-        void LateUpdate()
+        void Updating()
         {
-            if (logStack.Count >= 0)
+            if (logStack.Count < 0) return;
+
+            removingStack.Clear();
+            foreach (var log in logStack)
             {
-                removingStack.Clear();
-                foreach (var log in logStack)
-                {
-                    log.Value.SetTimeLife(log.Value.TimeLife - Time.deltaTime);
+                log.Value.TimeLife -= (float)loggingDelayMs / 1000;
 
-                    if (log.Value.TimeLife <= 0)
-                    {
-                        removingStack.Add(log.Key);
-                        log.Value.Log.gameObject.SetActive(false);
-                    }
-                }
-
-                if (removingStack.Count > 0)
+                if (log.Value.TimeLife <= 0)
                 {
-                    removingStack.ForEach(r => logStack.Remove(r));
+                    removingStack.Add(log.Key);
+                    UnityTaskManager.Instance
+                        .RegistryUnityTask(() => log.Value.Log.gameObject.SetActive(false));
                 }
+            }
+
+            if (removingStack.Count > 0)
+            {
+                removingStack.ForEach(r => logStack.Remove(r));
             }
         }
 

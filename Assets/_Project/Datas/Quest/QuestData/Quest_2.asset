@@ -18,7 +18,7 @@ MonoBehaviour:
   describe: Quest2_Step1
   hint: day la quest thu 2 va la step1
   actionCatchings:
-  - checkedValue: 1
+  - checkedValue: 0
     validatedData:
       rid: 3644543773784146306
     keyName: DoSomething2
@@ -69,7 +69,7 @@ MonoBehaviour:
   title: Quest thu 2
   description: day la quest thu 2
   state:
-    rid: 3644543917074153734
+    rid: 3644544087621370536
   questType: 1
   awards:
     data:
@@ -78,8 +78,8 @@ MonoBehaviour:
         rid: 3644543917074153710
   steps:
   - {fileID: -5515768649642253822}
-  currentStep: {fileID: 0}
-  currentProcessing: Step_end
+  currentStep: {fileID: -5515768649642253822}
+  currentProcessing: step_1
   requirements: []
   openEffects: []
   closedEffects: []
@@ -90,7 +90,7 @@ MonoBehaviour:
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
         value: 35
-    - rid: 3644543917074153734
-      type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+    - rid: 3644544087621370536
+      type: {class: UnlockedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
         quest: {fileID: 11400000}

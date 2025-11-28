@@ -1,42 +1,57 @@
 #if UNITY_EDITOR
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 namespace TnieYuPackage.SOAP.Data.Generator
 {
-    public class SoapInterfaceDataTypeGenerator : EditorWindow
+    public class SoapAbstractDataTypeGenerator : EditorWindow
     {
         private string folderPath = "Assets/";
         private DefaultAsset folderAsset;
 
-        private string interfaceName = "";
-        private string interfaceType = "";
+        private string abstractTypeName = ""; // class name muốn đặt (MyItem, MyEnemyData…)
+        private string csharpType = ""; // dạng: Namespace.Abstract, Assembly
+        private string checkResult = "";
+        private string resolvedFullName = "";
 
-        [MenuItem("Tools/TnieYu/SOAP/Data - Interface Type Generator")]
+        [MenuItem("Tools/TnieYu/SOAP/Data - Abstract Type Generator")]
         private static void OpenWindow()
         {
-            var window = GetWindow<SoapInterfaceDataTypeGenerator>("SOAP Interface Type Generator");
-            window.minSize = new Vector2(420, 200);
+            var window = GetWindow<SoapAbstractDataTypeGenerator>("SOAP Abstract Type Generator");
+            window.minSize = new Vector2(480, 250);
             window.Show();
         }
 
         private void OnGUI()
         {
             GUILayout.Space(10);
-            EditorGUILayout.LabelField("SOAP Interface Type Generator", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox("Generate new SOAPInterfaceData<T> script files.", MessageType.Info);
+            EditorGUILayout.LabelField("SOAP Abstract Type Generator", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox("Generate new SoapDataAbstractSo<T> types automatically.",
+                MessageType.Info);
 
             GUILayout.Space(10);
 
-            // ===========================
-            //       FOLDER SECTION
-            // ===========================
+            DrawFolderSection();
+            GUILayout.Space(10);
+
+            DrawAbstractInput();
+            GUILayout.Space(15);
+
+            DrawGenerateButton();
+        }
+
+        // ================================================
+        // FOLDER PICKER
+        // ================================================
+        private void DrawFolderSection()
+        {
             EditorGUILayout.LabelField("Output Folder:", EditorStyles.boldLabel);
 
-            // Drag & Drop folder
             EditorGUI.BeginChangeCheck();
             folderAsset = (DefaultAsset)EditorGUILayout.ObjectField("Folder", folderAsset, typeof(DefaultAsset), false);
+
             if (EditorGUI.EndChangeCheck() && folderAsset != null)
             {
                 string assetPath = AssetDatabase.GetAssetPath(folderAsset);
@@ -52,7 +67,6 @@ namespace TnieYuPackage.SOAP.Data.Generator
                 }
             }
 
-            // TextField + Browse button
             EditorGUILayout.BeginHorizontal();
             folderPath = EditorGUILayout.TextField(folderPath);
 
@@ -67,38 +81,108 @@ namespace TnieYuPackage.SOAP.Data.Generator
                         folderAsset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(folderPath);
                     }
                     else
-                        Debug.LogWarning("Selected folder must be inside Assets/");
+                        Debug.LogWarning("Must be inside Assets/");
                 }
             }
 
             EditorGUILayout.EndHorizontal();
+        }
 
-            GUILayout.Space(10);
+        // ================================================
+        // ABSTRACT SETTINGS UI
+        // ================================================
+        private void DrawAbstractInput()
+        {
+            EditorGUILayout.LabelField("Abstract Type Settings:", EditorStyles.boldLabel);
 
-            // ===========================
-            //      INTERFACE SETTINGS
-            // ===========================
-            EditorGUILayout.LabelField("Interface Settings:", EditorStyles.boldLabel);
-            interfaceName = EditorGUILayout.TextField("Interface Name", interfaceName);
-            interfaceType = EditorGUILayout.TextField("C# Type", interfaceType);
+            abstractTypeName = EditorGUILayout.TextField("Generated Type Name", abstractTypeName);
 
-            GUILayout.Space(15);
+            GUILayout.Space(5);
+            csharpType = EditorGUILayout.TextField("C# Type (Namespace.Type, Assembly)", csharpType);
 
-            GUI.enabled = !string.IsNullOrEmpty(interfaceName) && !string.IsNullOrEmpty(interfaceType);
+            if (GUILayout.Button("Check Type"))
+                CheckCSharpType();
 
-            if (GUILayout.Button("Generate Interface Data", GUILayout.Height(30)))
-                GenerateTypeFile(interfaceName, interfaceType);
+            if (!string.IsNullOrEmpty(checkResult))
+            {
+                EditorGUILayout.HelpBox(
+                    checkResult,
+                    checkResult.StartsWith("✔") ? MessageType.Info : MessageType.Error
+                );
+            }
+        }
+
+        // ================================================
+        // CHECK TYPE
+        // ================================================
+        private void CheckCSharpType()
+        {
+            checkResult = "";
+            resolvedFullName = "";
+
+            if (string.IsNullOrWhiteSpace(csharpType))
+            {
+                checkResult = "❌ Please enter: Namespace.Class, Assembly";
+                return;
+            }
+
+            string[] parts = csharpType.Split(',');
+            if (parts.Length != 2)
+            {
+                checkResult = "❌ Invalid format. Correct: Namespace.Class, AssemblyName";
+                return;
+            }
+
+            string typeName = parts[0].Trim();
+            string asmName = parts[1].Trim();
+
+            var asm = System.AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => a.GetName().Name == asmName);
+
+            if (asm == null)
+            {
+                checkResult = $"❌ Assembly '{asmName}' not found.";
+                return;
+            }
+
+            var type = asm.GetType(typeName);
+            if (type == null)
+            {
+                checkResult = $"❌ Type '{typeName}' not found in assembly '{asmName}'.";
+                return;
+            }
+
+            resolvedFullName = type.FullName;
+            checkResult = $"✔ Found Type: {resolvedFullName}";
+        }
+
+        // ================================================
+        // GENERATE BUTTON
+        // ================================================
+        private void DrawGenerateButton()
+        {
+            GUI.enabled = !string.IsNullOrEmpty(abstractTypeName)
+                          && (!string.IsNullOrEmpty(resolvedFullName) || !string.IsNullOrEmpty(csharpType));
+
+            if (GUILayout.Button("Generate Abstract Data", GUILayout.Height(30)))
+            {
+                string typeCs = string.IsNullOrEmpty(resolvedFullName) ? csharpType : resolvedFullName;
+                GenerateTypeFile(abstractTypeName, typeCs);
+            }
 
             GUI.enabled = true;
         }
 
+        // ================================================
+        // GENERATE FILE
+        // ================================================
         private void GenerateTypeFile(string name, string type)
         {
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
-            string fileName = $"Soap{name}Data.cs";
-            string filePath = Path.Combine(folderPath, fileName);
+            string fileName = $"{name}SoapDataSo";
+            string filePath = Path.Combine(folderPath, $"{fileName}.cs");
 
             if (File.Exists(filePath))
             {
@@ -112,16 +196,19 @@ namespace TnieYuPackage.SOAP.Data.Generator
             string code = $@"
 using UnityEngine;
 
-namespace TnieYuPackage.SOAP.Data.Generator
+namespace TnieYuPackage.SOAP.Data
 {{
-    [CreateAssetMenu(fileName = ""Soap{name}Data"", menuName = ""TnieYuPackage/SOAP/InterfaceData/{name}"")]
-    public class Soap{name}Data : SoapInterfaceData<{type}> {{ }}
+    [CreateAssetMenu(fileName = ""{name}"", menuName = ""TnieYuPackage/Soap/AbstractData/{name}"")]
+    public class {fileName} : SoapAbstractDataSo<SoapAbstractData<{type}>, {type}>
+    {{
+
+    }}
 }}";
 
             File.WriteAllText(filePath, code);
             AssetDatabase.Refresh();
 
-            Debug.Log($"✅ Generated: {filePath}");
+            Debug.Log($"✅ Generated Abstract Data: {filePath}");
         }
     }
 }

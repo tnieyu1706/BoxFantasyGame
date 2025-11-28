@@ -32,4 +32,4 @@ MonoBehaviour:
     - rid: 3644543917074153717
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
-        value: 360
+        value: 400

@@ -69,7 +69,7 @@ MonoBehaviour:
   title: Day la quest thu 4
   description: xin chao lai lan nua quest 4 ----- 4
   state:
-    rid: 3644543917074153737
+    rid: 3644544087621370524
   questType: 1
   awards:
     data:
@@ -79,7 +79,7 @@ MonoBehaviour:
   steps:
   - {fileID: -845590427589791233}
   currentStep: {fileID: -845590427589791233}
-  currentProcessing: step_1
+  currentProcessing: 
   requirements: []
   openEffects: []
   closedEffects: []
@@ -90,7 +90,7 @@ MonoBehaviour:
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
         value: 1
-    - rid: 3644543917074153737
-      type: {class: UnlockedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+    - rid: 3644544087621370524
+      type: {class: LockState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
         quest: {fileID: 11400000}
