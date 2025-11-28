@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace TnieYuPackage.GlobalExtensions
 {
@@ -11,7 +12,7 @@ namespace TnieYuPackage.GlobalExtensions
         /// <param name="function"></param>
         /// <typeparam name="TDelegate"></typeparam>
         /// <returns></returns>
-        public static TDelegate AddSafe<TDelegate>(this TDelegate? source, TDelegate? function)
+        public static TDelegate AddSafe<TDelegate>(this TDelegate source, TDelegate function)
             where TDelegate : Delegate
         {
             if (function == null)
@@ -27,19 +28,13 @@ namespace TnieYuPackage.GlobalExtensions
             return source;
         }
 
-        public static bool Contains<TDelegate>(this TDelegate? source, TDelegate function)
+        public static bool Contains<TDelegate>(this TDelegate source, TDelegate function)
             where TDelegate : Delegate
         {
             if (source == null)
                 return false;
-        
-            foreach (var d in source.GetInvocationList())
-            {
-                if (d.Method == function.Method && d.Target == function.Target)
-                    return true;
-            }
 
-            return false;
+            return source.GetInvocationList().Any(d => d.Method == function.Method && d.Target == function.Target);
         }
     }
 }

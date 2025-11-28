@@ -24,7 +24,7 @@ namespace Systems.QuestSystem.QuestFlow.QuestFlowGraph.Runtime
         }
 
         [Button]
-        public void UpdateAllFlow()
+        private void UpdateAllFlow()
         {
             if (questFlowGraphRuntime != null)
             {

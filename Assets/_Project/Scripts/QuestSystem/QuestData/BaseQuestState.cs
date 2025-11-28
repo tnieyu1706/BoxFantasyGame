@@ -95,7 +95,7 @@ namespace Systems.QuestSystem.QuestData
         public override void Do()
         {
             //runtime executed
-            quest.RegistryRequirement();
+            quest.LoadQuestRequirements();
         }
 
         public override void Exit()
@@ -137,7 +137,6 @@ namespace Systems.QuestSystem.QuestData
         public override void Do()
         {
             quest.LoadCurrentStep();
-            quest.currentStep.LoadStep(); //ensure 
         }
 
         public override void Exit()

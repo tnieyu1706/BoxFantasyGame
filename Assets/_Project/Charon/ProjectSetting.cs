@@ -92,6 +92,7 @@ namespace Systems.Charon
 		partial void OnBeforeInitialize();
 		partial void OnInitialize();
 
+
 		/// <inheritdoc />
 		public bool Equals(ProjectSetting other)
 		{

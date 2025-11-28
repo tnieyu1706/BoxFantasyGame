@@ -1,5 +1,5 @@
-using Systems.GeneralSystem.ObjectDataSystem;
 using TnieYuPackage.GTKExtensions;
+using TnieYuPackage.ObjectDataSystem;
 using Unity.GraphToolkit.Editor;
 
 namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.Model.Nodes

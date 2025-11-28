@@ -7,7 +7,7 @@
         "EditorAttributes",
         "TnieYuPackage.Utils",
         "TnieYuPackage.DesignPatterns",
-        "GeneralSystem.ObjectData"
+        "TnieYuPackage.ObjectData"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,19 +1,17 @@
 using System;
-using TnieYuPackage.DesignPatterns.Patterns.Singleton;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Systems.Input
 {
     [CreateAssetMenu(fileName = "InterfaceInputReader", menuName = "Scriptable Objects/Input/InterfaceInputReader")]
-    public class InterfaceInputReader : SingletonScriptable<InterfaceInputReader>, InputSystem.IInterfaceActions,
-        IInputReader
+    public class InterfaceInputReader :BaseInputReader<InterfaceInputReader>, InputSystem.IInterfaceActions
     {
         public Action Tab;
         public Action Map;
         public Action<int> SelectItem;
         
-        public void EnableActions()
+        public override void EnableActions()
         {
             if (IInputReader.InputSystem == null)
             {

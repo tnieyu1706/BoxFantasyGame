@@ -128,16 +128,16 @@ MonoBehaviour:
 
     TestQuest_1".'
   state:
-    rid: 3644543847062569204
+    rid: 3644544087621370537
   questType: 1
   awards:
     data:
     - key: TotalMoney
       value:
-        rid: 3644543773784146318
+        rid: 3644543917074153709
     - key: Level
       value:
-        rid: 3644543773784146319
+        rid: 3644543917074153708
   steps:
   - {fileID: -6225380762305771579}
   - {fileID: -2096398407324912174}
@@ -145,19 +145,14 @@ MonoBehaviour:
   currentProcessing: Step_end
   requirements:
   - rid: 3644543794999984722
+  - rid: 3644544102087786713
   openEffects: []
   closedEffects: []
   references:
     version: 2
     RefIds:
-    - rid: 3644543773784146318
-      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
-      data:
-        value: 40
-    - rid: 3644543773784146319
-      type: {class: IntData, ns: Systems.GeneralSystem.ObjectDataSystem, asm: GeneralSystem.ObjectData}
-      data:
-        value: 1
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 3644543794999984722
       type: {class: QuestActionRequirement, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
@@ -172,7 +167,23 @@ MonoBehaviour:
         sender: {fileID: 11400000, guid: 45b77f96398867e44b1050037166f00a, type: 2}
         target: {fileID: 0}
         actionName: DoSomething2
-    - rid: 3644543847062569204
+    - rid: 3644543917074153708
+      type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
+      data:
+        value: 1
+    - rid: 3644543917074153709
+      type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
+      data:
+        value: 40
+    - rid: 3644544087621370537
       type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
         quest: {fileID: 11400000}
+    - rid: 3644544102087786713
+      type: {class: QuestFieldRequirement, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        checkedValue: 0
+        validatedData:
+          rid: -2
+        keyName: 
+        quest: {fileID: 0}

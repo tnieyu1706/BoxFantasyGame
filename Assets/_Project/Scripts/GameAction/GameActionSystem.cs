@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using TnieYuPackage.DesignPatterns.Patterns.Singleton;
 
 namespace Systems.GameAction
 {
     public class GameActionSystem : SingletonBehavior<GameActionSystem>
     {
-        private Queue<GameActionCommand> queue = new();
+        private ConcurrentQueue<GameActionCommand> queue = new();
 
         private GameActionCommand commandTrigger;
 
@@ -16,9 +16,8 @@ namespace Systems.GameAction
 
         void Update()
         {
-            while (queue.Count > 0)
+            while (queue.TryDequeue(out commandTrigger))
             {
-                commandTrigger = queue.Dequeue();
                 commandTrigger.Trigger();
             }
         }

@@ -1,14 +1,17 @@
 ﻿// Copyright (c) 2014 Luminary LLC
 // Licensed under The MIT License (See LICENSE for full text)
+
 using UnityEngine;
-using System.Collections;
 
-public class SetPropertyAttribute : PropertyAttribute
+namespace Amirebrahimi.SetProperty.Scripts
 {
-	public string Name { get; private set; }
-
-	public SetPropertyAttribute(string name)
+	public class SetPropertyAttribute : PropertyAttribute
 	{
-		this.Name = name;
+		public string Name { get; private set; }
+
+		public SetPropertyAttribute(string name)
+		{
+			this.Name = name;
+		}
 	}
 }

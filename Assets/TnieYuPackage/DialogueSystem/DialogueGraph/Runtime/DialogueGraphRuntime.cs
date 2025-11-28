@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Systems.GeneralSystem.ObjectDataSystem;
 using TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Nodes;
+using TnieYuPackage.ObjectDataSystem;
 using TnieYuPackage.Utils;
 using TnieYuPackage.Utils.DictionaryUtil;
 using UnityEngine;

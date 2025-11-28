@@ -9,7 +9,7 @@
         "TnieYuPackage.GTKExtensions",
         "TnieYuPackage.Utils",
         "AYellowpaper.SerializedCollections",
-        "GeneralSystem.ObjectData"
+        "TnieYuPackage.ObjectData"
     ],
     "includePlatforms": [
         "Editor"

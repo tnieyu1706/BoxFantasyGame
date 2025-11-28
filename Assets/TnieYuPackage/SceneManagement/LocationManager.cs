@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using EditorAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ namespace TnieYuPackage.SceneManagement
 {
     public class LocationManager : MonoBehaviour
     {
+        #region Properties
+        
         public readonly SceneGroupManager SceneGroupManager = new SceneGroupManager();
 
         [SerializeField] private float delay = 1f;
@@ -23,6 +26,8 @@ namespace TnieYuPackage.SceneManagement
 
         float targetProgress;
         bool isLoading;
+        
+        #endregion
 
         async void Start()
         {
@@ -99,6 +104,8 @@ namespace TnieYuPackage.SceneManagement
                     Time.deltaTime * progressDifference * fillSpeed
                 );
         }
+        
+        #region Loading Methods
 
         public async Task LoadLocation(LocationSo location, Vector3 position, bool isReload = false)
         {
@@ -170,5 +177,20 @@ namespace TnieYuPackage.SceneManagement
             else
                 loadingAudioSource.Stop();
         }
+        
+        #endregion
+        
+        #region Loading Manual
+
+        [Space(20)]
+        [SerializeField] private PositionSo position;
+        
+        [Button]
+        private async Task LoadPositionManual()
+        {
+            await LoadLocation(position.location, position.position);
+        }
+        
+        #endregion
     }
 }

@@ -1,7 +1,7 @@
 { 
-	"ToolsVersion": "2025.4.2.0", 
-	"RevisionHash": "68ede055e72e1c15b85aa254", 
-	"ChangeNumber": 2, 
+	"ToolsVersion": "2025.4.4.0", 
+	"RevisionHash": "692742cf6f67fb0ad0adfa5c", 
+	"ChangeNumber": 4, 
 	"Collections": { 
 		"ProjectSettings": [ 
 			{ 
@@ -78,7 +78,7 @@
 						"Requirement": 2, 
 						"ReferenceType": null, 
 						"Size": 4, 
-						"Specification": "pick.Normal=0&pick.Component=1&pick.Settings=2" 
+						"Specification": "pick.Normal=0&pick.Component=1&pick.Settings=2&pick.Union=3" 
 					}, 
 					{ 
 						"Id": "59088257983a362690093cf4", 
@@ -246,6 +246,59 @@
 						"Requirement": 0, 
 						"ReferenceType": null, 
 						"Size": 4096, 
+						"Specification": "" 
+					} 
+				] 
+			}, 
+			{ 
+				"Id": "692742cf6f67fb0ad0adfa60", 
+				"Name": "TestSchema", 
+				"DisplayName": "Test Schema", 
+				"Type": 0, 
+				"Description": null, 
+				"IdGenerator": 0, 
+				"Specification": null, 
+				"Properties": [ 
+					{ 
+						"Id": "692742cf6f67fb0ad0adfa5d", 
+						"SharedProperty": null, 
+						"Name": "Id", 
+						"DisplayName": "Id", 
+						"Description": "", 
+						"DataType": 0, 
+						"DefaultValue": null, 
+						"Uniqueness": 1, 
+						"Requirement": 3, 
+						"ReferenceType": null, 
+						"Size": 0, 
+						"Specification": "" 
+					}, 
+					{ 
+						"Id": "692742cf6f67fb0ad0adfa5e", 
+						"SharedProperty": null, 
+						"Name": "Value", 
+						"DisplayName": "Value", 
+						"Description": "", 
+						"DataType": 0, 
+						"DefaultValue": null, 
+						"Uniqueness": 0, 
+						"Requirement": 2, 
+						"ReferenceType": null, 
+						"Size": 0, 
+						"Specification": "editor=text-multiline" 
+					}, 
+					{ 
+						"Id": "692742cf6f67fb0ad0adfa5f", 
+						"SharedProperty": null, 
+						"Name": "Number", 
+						"DisplayName": "Number", 
+						"Description": "", 
+						"DataType": 12, 
+						"DefaultValue": "0", 
+						"Uniqueness": 0, 
+						"Requirement": 2, 
+						"ReferenceType": null, 
+						"Size": 4, 
 						"Specification": "" 
 					} 
 				] 
@@ -437,6 +490,8 @@
 			} 
 		], 
 		"SchemaProperty": [ 
+		], 
+		"TestSchema": [ 
 		] 
 	} 
 }

@@ -22,8 +22,8 @@
     },
     {
       "id": 3,
-      "characterName": "Vy",
-      "content": "Thi t chao hoi thoi ma?",
+      "characterName": "Minh",
+      "content": "Thi thang Vy chao hoi thoi ma?",
       "choice1": "",
       "choice2": "",
       "choice3": "",
@@ -42,28 +42,18 @@
     },
     {
       "id": 5,
-      "characterName": "Nam",
+      "characterName": "Minh",
       "content": "Gio m lua chon 1 trong 2 option sau di r t voi m noi chuyen",
-      "choice1": "Option1: Thang ngu#12",
-      "choice2": "Option2: Thang cho#9",
+      "choice1": "Option1: Thang ngu#6",
+      "choice2": "Option2: Thang cho#11",
       "choice3": "",
       "next": "",
       "actionName": ""
     },
     {
-      "id": 12,
+      "id": 6,
       "characterName": "Nam",
       "content": "M lua chon option1 dung ko ?",
-      "choice1": "",
-      "choice2": "",
-      "choice3": "",
-      "next": 6,
-      "actionName": ""
-    },
-    {
-      "id": 6,
-      "characterName": "Vy",
-      "content": "T chon thang ngu dung chua?",
       "choice1": "",
       "choice2": "",
       "choice3": "",
@@ -72,16 +62,36 @@
     },
     {
       "id": 7,
+      "characterName": "Vy",
+      "content": "T chon thang ngu dung chua?",
+      "choice1": "",
+      "choice2": "",
+      "choice3": "",
+      "next": 8,
+      "actionName": ""
+    },
+    {
+      "id": 8,
+      "characterName": "Vy",
+      "content": "Xin chao ngay moi",
+      "choice1": "",
+      "choice2": "",
+      "choice3": "",
+      "next": 9,
+      "actionName": ""
+    },
+    {
+      "id": 9,
       "characterName": "Nam",
       "content": "Sai roi thang cho ngu a`",
       "choice1": "",
       "choice2": "",
       "choice3": "",
-      "next": 8,
+      "next": 10,
       "actionName": "FalseMethod"
     },
     {
-      "id": 8,
+      "id": 10,
       "characterName": "Vy",
       "content": "Con me the ma cung noi dc suc vat that",
       "choice1": "",
@@ -91,27 +101,27 @@
       "actionName": ""
     },
     {
-      "id": 9,
+      "id": 11,
       "characterName": "Vy",
       "content": "T chon thang cho dung chua?",
       "choice1": "",
       "choice2": "",
       "choice3": "",
-      "next": 10,
+      "next": 12,
       "actionName": ""
     },
     {
-      "id": 10,
+      "id": 12,
       "characterName": "Nam",
       "content": "Dung r do thang cho ngu",
       "choice1": "",
       "choice2": "",
       "choice3": "",
-      "next": 11,
+      "next": 13,
       "actionName": "TrueMethod"
     },
     {
-      "id": 11,
+      "id": 13,
       "characterName": "Vy",
       "content": "Ok cam on nhieu ko co gi dau con cho ngu a`.",
       "choice1": "",

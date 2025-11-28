@@ -288,7 +288,7 @@ MonoBehaviour:
                 m_BoolArgument: 0
               m_CallState: 2
   fileData:
-    rid: 4756950884533928798
+    rid: 3644544087621370504
   actionMethods:
     data:
     - key: TrueMethod
@@ -336,10 +336,10 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 4756950884533928798
+    - rid: 3644544087621370504
       type: {class: CsvData, ns: TnieYuPackage.FileData, asm: TnieYuPackage.FileData}
       data:
-        filePath: Assets/_Project/Features/DialogueSheet/Sample/test_dialogue_conversation.csv
+        filePath: Assets/TnieYuPackage/DialogueSystem/DialogueSheet/Sample/test_dialogue_conversation.csv
 --- !u!1 &2681584933912971820
 GameObject:
   m_ObjectHideFlags: 0

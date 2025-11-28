@@ -8,12 +8,12 @@
         "GeneralSystem.Requirement",
         "EditorAttributes",
         "TnieYuPackage.Utils",
-        "GeneralSystem.ObjectData",
         "GameAction",
         "Unity.GraphToolkit.Common.Editor",
         "Unity.GraphToolkit.Editor",
         "Unity.GraphToolkit.Utility.Editor",
-        "TnieYuPackage.GTKExtensions"
+        "TnieYuPackage.GTKExtensions",
+        "TnieYuPackage.ObjectData"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

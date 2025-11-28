@@ -4,7 +4,8 @@
     "references": [
         "Eflatun.SceneReference",
         "TnieYuPackage.Utils",
-        "TnieYuPackage.DesignPatterns"
+        "TnieYuPackage.DesignPatterns",
+        "EditorAttributes"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

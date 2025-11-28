@@ -1,3 +1,5 @@
+using TnieCustomPackage.BackboneLogger;
+using EditorAttributes;
 using UnityEngine;
 
 namespace _Project.Scripts.Test.Interface
@@ -9,13 +11,11 @@ namespace _Project.Scripts.Test.Interface
 
     public class DataTest : MonoBehaviour, IDataTest
     {
-        public string value1;
-        public int value2;
-        public Vector3 value3;
-
+        public string testValue;
+        
+        [Button]
         public void ShowInfo()
         {
-            Debug.Log(value1);
         }
     }
 }

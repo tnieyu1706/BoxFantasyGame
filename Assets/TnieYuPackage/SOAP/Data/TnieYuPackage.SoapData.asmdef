@@ -1,0 +1,19 @@
+{
+    "name": "TnieYuPackage.SoapData",
+    "rootNamespace": "",
+    "references": [
+        "EditorAttributes",
+        "SetProperty",
+        "TnieCustomPackage.SerializeInterface",
+        "TnieYuPackage.CustomAttributes"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

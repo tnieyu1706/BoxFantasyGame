@@ -1,6 +1,6 @@
 using System;
 using JetBrains.Annotations;
-using Systems.GeneralSystem.ObjectDataSystem;
+using TnieYuPackage.ObjectDataSystem;
 using TnieYuPackage.Utils;
 using UnityEngine;
 
