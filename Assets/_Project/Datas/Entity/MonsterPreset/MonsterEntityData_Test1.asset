@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f352ccc6545e4745ab6a1246d612587c, type: 3}
+  m_Name: MonsterEntityData_Test1
+  m_EditorClassIdentifier: Assembly-CSharp::Systems.EntityDataSystem.MonsterEntityDataPresetSo
+  id:
+    value: fb469065-5f13-4f12-8880-226641ff3e6b
+  objectName: MonsterEntity_Test1
+  staticCategoryIdentify: {fileID: 11400000, guid: 3251b133892264a4fb94cb3bcecf2330, type: 2}
+  health: 60
+  attackedDamage: 3
+  moveSpeed: 6

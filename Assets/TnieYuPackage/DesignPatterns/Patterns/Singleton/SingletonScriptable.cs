@@ -21,6 +21,7 @@ namespace TnieYuPackage.DesignPatterns.Patterns.Singleton
                         Debug.LogError($"No assets found in '{typeof(T).Name}'!");
                         return null;
                     }
+
                     if (guids.Length > 0)
                     {
                         string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
@@ -29,8 +30,12 @@ namespace TnieYuPackage.DesignPatterns.Patterns.Singleton
 #else
                 // Runtime thì load từ Resources
                 instance = Resources.Load<T>(typeof(T).Name);
+                if (instance == null) {
+                    Debug.LogError($"No assets found in '{typeof(T).Name}'!");
+                }
 #endif
                 }
+
                 return instance;
             }
         }

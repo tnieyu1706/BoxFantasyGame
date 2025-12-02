@@ -3,9 +3,9 @@ using TnieYuPackage.CustomAttributes;
 using TnieYuPackage.DesignPatterns.Patterns.Singleton;
 using UnityEngine;
 
-namespace Systems.Interact
+namespace Systems.Interact.ObjectInteract
 {
-    public class ScreenInteractTracking : SceneSingletonBehaviour<ScreenInteractTracking>
+    public class ScreenObjectInteractTracking : SceneSingletonBehaviour<ScreenObjectInteractTracking>
     {
         public float maxDistanceTracking = 2f;
         [TnieLayerMaskDropdown] public int layerMaskTracking;

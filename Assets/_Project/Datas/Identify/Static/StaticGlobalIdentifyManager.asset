@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Systems.IdentifySystem.ObjectIdentify.StaticIdentify.StaticCategoryIdentifyManager
   categoryIdentifies:
   - {fileID: 11400000, guid: 9d77f9e1497da2c43b3539f2253cf14c, type: 2}
+  - {fileID: 11400000, guid: 3251b133892264a4fb94cb3bcecf2330, type: 2}

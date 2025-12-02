@@ -1,15 +1,15 @@
 using UnityEngine;
 
-namespace Systems.Interact.Test
+namespace Systems.Interact.ObjectInteract.Test
 {
-    public class DemoElementInteractBehaviour : MonoBehaviour, IInteractElement
+    public class DemoElementObjectInteractBehaviour : MonoBehaviour, IObjectInteractElement
     {
-        public void SubscribeEvent(IInteractVisitor visitor)
+        public void SubscribeEvent(IObjectInteractVisitor visitor)
         {
             visitor.Event.AddListener(DebugLog);
         }
 
-        public void UnsubscribeEvent(IInteractVisitor visitor)
+        public void UnsubscribeEvent(IObjectInteractVisitor visitor)
         {
             visitor.Event.RemoveListener(DebugLog);
         }

@@ -10,7 +10,6 @@ namespace _Project.Test
         // public InterfaceReferenceGUIProp<IObjectBehavior> interfaceReferenceProp;
         public InterfaceReferenceGUI<IObjectBehavior> interfaceReference;
         
-
         // [Button]
         // public void TestValue()
         // {

@@ -9,14 +9,14 @@ namespace TnieYuPackage.CustomAttributes.PropertyDrawers
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            // Lấy tất cả tên layer hiện có
+            // Get available Layer
             string[] layerNames = InternalEditorUtility.layers;
             int[] layerIndices = new int[layerNames.Length];
 
             for (int i = 0; i < layerNames.Length; i++)
                 layerIndices[i] = LayerMask.NameToLayer(layerNames[i]);
 
-            // Convert giá trị hiện tại sang dạng tạm để hiển thị MaskField
+            // Get LayerIndices from available Layer
             int currentMask = property.intValue;
             int displayMask = 0;
 
@@ -26,10 +26,10 @@ namespace TnieYuPackage.CustomAttributes.PropertyDrawers
                     displayMask |= 1 << i;
             }
 
-            // Vẽ dropdown
+            // Dropdown layerMask and get selected available Layer
             int newDisplayMask = EditorGUI.MaskField(position, label, displayMask, layerNames);
 
-            // Chuyển kết quả người dùng chọn về layer index thật
+            // Checking available Layer <-> LayerIndices and get result.
             int newMask = 0;
             for (int i = 0; i < layerIndices.Length; i++)
             {

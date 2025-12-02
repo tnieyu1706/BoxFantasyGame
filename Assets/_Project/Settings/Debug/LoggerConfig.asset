@@ -40,3 +40,6 @@ MonoBehaviour:
   - name: Runtime
     active: 1
     color: {r: 0.2509804, g: 0.8784314, b: 0.8156863, a: 1}
+  - name: General
+    active: 1
+    color: {r: 0.9333334, g: 0.509804, b: 0.9333334, a: 1}

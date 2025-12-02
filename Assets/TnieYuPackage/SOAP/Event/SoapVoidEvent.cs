@@ -16,4 +16,9 @@ namespace TnieYuPackage.SOAP.Event
     {
         public Action<T> Event;
     }
+
+    public abstract class SoapEventSo<T1, T2> : ScriptableObject
+    {
+        public Action<T1, T2> Event;
+    }
 }

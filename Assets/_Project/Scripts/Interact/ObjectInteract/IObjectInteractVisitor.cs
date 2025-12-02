@@ -3,11 +3,11 @@ using TnieYuPackage.DesignPatterns.Patterns.Visitor;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Systems.Interact
+namespace Systems.Interact.ObjectInteract
 {
-    public interface IInteractVisitor : IVisitor<IInteractElement>
+    public interface IObjectInteractVisitor : IVisitor<IObjectInteractElement>
     {
-        void IVisitor<IInteractElement>.Visit(IInteractElement element)
+        void IVisitor<IObjectInteractElement>.Visit(IObjectInteractElement element)
         {
             
         }
@@ -15,7 +15,7 @@ namespace Systems.Interact
     }
 
     [Serializable]
-    public class InteractVisitorConcrete : IInteractVisitor
+    public class ObjectInteractVisitorConcrete : IObjectInteractVisitor
     {
         [SerializeField] private UnityEvent @event = new();
         public UnityEvent Event => @event;

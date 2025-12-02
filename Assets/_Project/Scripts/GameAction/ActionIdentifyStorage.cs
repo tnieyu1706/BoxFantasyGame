@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using EditorAttributes;
-using Systems.IdentifySystem.ObjectIdentify.StaticIdentify;
 using Systems.IdentifySystem.TypeIdentify;
 using TnieYuPackage.Utils;
 using UnityEngine;
