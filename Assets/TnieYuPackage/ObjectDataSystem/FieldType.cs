@@ -13,6 +13,7 @@ namespace TnieYuPackage.ObjectDataSystem
     public class FieldTypeData
     {
         public Type Type;
+        public Func<IObjectData> ConvertToObjectDataProcedure;
 
         public FieldTypeData(Type type)
         {
@@ -26,9 +27,20 @@ namespace TnieYuPackage.ObjectDataSystem
 
         static FieldTypeSupport()
         {
-            FieldTypes[FieldType.Int] = new FieldTypeData(typeof(int));
-            FieldTypes[FieldType.Bool] = new FieldTypeData(typeof(bool));
-            FieldTypes[FieldType.String] = new FieldTypeData(typeof(string));
+            FieldTypes[FieldType.Int] = new FieldTypeData(typeof(int))
+            {
+                ConvertToObjectDataProcedure = () => new IntData()
+            };
+            
+            FieldTypes[FieldType.Bool] = new FieldTypeData(typeof(bool))
+            {
+                ConvertToObjectDataProcedure = () => new BooleanData()
+            };
+            
+            FieldTypes[FieldType.String] = new FieldTypeData(typeof(string))
+            {
+                ConvertToObjectDataProcedure = () => new StringData()
+            };
         }
     }
 }

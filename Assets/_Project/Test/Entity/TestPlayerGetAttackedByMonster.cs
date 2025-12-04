@@ -8,10 +8,10 @@ namespace _Project.Test.Entity
     {
         private void OnTriggerEnter(Collider other)
         {
-            IEntityData monsterBehaviour = other.GetComponent<IEntityData>();
+            IEntity monsterBehaviour = other.GetComponent<IEntity>();
             if (monsterBehaviour != null)
             {
-                PlayerEntityData.Instance.Health -= monsterBehaviour.AttackedDamage;
+                PlayerEntity.Instance.CurrentHealth -= monsterBehaviour.AttackedDamage;
                 
                 Debug.Log(monsterBehaviour.AttackedDamage);
             }

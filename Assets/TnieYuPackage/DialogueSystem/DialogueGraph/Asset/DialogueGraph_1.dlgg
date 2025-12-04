@@ -61,7 +61,7 @@ MonoBehaviour:
     - rid: 3644543610333692166
       type: {class: 'Constant`1[[System.Boolean, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 0
+        m_Value: 1
     - rid: 3644543610333692167
       type: {class: StartNode, ns: TnieYuPackage.DialogueSystem.DialogueGraph.Editor.Model.Nodes, asm: DialogueGraph.Editor}
       data: 
@@ -585,7 +585,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: ad596e87b3f08681920187cac0375ffd
         m_Version: 2
-        m_Position: {x: 1956.6329, y: -400.99094}
+        m_Position: {x: 1956.6329, y: -402.20764}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -684,7 +684,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: ad493fbd487027cf85ef61dcb399faf5
         m_Version: 2
-        m_Position: {x: 1725.2804, y: -538.9981}
+        m_Position: {x: 1726.0804, y: -542.9981}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -786,7 +786,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: fc734c84d6e4229c9fb548447607bc5d
         m_Version: 2
-        m_Position: {x: 1726.4974, y: -392.9941}
+        m_Position: {x: 1725.6975, y: -392.9941}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -1673,7 +1673,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 3f3168995302ecc32e09abbed929fd31
         m_Version: 2
-        m_Position: {x: 935.2721, y: 49.72601}
+        m_Position: {x: 926.7601, y: 49.72601}
         m_Title: Chracter1
         m_Tooltip: 
         m_NodePreviewModel:
@@ -2468,7 +2468,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 888cace37d8f300a5c7c9e680ae878a6
         m_Version: 2
-        m_Position: {x: 2024.7999, y: 18.71997}
+        m_Position: {x: 2026.0167, y: 18.336647}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -2779,7 +2779,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: d33d5c9cf2829ceca26da5e02aaa5acb
         m_Version: 2
-        m_Position: {x: 2307.429, y: 28.96373}
+        m_Position: {x: 2304.9656, y: 18.220402}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:

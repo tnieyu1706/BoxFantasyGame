@@ -53,14 +53,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Nodes
                 return;
             }
 
-            //Validate actual value and set nextId
-            if (ObjectData.ValidateData(aField.data, bField.data) &&
-                aField.data.Value is IComparable aValue &&
-                bField.data.Value is IComparable bValue)
-            {
-                bool resultCompare = CompareOperatorData.Compare.Invoke(aValue, bValue);
-                NextId = resultCompare ? trueNextId : falseNextId;
-            }
+            NextId = aField.data.Equals(bField.data) ? trueNextId : falseNextId;
         }
     }
 }

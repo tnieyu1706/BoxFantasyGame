@@ -11,13 +11,14 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Nodes
     {
         public FieldType fieldType;
         [SerializeReference]
-        public ObjectData data;
+        public IObjectData data;
 
         public FieldNodeRuntime(SerializableGuid id, FieldType fieldType, object value) : base(id)
         {
             this.fieldType = fieldType;
-            
-            ObjectData.SetValueDirectly(this.fieldType, value, out data);
+
+            data = FieldTypeSupport.FieldTypes[fieldType].ConvertToObjectDataProcedure.Invoke();
+            data.Value = value;
         }
     }
 

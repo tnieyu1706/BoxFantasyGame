@@ -13,13 +13,14 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Nodes
     {
         public SerializableGuid fieldId = SerializableGuid.Empty;
         public FieldType type;
-        [SerializeReference] public ObjectData setData;
+        [SerializeReference] public IObjectData setData;
 
         public SetFieldNodeRuntime(SerializableGuid id, FieldType type, object setValue) : base(id)
         {
             this.type = type;
 
-            ObjectData.SetValueDirectly(this.type, setValue, out setData);
+            setData = FieldTypeSupport.FieldTypes[type].ConvertToObjectDataProcedure.Invoke();
+            setData.Value = setValue;
         }
 
         public override void Execute()
@@ -32,7 +33,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Runtime.Nodes
 
             var field = FieldDataSupport.GetFieldNodeRuntimeById(fieldId);
 
-            if (field != null && field.fieldType == type && ObjectData.ValidateData(setData, field.data.Value))
+            if (field != null && field.fieldType == type)
             {
                 field.data.Value = setData.Value;
             }

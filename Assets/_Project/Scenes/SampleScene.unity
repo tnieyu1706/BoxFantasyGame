@@ -326,17 +326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7d746982e1465f883f663cef3046e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visitor:
-    rid: 2340023557923537215
-  references:
-    version: 2
-    RefIds:
-    - rid: 2340023557923537215
-      type: {class: ObjectInteractVisitorConcrete, ns: Systems.Interact.ObjectInteract, asm: Assembly-CSharp}
-      data:
-        event:
-          m_PersistentCalls:
-            m_Calls: []
+  interactor:
+    event:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &113192484
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,8 +869,7 @@ GameObject:
   - component: {fileID: 385682015}
   - component: {fileID: 385682014}
   - component: {fileID: 385682013}
-  - component: {fileID: 385682018}
-  - component: {fileID: 385682019}
+  - component: {fileID: 385682017}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1035,7 +1027,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &385682018
+--- !u!114 &385682017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1044,25 +1036,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 385682006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54737a3d9a1c4ff2a21b053a71479a1e, type: 3}
+  m_Script: {fileID: 11500000, guid: edf67c7c846042c7b905736c5f7c391e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems.CollisionSystem.TriggerInteractTracking
-  interactLayerMask: 4096
-  onInteractEnter: {fileID: 11400000, guid: 288a502b8f76aa547b5fad548a15366e, type: 2}
-  subjectCollider: {fileID: 385682016}
---- !u!114 &385682019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 385682006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba689fa0f6d2478290db2fddf8693e41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems.PropertyDataSystem.VisitorPattern.HealthPropertyVisitor
-  property:
+  m_EditorClassIdentifier: Assembly-CSharp::Systems.PropertyDataSystem.UnitHandlers.UnitGettingDamageInteractor
+  interactionLayerMask: 4096
+  entityHealth:
     _underlyingValue: {fileID: 11400000, guid: 8781b15bbb6938442afa9da32dc6e6a4, type: 2}
 --- !u!1 &410087039
 GameObject:
@@ -1510,51 +1488,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1063766324
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1063766326}
-  - component: {fileID: 1063766325}
-  m_Layer: 0
-  m_Name: MonsterBehaviour
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1063766325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063766324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b14feb1ebaee4a379fa2feac7b1a1a70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems.EntityDataSystem.Monster.MonsterApplyDamageInteractBehaviour
-  onEnterEvent: {fileID: 11400000, guid: 288a502b8f76aa547b5fad548a15366e, type: 2}
---- !u!4 &1063766326
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063766324}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35101, y: 1.65557, z: 0.20049}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1168428295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,7 +1752,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d703e1de7a4d23ad8bbc0c77cc40b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Test.TestChangeStructComponent
-  sValueDummy: 0
+  datas:
+    data: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &1431679152
 Transform:
   m_ObjectHideFlags: 0
@@ -2518,7 +2455,7 @@ GameObject:
   - component: {fileID: 1854534544}
   - component: {fileID: 1854534547}
   - component: {fileID: 1854534546}
-  - component: {fileID: 1854534545}
+  - component: {fileID: 1854534548}
   m_Layer: 12
   m_Name: Colliders
   m_TagString: Untagged
@@ -2541,19 +2478,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 113192489}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1854534545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1854534543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dd08653d3d64db4ad94f99cde0d9a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems.EntityDataSystem.Monster.MonsterApplyDamageInteractElement
-  monsterBehaviour: {fileID: 1854534546}
 --- !u!114 &1854534546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2566,8 +2490,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec172fd32754a218a60213b6fe091e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Systems.EntityDataSystem.MonsterEntityDataBehaviour
-  monsterDataPreset: {fileID: 11400000, guid: 1547f13fb7762414d9148ca82c516c56, type: 2}
-  currentHealth: 0
+  monsterPreset: {fileID: 11400000, guid: 1547f13fb7762414d9148ca82c516c56, type: 2}
+  <CurrentHealth>k__BackingField: 0
+  <MaxHealth>k__BackingField: 0
 --- !u!65 &1854534547
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2589,6 +2514,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1854534548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854534543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e191ba9cd8a479a8e0ca9d9cb281d4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Systems.PropertyDataSystem.UnitHandlers.UnitDealingDamageProcessor
+  entityAttack:
+    _underlyingValue: {fileID: 1854534546}
 --- !u!1 &1870499577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2929,7 +2868,6 @@ SceneRoots:
   - {fileID: 1505644003}
   - {fileID: 1763076314}
   - {fileID: 337737133}
-  - {fileID: 1063766326}
   - {fileID: 1550263087}
   - {fileID: 568633846}
   - {fileID: 1848181654}
@@ -2943,5 +2881,5 @@ SceneRoots:
   - {fileID: 1235678014}
   - {fileID: 1870499578}
   - {fileID: 1524768519}
-  - {fileID: 1431679152}
   - {fileID: 113192489}
+  - {fileID: 1431679152}

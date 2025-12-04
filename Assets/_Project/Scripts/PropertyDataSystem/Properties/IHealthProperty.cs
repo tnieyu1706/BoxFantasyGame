@@ -2,6 +2,7 @@ namespace Systems.PropertyDataSystem.Properties
 {
     public interface IHealthProperty
     {
-        int Health { get; set; }
+        int CurrentHealth { get; set; }
+        int MaxHealth { get; set; }
     }
 }

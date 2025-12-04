@@ -47,10 +47,10 @@ namespace Systems.GeneralSystem.RequirementSystem
     [Serializable]
     public class FieldRequirementValue
     {
-        [SerializeReference, AbstractSupport(typeof(ObjectData))]
-        private ObjectData value;
+        [SerializeReference, AbstractSupport(typeof(IObjectData))]
+        private IObjectData value;
 
-        public ObjectData Value
+        public IObjectData Value
         {
             get => value;
             set
@@ -60,6 +60,6 @@ namespace Systems.GeneralSystem.RequirementSystem
             }
         }
 
-        public SafeTriggerAction<ObjectData> OnValueLoad = new();
+        public SafeTriggerAction<IObjectData> OnValueLoad = new();
     }
 }

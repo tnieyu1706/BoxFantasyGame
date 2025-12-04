@@ -36,7 +36,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
             }
 
             DialogueGraphRuntime graphRuntime = ScriptableObject.CreateInstance<DialogueGraphRuntime>();
-            
+
             //configurations setup
             var isBackup = startNode.GetNodeOptionValue<bool>(StartNode.IS_BACKUP_NAME);
             graphRuntime.isBackup = isBackup;
@@ -45,12 +45,21 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
             {
                 nodesLookup[node] = SerializableGuid.NewGuid();
                 FieldNodeRuntime fieldNodeRuntime = TranslateFieldNodeToRuntime(node);
-                
+
                 graphRuntime.Fields.Add(fieldNodeRuntime);
-                
+
                 if (isBackup)
                 {
-                    graphRuntime.datasBackup.Add(fieldNodeRuntime.data);
+                    Debug.Log($"Add field backup: {fieldNodeRuntime.id}");
+
+                    IObjectData backupData = FieldTypeSupport.FieldTypes[fieldNodeRuntime.fieldType]
+                        .ConvertToObjectDataProcedure.Invoke();
+                    backupData.Value = fieldNodeRuntime.data.Value;
+                    
+                    graphRuntime.datasBackup.AddOrUpdate(
+                        fieldNodeRuntime.id,
+                        backupData
+                    );
                 }
             }
 
@@ -58,11 +67,11 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
             {
                 nodesLookup[node] = SerializableGuid.NewGuid();
             }
-            
+
             // Debug.Log(nodesLookup.Count);
 
             NodeRuntime runtimeNode;
-            
+
             INode currentNode;
             Queue<INode> queue = new();
             currentNode = startNode.GetNextNodeWithOutPort(BaseNode.EXECUTION_PORT_DEFAULT_NAME);
@@ -74,7 +83,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
                 currentNode = queue.Dequeue();
                 runtimeNode = TranslateNodeModelToRuntimeNode(currentNode);
                 graphRuntime.Nodes.Add(runtimeNode);
-            
+
                 foreach (var nextNode in GetNextNode(currentNode))
                 {
                     if (!CheckNodeExist(graphRuntime.NodesDict.Values, nextNode))
@@ -91,7 +100,6 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
         private bool CheckNodeExist(IEnumerable<NodeRuntime> nodes, INode node)
         {
             return nodes.Select(n => n.id).Contains(nodesLookup[node]);
-            
         }
 
         private List<INode> GetNextNode(INode node)
@@ -117,7 +125,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
                 INode trueNextNode = compareNode.GetNextNodeWithOutPort(CompareNode.TRUE_EXECUTION_PORT_NAME);
                 if (trueNextNode != null)
                     resultNodes.Add(trueNextNode);
-                
+
                 INode falseNextNode = compareNode.GetNextNodeWithOutPort(CompareNode.FALSE_EXECUTION_PORT_NAME);
                 if (falseNextNode != null)
                     resultNodes.Add(falseNextNode);
@@ -125,7 +133,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
             else
             {
                 INode nextNode = node.GetNextNodeWithOutPort(BaseNode.EXECUTION_PORT_DEFAULT_NAME);
-                
+
                 if (nextNode != null)
                     resultNodes.Add(nextNode);
             }
@@ -142,7 +150,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
             {
                 node.fieldValue = defaultValue;
             }
-            
+
             return new FieldNodeRuntime(nodeId, fieldType, node.fieldValue);
         }
 
@@ -157,7 +165,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
 
             INode nextNode;
             FieldType fieldType;
-            
+
             switch (nodeModel)
             {
                 case CompareNode compareNode:
@@ -231,7 +239,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
                     {
                         var choiceNumber = choiceNode.GetNodeOptionValue<int>(ChoiceNode.CHOICE_NUMBER_NAME);
                         List<ChoiceOption> choices = new();
-                        
+
                         string choiceText;
                         SerializableGuid choiceNextId;
                         INode nextChoiceNode;
@@ -289,7 +297,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Editor.AssetImporter
                         object valueSet = setFieldNode.GetInputPortValue<object>(SetFieldNode.FIELD_VALUE_SET_NAME);
                         fieldType =
                             setFieldNode.GetNodeOptionValue<FieldType>(IFieldTypeDefinition.FIELD_TYPE_NAME);
-                        
+
                         SerializableGuid fieldNodeId = SerializableGuid.Empty;
                         var fieldNodePort =
                             setFieldNode

@@ -123,7 +123,7 @@ namespace Systems.QuestSystem.QuestData
 
         public override bool Validate(GameActionCommandStaticDto payload)
         {
-            return GameActionCommandStaticDto.Matching(payload, GetValidatedPayload());
+            return GameActionCommandStaticDto.Matching(payload, ActualValidatedData);
         }
     }
 }

@@ -11,7 +11,6 @@ using TnieYuPackage.ObjectDataSystem;
 using TnieYuPackage.Utils;
 using TnieYuPackage.Utils.DictionaryUtil;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Void = EditorAttributes.Void;
 
 namespace Systems.QuestSystem.QuestData
@@ -59,7 +58,7 @@ namespace Systems.QuestSystem.QuestData
         [SerializeReference, QuestStateDrawer, HideProperty] public BaseQuestState state;
         [HideProperty] public QuestType questType = QuestType.Side;
 
-        [HideProperty] public SerializableDictionaryAbstract<string, ObjectData> awards;
+        [HideProperty] public SerializableDictionaryAbstract<string, IObjectData> awards;
 
         #endregion
 
@@ -282,7 +281,7 @@ namespace Systems.QuestSystem.QuestData
             {
                 if (FieldRequirementManager.Instance.TryToGetField(kvp.Key, out fieldValue))
                 {
-                    fieldValue.Value += kvp.Value;
+                    fieldValue.Value.Add(kvp.Value);
                 }
             }
         }

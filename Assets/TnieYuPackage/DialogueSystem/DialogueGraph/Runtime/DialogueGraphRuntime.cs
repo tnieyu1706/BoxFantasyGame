@@ -17,17 +17,16 @@ namespace TnieYuPackage.DialogueSystem.DialogueGraph.Runtime
         public List<FieldNodeRuntime> Fields = new();
         public SerializableDictionary<string, UnityEvent> MethodBindings = new();
         
-        [SerializeReference]
-        public List<ObjectData> datasBackup = new();
+        public SerializableDictionaryAbstract<SerializableGuid, IObjectData> datasBackup = new();
         public bool isBackup;
 
         public void BackupFieldData()
         {
             if (isBackup)
             {
-                for (int i = 0; i < Fields.Count; i++)
+                foreach (var field in Fields)
                 {
-                    Fields[i].data = datasBackup[i].Clone() as ObjectData;
+                    field.data.Value = datasBackup[field.id].Value;
                 }
             }
         }

@@ -74,10 +74,9 @@ namespace Systems.QuestSystem.QuestData
             ((IQuestRequirement)this).CompleteResultQuest();
         }
 
-        public override bool Validate(ObjectData payload)
+        public override bool Validate(IObjectData payload)
         {
-            if (ObjectData.ValidateData(payload, GetValidatedPayload()) &&
-                payload.CompareTo(GetValidatedPayload()) >= 0)
+            if (payload.GreaterThanOrEqual(ActualValidatedData))
             {
                 return true;
             }
@@ -110,7 +109,7 @@ namespace Systems.QuestSystem.QuestData
 
         public override bool Validate(GameActionCommandStaticDto payload)
         {
-            return GameActionCommandStaticDto.Matching(payload, GetValidatedPayload());
+            return GameActionCommandStaticDto.Matching(payload, ActualValidatedData);
         }
     }
 }

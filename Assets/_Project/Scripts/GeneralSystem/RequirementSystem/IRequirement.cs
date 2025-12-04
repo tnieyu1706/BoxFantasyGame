@@ -11,20 +11,16 @@ namespace Systems.GeneralSystem.RequirementSystem
 {
     public interface IRequirement
     {
+        object ValidatedData { get; }
         bool CheckedValue { get; set; }
         string KeyName { get; }
-        object GetDataValidate();
         void CompleteResult();
     }
 
     public interface IRequirement<TPayload> : IRequirement
     {
-        object IRequirement.GetDataValidate()
-        {
-            return (TPayload)GetDataValidate();
-        }
-
-        TPayload GetValidatedPayload();
+        object IRequirement.ValidatedData => ActualValidatedData;
+        TPayload ActualValidatedData { get; }
 
         bool Validate(TPayload payload);
 
@@ -73,6 +69,8 @@ namespace Systems.GeneralSystem.RequirementSystem
         [SerializeReference, AbstractSupport()]
         private TPayload validatedData;
 
+        public TPayload ActualValidatedData => validatedData;
+
         #endregion
 
         public bool CheckedValue
@@ -83,14 +81,11 @@ namespace Systems.GeneralSystem.RequirementSystem
 
         public abstract string KeyName { get; }
         public abstract void CompleteResult();
-
-        public TPayload GetValidatedPayload() => validatedData;
-
         public abstract bool Validate(TPayload payload);
     }
 
     [Serializable]
-    public abstract class FieldRequirement : BaseRequirement<ObjectData>
+    public abstract class FieldRequirement : BaseRequirement<IObjectData>
     {
         [PropertyOrder(-1)] [SerializeField] private string keyName;
         public override string KeyName => keyName;

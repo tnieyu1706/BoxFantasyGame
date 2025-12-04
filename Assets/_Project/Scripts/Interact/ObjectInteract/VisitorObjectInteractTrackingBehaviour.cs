@@ -1,27 +1,18 @@
 using Systems.Input;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Systems.Interact.ObjectInteract
 {
     public class VisitorObjectInteractTrackingBehaviour : MonoBehaviour
     {
-        [SerializeReference] private IObjectInteractVisitor visitor;
-
-        public IObjectInteractVisitor Visitor
-        {
-            get
-            {
-                if (visitor == null)
-                    visitor = new ObjectInteractVisitorConcrete();
-                return visitor;
-            }
-        }
+        [SerializeField] private ObjectInteractor interactor = new();
 
         void OnEnable()
         {
             ScreenObjectInteractTracking.Instance.OnTrackingEnter += TrackingEnter;
             ScreenObjectInteractTracking.Instance.OnTrackingExit += TrackingExit;
-            PlayerInputReader.Instance.interact.Event += Visitor.Event.Invoke;
+            PlayerInputReader.Instance.interact.Event += interactor.Event.Invoke;
         }
 
         void OnDisable()
@@ -34,34 +25,34 @@ namespace Systems.Interact.ObjectInteract
 
             if (PlayerInputReader.Instance != null)
             {
-                PlayerInputReader.Instance.interact.Event -= Visitor.Event.Invoke;
+                PlayerInputReader.Instance.interact.Event -= interactor.Event.Invoke;
             }
         }
 
         void TrackingEnter(Collider target)
         {
-            IObjectInteractElement element = target.GetComponent<IObjectInteractElement>();
-            if (element == null)
+            IObjectInteractProcessor processor = target.GetComponent<IObjectInteractProcessor>();
+            if (processor == null)
             {
                 Debug.Log($"{target.name} dont contains IInteractElement");
                 return;
             }
 
-            element.SubscribeEvent(Visitor);
+            processor.SubscribeEvent(interactor);
 
             InputUIManager.Instance.ShowInput(PlayerInputReader.Instance.interact.InputName);
         }
 
         void TrackingExit(Collider target)
         {
-            IObjectInteractElement element = target.GetComponent<IObjectInteractElement>();
-            if (element == null)
+            IObjectInteractProcessor processor = target.GetComponent<IObjectInteractProcessor>();
+            if (processor == null)
             {
                 Debug.Log($"{target.name} dont contains IInteractElement");
                 return;
             }
 
-            element.UnsubscribeEvent(Visitor);
+            processor.UnsubscribeEvent(interactor);
 
             InputUIManager.Instance.HideInput(PlayerInputReader.Instance.interact.InputName);
         }
