@@ -1,0 +1,14 @@
+{
+  "foldouts": {
+    "-6256_ItemData_Data1 (Systems.ItemSystem.ItemData)_UsePrimary_IEntity": true,
+    "-6256_ItemData_Data1 (Systems.ItemSystem.ItemData)_UseSecondary_IEntity": true
+  },
+  "parameterValues": {
+    "-6256_ItemData_Data1 (Systems.ItemSystem.ItemData)_UsePrimary_IEntity": [
+      null
+    ],
+    "-6256_ItemData_Data1 (Systems.ItemSystem.ItemData)_UseSecondary_IEntity": [
+      null
+    ]
+  }
+}
