@@ -17,6 +17,7 @@ MonoBehaviour:
   objectName: PlayerEntity
   staticCategoryIdentify: {fileID: 11400000, guid: 3251b133892264a4fb94cb3bcecf2330, type: 2}
   health:
-    value: 91
+    value: 68
+  maxHealth: 0
   attackedDamage: 5
   moveSpeed: 10

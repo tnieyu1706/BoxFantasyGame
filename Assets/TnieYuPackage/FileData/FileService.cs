@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 namespace TnieYuPackage.FileData
 {
-    public interface IFileData
+    public interface IFileService
     {
         string Path { get; }
         
         void WriteData<T>(IEnumerable<T> data);
         IEnumerable<T> ReadData<T>();
     }
+    
     [Serializable]
-    public abstract class FileData<TService> : IFileData
+    public abstract class FileService<TService> : IFileService
         where TService : new()
     {
         public abstract string Path { get; }

@@ -1,31 +1,80 @@
 using System;
-using System.IO;
-using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using TnieYuPackage.CustomAttributes;
 using UnityEngine;
 
 namespace TnieYuPackage.FileData
 {
     [Serializable]
-    public class JsonService
+    public class JsonItemsWrapper<T>
     {
-        public void WriteData<T>(string filepath, T data)
+        public T[] items;
+    }
+    
+    [Serializable]
+    public class JsonService : FileService<JsonSerializer>
+    {
+        [SerializeField] [TniePath(typeof(TextAsset), ".json")] 
+        private string filePath;
+        
+        public override string Path => filePath;
+        
+        public override void WriteData<T>(IEnumerable<T> data)
         {
-            if (data == null)
+            if (filePath == null)
             {
-                Debug.LogWarning("Data is null!");
+                Debug.LogError("file path is null");
                 return;
             }
-
-            string jsonData = JsonUtility.ToJson(data, true);
-
-            File.WriteAllText(filepath, jsonData, Encoding.UTF8);
+            
+            var itemsWrapper = new JsonItemsWrapper<T>()
+            {
+                items = data.ToArray()
+            };
+            
+            service.WriteData(filePath, itemsWrapper);
+            Debug.Log($"Json data written from - {filePath}");
         }
 
-        public T ReadData<T>(string filepath)
+        public override IEnumerable<T> ReadData<T>()
         {
-            string jsonData = File.ReadAllText(filepath, Encoding.UTF8);
+            if (filePath == null)
+            {
+                Debug.LogError("file path is null");
+                return null;
+            }
 
-            return JsonUtility.FromJson<T>(jsonData);
+            JsonItemsWrapper<T> itemsWrapper = service.ReadData<JsonItemsWrapper<T>>(filePath);
+            
+            Debug.Log($"Json data read from - {filePath}");
+            
+            return itemsWrapper.items;
+        }
+
+        public void WriteObject<T>(T data)
+        {
+            if (Path == string.Empty)
+            {
+                Debug.LogWarning("Path is empty.");
+                return;
+            }
+            
+            service.WriteData(Path, data);
+            Debug.Log($"JsonData has been written to {filePath}");
+        }
+
+        public T ReadObject<T>()
+        {
+            if (Path == string.Empty)
+            {
+                Debug.LogWarning("Path is empty.");
+                return default(T);
+            }
+            var data = service.ReadData<T>(Path);
+
+            Debug.Log($"Have just read data from JsonData-{filePath}");
+            return data;
         }
     }
 }

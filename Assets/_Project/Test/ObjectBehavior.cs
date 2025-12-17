@@ -6,6 +6,7 @@ namespace _Project.Test
     {
         public string Value { get; }
     }
+
     public class ObjectBehavior : MonoBehaviour, IObjectBehavior
     {
         public string value = "hello xin chao";

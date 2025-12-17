@@ -1,0 +1,34 @@
+{
+  "data": {
+    "runtimes": [
+      {
+        "_underlyingValue": {
+          "instanceID": 66430
+        }
+      },
+      {
+        "_underlyingValue": {
+          "instanceID": 66400
+        }
+      }
+    ]
+  },
+  "details": {
+    "e2bfabbb-4b26-4c31-88b6-6a1f21559ff3": {
+      "runtimeGuid": {
+        "value": "e2bfabbb-4b26-4c31-88b6-6a1f21559ff3"
+      },
+      "value1": "1234",
+      "value2": "xin chao 1",
+      "floatValue": 2.309999942779541
+    },
+    "5d6161b8-9822-457d-aca3-6c0cc2adaf31": {
+      "runtimeGuid": {
+        "value": "5d6161b8-9822-457d-aca3-6c0cc2adaf31"
+      },
+      "value1": "alo 123",
+      "value2": "mung sinh nhat 789",
+      "floatValue": 3.1400001049041748
+    }
+  }
+}

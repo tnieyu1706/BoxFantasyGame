@@ -21,16 +21,16 @@ namespace TnieYuPackage.DialogueSystem.DialogueSheet.Models
         {
             private readonly DialogueSheet dialogueSheet = new();
 
-            public Builder BuildDialogueNodes(IFileData fileData)
+            public Builder BuildDialogueNodes(IFileService fileService)
             {
-                if (fileData == null || string.IsNullOrEmpty(fileData.Path))
+                if (fileService == null || string.IsNullOrEmpty(fileService.Path))
                 {
                     Debug.LogWarning("No data loaded!");
                     return this;
                 }
 
                 //load data from csv
-                IEnumerable<DialogueNodeDto> nodesDto = fileData.ReadData<DialogueNodeDto>();
+                IEnumerable<DialogueNodeDto> nodesDto = fileService.ReadData<DialogueNodeDto>();
                 dialogueSheet.nodes.data =
                     nodesDto.Select(dto => dto.Build())
                         .Select(

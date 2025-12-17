@@ -164,7 +164,7 @@ namespace TnieYuPackage.FileData
         private string ConvertGenericCsvToJson(string csvFile)
         {
             using var reader = new StreamReader(csvFile, Encoding.UTF8);
-            using var csv = new CsvReader(reader, CsvService.GetCsvConfiguration());
+            using var csv = new CsvReader(reader, CsvSerializer.GetCsvConfiguration());
 
             csv.Read();
             csv.ReadHeader();
@@ -214,8 +214,8 @@ namespace TnieYuPackage.FileData
             if (dtoType == null) throw new Exception("DTO type not found. Make sure you provide 'Namespace.TypeName, AssemblyName' if needed.");
 
             // call CsvService.ReadListData<dtoType>(csvFile)
-            var csvService = new CsvService();
-            MethodInfo readMethod = typeof(CsvService).GetMethod("ReadListData").MakeGenericMethod(dtoType);
+            var csvService = new CsvSerializer();
+            MethodInfo readMethod = typeof(CsvSerializer).GetMethod("ReadListData").MakeGenericMethod(dtoType);
             var readResult = readMethod.Invoke(csvService, new object[] { csvFile }); // IEnumerable<T>
 
             // iterate result (IEnumerable)

@@ -1,55 +1,41 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using CsvHelper;
-using CsvHelper.Configuration;
+using TnieYuPackage.CustomAttributes;
+using UnityEngine;
 
 namespace TnieYuPackage.FileData
 {
     [Serializable]
-    public class CsvService
+    public class CsvService : FileService<CsvSerializer>
     {
-        private static CsvConfiguration csvConfiguration;
+        [SerializeField] [TniePath(typeof(TextAsset), ".csv")]
+        private string filePath = string.Empty;
         
-        public static CsvConfiguration GetCsvConfiguration()
+        public override string Path => filePath;
+
+        public override void WriteData<T>(IEnumerable<T> datas)
         {
-            if (csvConfiguration == null)
+            if (Path == string.Empty)
             {
-                csvConfiguration = new CsvConfiguration(CultureInfo.InvariantCulture)
-                {
-                    HasHeaderRecord = true,
-                    IgnoreBlankLines = true,
-                    TrimOptions = TrimOptions.Trim,
-                    MissingFieldFound = null,   // Không lỗi khi thiếu cột
-                    BadDataFound = null,        // Không lỗi khi dữ liệu hỏng
-                    DetectColumnCountChanges = false,
-                };
+                Debug.LogWarning("Path is empty.");
+                return;
             }
-
-            return csvConfiguration;
-        } 
-        
-        public void WriteListData<T>(string filepath, IEnumerable<T> datas)
-        {
-            using var writer = new StreamWriter(filepath, false, Encoding.UTF8);
-            using var csvWriter = new CsvWriter(writer, GetCsvConfiguration());
-
-            csvWriter.WriteHeader<T>();
-            csvWriter.NextRecord();
             
-            csvWriter.WriteRecords(datas);
-            csvWriter.Flush();
+            service.WriteListData(Path, datas);
+            Debug.Log($"Data written to {Path}");
         }
-        
-        public IEnumerable<T> ReadListData<T>(string filepath)
-        {
-            using var reader = new StreamReader(filepath, Encoding.UTF8);
-            using var csvReader = new CsvReader(reader, GetCsvConfiguration());
 
-            return csvReader.GetRecords<T>().ToList();
+        public override IEnumerable<T> ReadData<T>()
+        {
+            if (Path == string.Empty)
+            {
+                Debug.LogWarning("Path is empty.");
+                return null;
+            }
+            
+            var datas = service.ReadListData<T>(filePath);
+            Debug.Log($"Data read from {Path}");
+            return datas;
         }
     }
 }

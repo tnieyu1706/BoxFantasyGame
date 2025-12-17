@@ -6,6 +6,7 @@ using TnieYuPackage.FileData;
 using TnieYuPackage.Utils.DictionaryUtil;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace TnieYuPackage.DialogueSystem.DialogueSheet.Scripts
 {
@@ -14,8 +15,8 @@ namespace TnieYuPackage.DialogueSystem.DialogueSheet.Scripts
         #region Properties
         public TnieYuPackage.DialogueSystem.DialogueSheet.Models.DialogueSheet dialogueSheet;
         
-        [SerializeReference, AbstractSupport(typeof(IFileData))]
-        public IFileData fileData;
+        [FormerlySerializedAs("fileData")] [SerializeReference, AbstractSupport(typeof(IFileService))]
+        public IFileService fileService;
 
         public SerializableDictionary<string, UnityEvent> actionMethods = new();
         
@@ -78,7 +79,7 @@ namespace TnieYuPackage.DialogueSystem.DialogueSheet.Scripts
         public void RefreshDialogueSheet()
         {
             var sheet = new TnieYuPackage.DialogueSystem.DialogueSheet.Models.DialogueSheet.Builder()
-                .BuildDialogueNodes(fileData)
+                .BuildDialogueNodes(fileService)
                 .BuildActions(actionMethods.Dictionary)
                 .Build();
 
