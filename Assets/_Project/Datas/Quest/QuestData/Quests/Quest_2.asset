@@ -17,11 +17,10 @@ MonoBehaviour:
   shortName: Quest2_Step1
   describe: Quest2_Step1
   hint: day la quest thu 2 va la step1
-  actionCatchings:
-  - checkedValue: 0
-    validatedData:
-      rid: 3644543773784146306
-    keyName: DoSomething2
+  actionRequirements:
+  - checkedValue: 1
+    catcherValidatedData:
+      rid: 2340024060867772703
     step: {fileID: -5515768649642253822}
   openEffects:
   - rid: 3644543773784146303
@@ -31,6 +30,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 2340024060867772703
+      type: {class: DoSomethingGameActionCatcher, ns: Systems.GameAction.ActionCatchers, asm: GameAction}
+      data:
+        senderGameObjectNameCatching: abc
+        targetGameObjectNameCatching: xyz
     - rid: 3644543773784146303
       type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
       data:
@@ -39,12 +43,6 @@ MonoBehaviour:
       type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
       data:
         content: Close Quest2_Step1
-    - rid: 3644543773784146306
-      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
-      data:
-        sender: {fileID: 11400000, guid: 6334cb9b33aede04e97edac2db451981, type: 2}
-        target: {fileID: 11400000, guid: 45b77f96398867e44b1050037166f00a, type: 2}
-        actionName: DoSomething2
     - rid: 3644543792385360245
       type: {class: CloseQuestBackgroundEffect, ns: Systems.QuestSystem.BackgroundEffect, asm: QuestSystem}
       data:
@@ -69,7 +67,7 @@ MonoBehaviour:
   title: Quest thu 2
   description: day la quest thu 2
   state:
-    rid: 3644544087621370536
+    rid: 2340024066800353674
   questType: 1
   awards:
     data:
@@ -78,19 +76,19 @@ MonoBehaviour:
         rid: 3644543917074153710
   steps:
   - {fileID: -5515768649642253822}
-  currentStep: {fileID: -5515768649642253822}
-  currentProcessing: step_1
+  currentStep: {fileID: 0}
+  currentProcessing: Step_end
   requirements: []
   openEffects: []
   closedEffects: []
   references:
     version: 2
     RefIds:
+    - rid: 2340024066800353674
+      type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        quest: {fileID: 11400000}
     - rid: 3644543917074153710
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
         value: 35
-    - rid: 3644544087621370536
-      type: {class: UnlockedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
-      data:
-        quest: {fileID: 11400000}

@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Systems.EntityDataSystem;
-using UnityEngine;
 
 namespace Systems.ItemSystem
 {
@@ -12,22 +10,6 @@ namespace Systems.ItemSystem
     /// </summary>
     public interface IUsingProcedure
     {
-        void HandleProcedure(IEntity entity, List<IUsingEffect> effects);
-    }
-    
-    //IUsingProcedure implements
-    
-    [Serializable]
-    public class ConsumingUsingProcedure : IUsingProcedure
-    {
-        public void HandleProcedure(IEntity entity, List<IUsingEffect> effects)
-        {
-            Debug.Log("IUsingProcedure.HandleProcedure");
-
-            foreach (var effect in effects)
-            {
-                effect.Perform(entity);
-            }
-        }
+        void HandleProcedure(IItemUser itemUser, object target, List<IUsingEffect> effects);
     }
 }

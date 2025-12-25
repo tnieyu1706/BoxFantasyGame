@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using EditorAttributes;
 using Systems.QuestSystem.QuestData;
@@ -26,45 +25,41 @@ namespace Systems.QuestSystem.QuestFlow.QuestFlowGraph.Runtime
         [Button]
         private void UpdateAllFlow()
         {
-            if (questFlowGraphRuntime != null)
-            {
-                questFlowGraphRuntime.UpdateAllQuestFlow();
-            }
+            if (questFlowGraphRuntime == null) return;
 
-            UpdateUnlockedQuests();
-            UpdateCheckingQuests();
+            questFlowGraphRuntime.UpdateAllQuestFlow();
+
+            LoadUnlockedQuests();
+            LoadCheckingQuests();
         }
 
-        private void UpdateUnlockedQuests()
+        private void LoadUnlockedQuests()
         {
-            if (unlockedQuests != null)
+            //unRegistry old
+            foreach (var quest in unlockedQuests)
             {
-                //unRegistry old
-                foreach (var quest in unlockedQuests)
-                {
-                    quest.EndCycle();
-                }
+                quest.EndCycle();
             }
 
             unlockedQuests = questFlowGraphRuntime.GetUnlockedQuests();
+            if (unlockedQuests == null) return;
+            
             foreach (var quest in unlockedQuests)
             {
                 quest.StartCycle();
             }
         }
 
-        private void UpdateCheckingQuests()
+        private void LoadCheckingQuests()
         {
-            if (checkingQuests != null)
+            //unRegistry old
+            foreach (var quest in checkingQuests)
             {
-                //unRegistry old
-                foreach (var quest in checkingQuests)
-                {
-                    quest.EndCycle();
-                }
+                quest.EndCycle();
             }
 
             checkingQuests = questFlowGraphRuntime.GetCheckingQuests();
+            if (checkingQuests == null) return;
 
             foreach (var quest in checkingQuests)
             {
@@ -76,7 +71,7 @@ namespace Systems.QuestSystem.QuestFlow.QuestFlowGraph.Runtime
         {
             List<Quest> unloadedQuests = questFlowGraphRuntime.GetUnlockedQuests();
             unloadedQuests.AddRange(questFlowGraphRuntime.GetCheckingQuests());
-            
+
             foreach (var q in unloadedQuests)
             {
                 q.EndCycle();

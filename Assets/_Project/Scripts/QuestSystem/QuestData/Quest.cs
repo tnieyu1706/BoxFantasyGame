@@ -23,7 +23,7 @@ namespace Systems.QuestSystem.QuestData
     }
 
     [CreateAssetMenu(fileName = "Quest", menuName = "QuestSystem/Quest")]
-    public class Quest : BaseParentAsset<QuestStep>, IBackgroundEffectBehaviour
+    public class Quest : BaseParentAsset<QuestStep>, IDefaultBackgroundEffectBehaviourMixin
     {
         #region Tabs
 
@@ -55,7 +55,9 @@ namespace Systems.QuestSystem.QuestData
         [HideProperty] public string title;
         [TextArea(3, 10), HideProperty] public string description;
 
-        [SerializeReference, QuestStateDrawer, HideProperty] public BaseQuestState state;
+        [SerializeReference, QuestStateDrawer, HideProperty]
+        public BaseQuestState state;
+
         [HideProperty] public QuestType questType = QuestType.Side;
 
         [HideProperty] public SerializableDictionaryAbstract<string, IObjectData> awards;
@@ -173,9 +175,9 @@ namespace Systems.QuestSystem.QuestData
             {
                 foreach (var step in steps)
                 {
-                    if (step.actionCatchings is { Count: > 0 })
+                    if (step.actionRequirements is { Count: > 0 })
                     {
-                        foreach (var action in step.actionCatchings)
+                        foreach (var action in step.actionRequirements)
                         {
                             action.CheckedValue = false;
                         }
@@ -193,12 +195,12 @@ namespace Systems.QuestSystem.QuestData
             {
                 re.CheckValue = true;
             }
-            
+
             foreach (var step in steps)
             {
-                step.actionCatchings.ForEach(a => a.CheckedValue = true);
+                step.actionRequirements.ForEach(a => a.CheckedValue = true);
             }
-            
+
             BaseQuestState.Transition<ClosedState>(ref state, this);
         }
 
@@ -206,16 +208,18 @@ namespace Systems.QuestSystem.QuestData
 
         #region Quest Methods
 
-        public bool LoadQuestRequirements()
+        public void LoadQuestRequirements()
         {
             if (requirements is { Count: > 0 })
             {
                 //load FieldRequirement when not catching
                 foreach (var reField in requirements.OfType<QuestFieldRequirement>())
                 {
-                    if (!reField.CheckValue)
+                    if (reField.CheckValue) continue;
+
+                    if (reField.CheckValueDirectly())
                     {
-                        reField.CheckedValue = reField.CheckValueDirectly();
+                        reField.OnComplete();
                     }
                 }
 
@@ -224,12 +228,11 @@ namespace Systems.QuestSystem.QuestData
                     if (re == null) continue;
 
                     if (!re.CheckValue)
-                        return false;
+                        return;
                 }
             }
 
             OpenQuest();
-            return true;
         }
 
         public Dictionary<string, QuestStep> GetMapSteps()
@@ -239,27 +242,26 @@ namespace Systems.QuestSystem.QuestData
 
         public void LoadCurrentStep()
         {
+            if (steps == null || steps.Count == 0)
+            {
+                Debug.Log($"Current quest - {id} don't have any steps.");
+                CloseQuest();
+                return;
+            }
+
             if (string.IsNullOrEmpty(currentProcessing))
             {
-                if (currentProcessing.Equals(QuestStep.QUEST_STEP_END_KEY))
-                {
-                    Debug.Log($"Current quest - {id} is end");
-                    if (state is not ClosedState)
-                    {
-                        CloseQuest();
-                    }
-
-                    return;
-                }
-                
-                if (steps == null || steps.Count == 0)
-                {
-                    Debug.Log($"Current quest - {id} don't have any steps.");
-                    CloseQuest();
-                    return;
-                }
-
+                Debug.Log($"Quest- {id} Current Step is empty.");
                 currentProcessing = steps[0].stepId;
+            }
+
+            if (currentProcessing.Equals(QuestStep.QUEST_STEP_END_KEY))
+            {
+                Debug.Log($"Current quest - {id} is end.");
+                if (state is not ClosedState)
+                    CloseQuest();
+
+                return;
             }
 
             if (GetMapSteps().TryGetValue(currentProcessing, out currentStep))
@@ -269,7 +271,7 @@ namespace Systems.QuestSystem.QuestData
                 return;
             }
 
-            Debug.Log("Failed to load the current quest step");
+            Debug.LogWarning($"Current step {currentProcessing} is not valid.");
         }
 
         private void PerformAwards()
@@ -288,22 +290,21 @@ namespace Systems.QuestSystem.QuestData
 
         public void OpenQuest()
         {
-            BaseQuestState.Transition<UnlockedState>(ref state, this);
-            state.Do();
+            Debug.Log($"The quest - {id} is unlocked");
+            ((IDefaultBackgroundEffectBehaviourMixin)this).HandleOpenBackground();
             
-            this.HandleOpenBackground();
-
+            BaseQuestState.Transition<UnlockedState>(ref state, this);
+            
             if (steps is { Count: > 0 })
             {
                 currentProcessing = steps[0].stepId;
-                LoadCurrentStep();
             }
             else
             {
                 CloseQuest();
             }
-
-            Debug.Log("The quest is unlocked");
+            
+            state.Do();
         }
 
         public void CloseQuest()
@@ -311,30 +312,34 @@ namespace Systems.QuestSystem.QuestData
             BaseQuestState.Transition<ClosedState>(ref state, this);
             state.Do();
 
-            //Do something when quest closed.
+            //perform: get awards.
             PerformAwards();
-            this.HandleCloseBackground();
+
+            //closing: ensure closing step & quest requirements.
+            if (currentStep != null)
+            {
+                currentStep.UnLoadStep();
+            }
+
+            ((IDefaultBackgroundEffectBehaviourMixin)this).HandleCloseBackground();
+
+
             currentProcessing = QuestStep.QUEST_STEP_END_KEY;
             currentStep = null;
+
             Debug.Log("The quest is closed");
         }
 
         public bool MoveNextStep(string stepId)
         {
-            if (string.IsNullOrEmpty(stepId) || !GetMapSteps().ContainsKey(stepId))
+            if (string.IsNullOrEmpty(stepId))
             {
                 return false;
             }
 
-            //ensure unRegistry all old step
-            if (currentStep != null)
-            {
-                currentStep.UnLoadStep(); //ensure
-            }
-
-            //normal execute move next step.
             currentProcessing = stepId;
             LoadCurrentStep();
+            
             return true;
         }
 
@@ -344,12 +349,10 @@ namespace Systems.QuestSystem.QuestData
 
         public void RegistryRequirement()
         {
-            if (!LoadQuestRequirements())
+            foreach (var re in requirements)
             {
-                foreach (var re in requirements)
-                {
-                    if (re != null) re.SubscribeRequirement();
-                }
+                if (!re.CheckValue)
+                    re?.SubscribeRequirement();
             }
         }
 

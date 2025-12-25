@@ -11,7 +11,7 @@ namespace Systems.QuestSystem.QuestData
         Quest Quest { get; set; }
         bool CheckValue { get; set; }
 
-        public void CompleteResultQuest()
+        public void OnQuestRequirementCompleted()
         {
             Quest.LoadQuestRequirements();
         }
@@ -39,49 +39,64 @@ namespace Systems.QuestSystem.QuestData
 
         public void SubscribeRequirement()
         {
-            if (CheckedValue || string.IsNullOrEmpty(KeyName)) return;
+            if (CheckedValue || string.IsNullOrEmpty(keyName)) return;
 
-            if (FieldRequirementManager.Instance.TryToGetField(KeyName, out var requirementValue) &&
-                this.Subscribe(requirementValue.OnValueLoad))
+            if (FieldRequirementManager.Instance.TryToGetField(keyName, out var requirementValue))
             {
-                Debug.Log($"Completed Registry event for field {KeyName}.");
+                requirementValue.OnValueLoad.TryToAddTrigger(OnFieldCatchingTrigger);
+
+                Debug.Log($"Completed Subscribe field Field Requirement {keyName},");
             }
         }
 
         public void UnsubscribeRequirement()
         {
-            if (string.IsNullOrEmpty(KeyName)) return;
-            
-            if (FieldRequirementManager.Instance.TryToGetField(KeyName, out var requirementValue))
+            if (string.IsNullOrEmpty(keyName)) return;
+
+            if (FieldRequirementManager.Instance.TryToGetField(keyName, out var requirementValue))
             {
-                this.UnSubscribe(requirementValue.OnValueLoad);
-                Debug.Log($"Completed UnRegistry event for field {KeyName}.");
+                requirementValue.OnValueLoad.RemoveTrigger(OnFieldCatchingTrigger);
+                Debug.Log($"Completed UnRegistry event for field {keyName}.");
             }
         }
 
         public bool CheckValueDirectly()
         {
-            if (FieldRequirementManager.Instance.TryToGetField(KeyName, out var requirementValue))
+            if (FieldRequirementManager.Instance.TryToGetField(keyName, out var requirementValue))
             {
-                return this.Validate(requirementValue.Value);
+                return Validate(requirementValue.Value);
             }
 
             return false;
         }
 
-        public override void CompleteResult()
+        private bool OnFieldCatchingTrigger(object data)
         {
-            ((IQuestRequirement)this).CompleteResultQuest();
+            bool result = Validate(data);
+
+            if (result)
+            {
+                OnComplete();
+            }
+            
+            return result;
         }
 
-        public override bool Validate(IObjectData payload)
+        public override bool Validate(object data)
         {
-            if (payload.GreaterThanOrEqual(ActualValidatedData))
+            if (data is IObjectData objectData && this.ValidatedData is IObjectData validatedObjectData)
             {
-                return true;
+                return objectData.GreaterThanOrEqual(validatedObjectData);
             }
 
+            Debug.LogError("current data is not IObjectData type.");
             return false;
+        }
+
+        public override void OnComplete()
+        {
+            CheckedValue = true;
+            ((IQuestRequirement)this).OnQuestRequirementCompleted();
         }
     }
 
@@ -102,14 +117,45 @@ namespace Systems.QuestSystem.QuestData
             set => CheckedValue = value;
         }
 
-        public override void CompleteResult()
+        public void SubscribeRequirement()
         {
-            ((IQuestRequirement)this).CompleteResultQuest();
+            if (CheckedValue) return;
+
+            if (ValidatedData is IGameActionCatcher gameActionCatcher)
+            {
+                gameActionCatcher.OnCompleted += OnComplete;
+                GameActionCatcherManager.Instance.Registry(gameActionCatcher);
+                Debug.Log("Completed Subscribe Action Requirement.");
+            }
         }
 
-        public override bool Validate(GameActionCommandStaticDto payload)
+        public void UnsubscribeRequirement()
         {
-            return GameActionCommandStaticDto.Matching(payload, ActualValidatedData);
+            if (GameActionCatcherManager.Instance == null) return;
+
+            if (ValidatedData is IGameActionCatcher gameActionCatcher)
+            {
+                GameActionCatcherManager.Instance.UnRegistry(gameActionCatcher);
+                gameActionCatcher.OnCompleted -= OnComplete;
+                Debug.Log("Completed UnSubscribe Action Requirement.");
+            }
+        }
+
+        public override void OnComplete()
+        {
+            CheckedValue = true;
+            ((IQuestRequirement)this).OnQuestRequirementCompleted();
+        }
+
+        public override bool Validate(object data)
+        {
+            if (data is GameActionCommand gameActionCommand)
+            {
+                return ((IGameActionCatcher)ValidatedData).Format(gameActionCommand)
+                       && ((IGameActionCatcher)ValidatedData).Catch(gameActionCommand);
+            }
+
+            return false;
         }
     }
 }

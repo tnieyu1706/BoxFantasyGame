@@ -2,12 +2,8 @@
     "name": "GameAction",
     "rootNamespace": "",
     "references": [
-        "IdentifySystem.ObjectIdentify",
-        "IdentifySystem.TypeIdentify",
-        "TnieYuPackage.Utils",
         "TnieYuPackage.DesignPatterns",
-        "EditorAttributes",
-        "LoggingSystem"
+        "EditorAttributes"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

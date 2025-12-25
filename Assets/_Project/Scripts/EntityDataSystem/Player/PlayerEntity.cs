@@ -35,5 +35,4 @@ namespace Systems.EntityDataSystem.Player
         public float MoveSpeed => moveSpeed;
         
     }
-    
 }

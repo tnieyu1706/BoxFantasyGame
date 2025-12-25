@@ -19,9 +19,8 @@ MonoBehaviour:
   hint: hello step1 tu quest4
   actionCatchings:
   - checkedValue: 0
-    validatedData:
-      rid: 3644543792385360247
-    keyName: DoSomething2
+    catcherValidatedData:
+      rid: 2340024035019063537
     step: {fileID: -845590427589791233}
   openEffects:
   - rid: 3644543792385360248
@@ -31,12 +30,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3644543792385360247
-      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
+    - rid: 2340024035019063537
+      type: {class: DoSomethingGameActionCatcher, ns: Systems.GameAction.ActionCatchers, asm: GameAction}
       data:
-        sender: {fileID: 11400000, guid: 45b77f96398867e44b1050037166f00a, type: 2}
-        target: {fileID: 0}
-        actionName: DoSomething2
+        senderGameObjectNameCatching: abc
+        targetGameObjectNameCatching: xyz
     - rid: 3644543792385360248
       type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
       data:
@@ -69,7 +67,7 @@ MonoBehaviour:
   title: Day la quest thu 4
   description: xin chao lai lan nua quest 4 ----- 4
   state:
-    rid: 3644544087621370524
+    rid: 2340024056191123754
   questType: 1
   awards:
     data:
@@ -78,7 +76,7 @@ MonoBehaviour:
         rid: 3644543917074153712
   steps:
   - {fileID: -845590427589791233}
-  currentStep: {fileID: -845590427589791233}
+  currentStep: {fileID: 0}
   currentProcessing: 
   requirements: []
   openEffects: []
@@ -86,11 +84,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 2340024056191123754
+      type: {class: LockState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        quest: {fileID: 11400000}
     - rid: 3644543917074153712
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
         value: 1
-    - rid: 3644544087621370524
-      type: {class: LockState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
-      data:
-        quest: {fileID: 11400000}

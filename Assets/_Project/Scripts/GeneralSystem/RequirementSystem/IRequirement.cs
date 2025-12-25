@@ -1,77 +1,50 @@
 using System;
-using EditorAttributes;
 using Systems.GameAction;
-using Systems.GameAction.Editor;
 using TnieYuPackage.CustomAttributes;
 using TnieYuPackage.ObjectDataSystem;
-using TnieYuPackage.Utils;
 using UnityEngine;
 
 namespace Systems.GeneralSystem.RequirementSystem
 {
     public interface IRequirement
     {
-        object ValidatedData { get; }
         bool CheckedValue { get; set; }
-        string KeyName { get; }
-        void CompleteResult();
+        object ValidatedData { get; }
+        void OnComplete();
+
+        bool Validate(object data);
     }
 
-    public interface IRequirement<TPayload> : IRequirement
+
+    [Serializable]
+    public abstract class FieldRequirement : IRequirement
     {
-        object IRequirement.ValidatedData => ActualValidatedData;
-        TPayload ActualValidatedData { get; }
+        public string keyName;
+        public bool checkedValue;
 
-        bool Validate(TPayload payload);
+        [SerializeReference] [AbstractSupport(typeof(IObjectData))]
+        public IObjectData validatedData;
 
-        public bool LoadRequirement(TPayload payload)
+        public bool CheckedValue
         {
-            if (Validate(payload))
-            {
-                CheckedValue = true;
-                CompleteResult();
-                //unregistry in triggeraction by return to true
-                return true;
-            }
-
-            return false;
-        }
-    }
-
-    public static class InterfaceRequirementExtensions
-    {
-        public static bool LoadRequirement<T>(this IRequirement<T> requirement, T payload)
-        {
-            return requirement.LoadRequirement(payload);
+            set => checkedValue = value;
+            get => checkedValue;
         }
 
-        public static bool Subscribe<T>(this IRequirement<T> requirement, BaseTriggerAction<T> triggerAction)
-        {
-            if (triggerAction == null)
-                return false;
-
-            return triggerAction.TryToAddTrigger(requirement.LoadRequirement);
-        }
-
-        public static void UnSubscribe<T>(this IRequirement<T> requirement, BaseTriggerAction<T> triggerAction)
-        {
-            triggerAction.RemoveTrigger(requirement.LoadRequirement);
-        }
+        public object ValidatedData => validatedData;
+        public abstract void OnComplete();
+        public abstract bool Validate(object data);
     }
 
     [Serializable]
-    public abstract class BaseRequirement<TPayload> : IRequirement<TPayload>
+    public abstract class ActionRequirement : IRequirement
     {
-        #region Fields
-
         [SerializeField] private bool checkedValue;
 
-        [SerializeReference, AbstractSupport()]
-        private TPayload validatedData;
+        [SerializeReference] [AbstractSupport(typeof(IGameActionCatcher))]
+        private IGameActionCatcher catcherValidatedData;
 
-        public TPayload ActualValidatedData => validatedData;
-
-        #endregion
+        private IRequirement requirementImplementation;
 
         public bool CheckedValue
         {
@@ -79,47 +52,9 @@ namespace Systems.GeneralSystem.RequirementSystem
             set => checkedValue = value;
         }
 
-        public abstract string KeyName { get; }
-        public abstract void CompleteResult();
-        public abstract bool Validate(TPayload payload);
-    }
-
-    [Serializable]
-    public abstract class FieldRequirement : BaseRequirement<IObjectData>
-    {
-        [PropertyOrder(-1)] [SerializeField] private string keyName;
-        public override string KeyName => keyName;
-    }
-
-    [Serializable]
-    public abstract class ActionRequirement : BaseRequirement<GameActionCommandStaticDto>
-    {
-        [PropertyOrder(-1)] [SerializeField, SelectAction]
-        private string keyName;
-
-        public override string KeyName => keyName;
-
-        public void SubscribeRequirement()
-        {
-            if (CheckedValue || string.IsNullOrEmpty(KeyName)) return;
-
-            if (ActionIdentifyStorage.Instance.TryToGetLoadEvent(KeyName, out var triggerAction) &&
-                this.Subscribe(triggerAction))
-            {
-                Debug.Log($"Completed Registry event for action {KeyName}.");
-            }
-        }
-
-        public void UnsubscribeRequirement()
-        {
-            if (string.IsNullOrEmpty(KeyName)) return;
-
-            if (ActionIdentifyStorage.Instance.TryToGetLoadEvent(KeyName, out var triggerAction))
-            {
-                this.UnSubscribe(triggerAction);
-
-                Debug.Log($"Completed UnRegistry event for action {KeyName}.");
-            }
-        }
+        public object ValidatedData => catcherValidatedData;
+        public abstract void OnComplete();
+        
+        public abstract bool Validate(object data);
     }
 }

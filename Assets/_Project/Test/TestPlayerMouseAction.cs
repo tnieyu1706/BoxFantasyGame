@@ -1,5 +1,5 @@
 using Systems.GameAction;
-using Systems.GameAction.GameActions;
+using Systems.GameAction.ActionStrategies;
 using Systems.IdentifySystem.ObjectIdentify.StaticIdentify;
 using Systems.Input;
 using UnityEngine;
@@ -25,17 +25,17 @@ namespace _Project.Test
 
         private void HandleLeftClick()
         {
-            IGameAction gameAction = new DoSomethingAction();
+            IGameActionStrategy gameActionStrategy = new DoSomethingGameActionStrategy();
 
-            GameActionCommand command = new GameActionCommand(testSender, testTarget, gameAction);
+            GameActionCommand command = new GameActionCommand(testSender, testTarget, gameActionStrategy, null);
             GameActionSystem.Instance.PushCommand(command);
         }
 
         private void HandleRightClick()
         {
-            IGameAction gameAction = new DoSomething2Action();
+            IGameActionStrategy gameActionStrategy = new DoSomethingGameActionStrategy();
 
-            GameActionCommand command = new GameActionCommand(testSender, testTarget, gameAction);
+            GameActionCommand command = new GameActionCommand(testSender, testTarget, gameActionStrategy, null);
             GameActionSystem.Instance.PushCommand(command);
         }
     }

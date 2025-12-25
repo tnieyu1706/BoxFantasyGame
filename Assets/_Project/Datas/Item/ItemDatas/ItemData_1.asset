@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33927166afee4a9eab52c5fe80aa5ad9, type: 3}
+  m_Name: ItemData_1
+  m_EditorClassIdentifier: Assembly-CSharp::Systems.ItemSystem.ItemData
+  id:
+    value: 8260e8dc-e0ab-4c29-82fa-ac1e33cef9a3
+  objectName: 1
+  staticCategoryIdentify: {fileID: 0}
+  itemName: Test Item 1
+  description: Not something special
+  itemCategory: {fileID: 11400000, guid: eed8a23cb1b389d4b8235f05d5f9d8b4, type: 2}
+  rarity: 0
+  itemSprite: {fileID: 0}
+  itemPrefab: {fileID: 0}
+  sellingPrice: 0
+  stackSize: 1
+  primaryUsingConfig:
+    isNeedTarget: 0
+    usingTargetTracking:
+      rid: 2340024103228932314
+    usingProcedure:
+      rid: 2340024103228932315
+    usingEffects:
+    - rid: 2340024103228932316
+  secondaryUsingConfig:
+    isNeedTarget: 0
+    usingTargetTracking:
+      rid: -2
+    usingProcedure:
+      rid: -2
+    usingEffects: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2340024103228932314
+      type: {class: SelfUsingTargetTracking, ns: Systems.ItemSystem.UsingTargetTrackings, asm: Assembly-CSharp}
+      data: 
+    - rid: 2340024103228932315
+      type: {class: ConsumingUsingProcedure, ns: Systems.ItemSystem.UsingProcedures, asm: Assembly-CSharp}
+      data: 
+    - rid: 2340024103228932316
+      type: {class: ChangeHealthUsingEffect, ns: Systems.ItemSystem.UsingEffects, asm: Assembly-CSharp}
+      data:
+        changedHealth: -8

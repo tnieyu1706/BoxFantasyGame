@@ -28,7 +28,7 @@ MonoBehaviour:
     - rid: 3644543917074153715
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
-        value: 4
+        value: 5
     - rid: 3644543917074153717
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:

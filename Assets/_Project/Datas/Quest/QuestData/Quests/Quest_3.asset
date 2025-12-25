@@ -18,10 +18,9 @@ MonoBehaviour:
   describe: Day la quest3 step_1
   hint: Hello xin chao quest3 step1 nhe
   actionCatchings:
-  - checkedValue: 0
-    validatedData:
-      rid: 3644543773784146310
-    keyName: DoSomething
+  - checkedValue: 1
+    catcherValidatedData:
+      rid: 2340024035019063536
     step: {fileID: -4046759039761210005}
   openEffects:
   - rid: 3644543773784146307
@@ -31,6 +30,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 2340024035019063536
+      type: {class: DoSomethingGameActionCatcher, ns: Systems.GameAction.ActionCatchers, asm: GameAction}
+      data:
+        senderGameObjectNameCatching: abc
+        targetGameObjectNameCatching: xyz
     - rid: 3644543773784146307
       type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
       data:
@@ -39,12 +43,6 @@ MonoBehaviour:
       type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
       data:
         content: Close Quest3_Step1
-    - rid: 3644543773784146310
-      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
-      data:
-        sender: {fileID: 11400000, guid: 45b77f96398867e44b1050037166f00a, type: 2}
-        target: {fileID: 11400000, guid: 6334cb9b33aede04e97edac2db451981, type: 2}
-        actionName: DoSomething
     - rid: 3644543792385360246
       type: {class: CloseQuestBackgroundEffect, ns: Systems.QuestSystem.BackgroundEffect, asm: QuestSystem}
       data:
@@ -69,7 +67,7 @@ MonoBehaviour:
   title: Day la quest thu 3
   description: Quest thu 3 nay con cho ngu a`
   state:
-    rid: 3644544087621370535
+    rid: 2340024056191123776
   questType: 1
   awards:
     data:
@@ -78,25 +76,26 @@ MonoBehaviour:
         rid: 3644543917074153711
   steps:
   - {fileID: -4046759039761210005}
-  currentStep: {fileID: -4046759039761210005}
-  currentProcessing: step_1
+  currentStep: {fileID: 0}
+  currentProcessing: Step_end
   requirements:
   - rid: 3644543794999984128
-  - rid: -2
   openEffects: []
   closedEffects: []
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 2340024056191123776
+      type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        quest: {fileID: 11400000}
     - rid: 3644543794999984128
       type: {class: QuestFieldRequirement, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
+        keyName: Level
         checkedValue: 1
         validatedData:
           rid: 3644543917074153716
-        keyName: Level
         quest: {fileID: 11400000}
     - rid: 3644543917074153711
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
@@ -106,7 +105,3 @@ MonoBehaviour:
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
         value: 4
-    - rid: 3644544087621370535
-      type: {class: UnlockedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
-      data:
-        quest: {fileID: 11400000}

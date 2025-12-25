@@ -17,11 +17,10 @@ MonoBehaviour:
   shortName: Step1-Test
   describe: hello xin chao moi nguoi minh ten la truong lam gia vy
   hint: <b>xin chao moi nguoi</b>
-  actionCatchings:
+  actionRequirements:
   - checkedValue: 1
-    validatedData:
-      rid: 3644543773784146320
-    keyName: DoSomething2
+    catcherValidatedData:
+      rid: 2340024060867772701
     step: {fileID: -6225380762305771579}
   openEffects:
   - rid: 3644543773784146322
@@ -31,12 +30,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3644543773784146320
-      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
+    - rid: 2340024060867772701
+      type: {class: DoSomethingGameActionCatcher, ns: Systems.GameAction.ActionCatchers, asm: GameAction}
       data:
-        sender: {fileID: 0}
-        target: {fileID: 0}
-        actionName: DoSomething2
+        senderGameObjectNameCatching: TestObject1
+        targetGameObjectNameCatching: TestObject1
     - rid: 3644543773784146322
       type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
       data:
@@ -67,11 +65,10 @@ MonoBehaviour:
   shortName: Step2-Begin
   describe: Begin new something
   hint: Hello xin chao <p>hello</p>
-  actionCatchings:
+  actionRequirements:
   - checkedValue: 1
-    validatedData:
-      rid: 3644543773784146321
-    keyName: DoSomething
+    catcherValidatedData:
+      rid: 2340024060867772702
     step: {fileID: -2096398407324912174}
   openEffects:
   - rid: 3644543773784146325
@@ -81,12 +78,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3644543773784146321
-      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
+    - rid: 2340024060867772702
+      type: {class: DoSomethingGameActionCatcher, ns: Systems.GameAction.ActionCatchers, asm: GameAction}
       data:
-        sender: {fileID: 11400000, guid: 6334cb9b33aede04e97edac2db451981, type: 2}
-        target: {fileID: 0}
-        actionName: DoSomething
+        senderGameObjectNameCatching: TestObject2
+        targetGameObjectNameCatching: TestObject1
     - rid: 3644543773784146325
       type: {class: LogBackgroundEffect, ns: Systems.GeneralSystem.BackgroundEffectSystem, asm: GeneralSystem.BackgroundEffect}
       data:
@@ -128,7 +124,7 @@ MonoBehaviour:
 
     TestQuest_1".'
   state:
-    rid: 3644544087621370537
+    rid: 2340024066800353676
   questType: 1
   awards:
     data:
@@ -144,29 +140,41 @@ MonoBehaviour:
   currentStep: {fileID: 0}
   currentProcessing: Step_end
   requirements:
-  - rid: 3644543794999984722
-  - rid: 3644544102087786713
+  - rid: 2340024035019063528
+  - rid: 2340024035019063530
   openEffects: []
   closedEffects: []
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 3644543794999984722
+    - rid: 2340024035019063528
+      type: {class: QuestFieldRequirement, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        keyName: Level
+        checkedValue: 1
+        validatedData:
+          rid: 2340024035019063529
+        quest: {fileID: 11400000}
+    - rid: 2340024035019063529
+      type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
+      data:
+        value: 5
+    - rid: 2340024035019063530
       type: {class: QuestActionRequirement, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
       data:
         checkedValue: 1
-        validatedData:
-          rid: 3644543794999984723
-        keyName: DoSomething2
+        catcherValidatedData:
+          rid: 2340024035019063531
         quest: {fileID: 11400000}
-    - rid: 3644543794999984723
-      type: {class: GameActionCommandStaticDto, ns: Systems.GameAction, asm: GameAction}
+    - rid: 2340024035019063531
+      type: {class: DoSomethingGameActionCatcher, ns: Systems.GameAction.ActionCatchers, asm: GameAction}
       data:
-        sender: {fileID: 11400000, guid: 45b77f96398867e44b1050037166f00a, type: 2}
-        target: {fileID: 0}
-        actionName: DoSomething2
+        senderGameObjectNameCatching: TestObject1
+        targetGameObjectNameCatching: TestObject2
+    - rid: 2340024066800353676
+      type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
+      data:
+        quest: {fileID: 11400000}
     - rid: 3644543917074153708
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
@@ -175,15 +183,3 @@ MonoBehaviour:
       type: {class: IntData, ns: TnieYuPackage.ObjectDataSystem, asm: TnieYuPackage.ObjectData}
       data:
         value: 40
-    - rid: 3644544087621370537
-      type: {class: ClosedState, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
-      data:
-        quest: {fileID: 11400000}
-    - rid: 3644544102087786713
-      type: {class: QuestFieldRequirement, ns: Systems.QuestSystem.QuestData, asm: QuestSystem}
-      data:
-        checkedValue: 0
-        validatedData:
-          rid: -2
-        keyName: 
-        quest: {fileID: 0}

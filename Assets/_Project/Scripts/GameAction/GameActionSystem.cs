@@ -7,7 +7,7 @@ namespace Systems.GameAction
     {
         private ConcurrentQueue<GameActionCommand> queue = new();
 
-        private GameActionCommand commandTrigger;
+        private GameActionCommand tempCommand;
 
         public void PushCommand(GameActionCommand command)
         {
@@ -16,9 +16,13 @@ namespace Systems.GameAction
 
         void Update()
         {
-            while (queue.TryDequeue(out commandTrigger))
+            while (queue.TryDequeue(out tempCommand))
             {
-                commandTrigger.Trigger();
+                tempCommand.Call();
+                // more handle like: catching, tracking ...
+                
+                GameActionCatcherManager.Instance.Catching(tempCommand);
+                
             }
         }
     }

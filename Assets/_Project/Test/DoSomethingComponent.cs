@@ -1,32 +1,30 @@
-using Systems.GameAction;
-using Systems.IdentifySystem.ObjectIdentify.StaticIdentify;
-using TnieYuPackage.CustomAttributes;
+using System;
+using EditorAttributes;
+using UnityEditor;
 using UnityEngine;
 
 namespace _Project.Test
 {
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field)]
+    public class TestTypeCacheAttribute : Attribute
+    {
+        
+    }
+    
     public class DoSomethingComponent : MonoBehaviour
     {
-        [SerializeReference, AbstractSupport(typeof(IGameAction))]
-        public IGameAction action;
-
-        public StaticObjectIdentify sender;
-        public StaticObjectIdentify target;
+        [TestTypeCache]
+        public string testValue;
         
-        private void Update()
+        [Button]
+        private void TestLogTypeCache()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.P))
-            {
-                ActivateAction();
-            }
-        }
+            var fields = TypeCache.GetFieldsWithAttribute<TestTypeCacheAttribute>();
 
-        private void ActivateAction()
-        {
-            if (action == null) return;
-            
-            GameActionCommand actionCommand = new GameActionCommand(sender, target, action);
-            GameActionSystem.Instance.PushCommand(actionCommand);
-        }
+            foreach (var f in fields)
+            {
+                Debug.Log($"{f.Name} - {f.GetValue(this)}");
+            }
+        } 
     }
 }

@@ -7,6 +7,7 @@ using Systems.GeneralSystem.RequirementSystem;
 using TnieYuPackage.CustomAttributes;
 using TnieYuPackage.DesignPatterns.Patterns.SubAsset;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Void = EditorAttributes.Void;
 
 namespace Systems.QuestSystem.QuestData
@@ -15,7 +16,7 @@ namespace Systems.QuestSystem.QuestData
     public class QuestStep : BaseSubAsset, IBackgroundEffectBehaviour
     {
         public const string QUEST_STEP_END_KEY = "Step_end";
-        
+
         #region Base Properties
 
         [SerializeField]
@@ -24,13 +25,12 @@ namespace Systems.QuestSystem.QuestData
             nameof(stepId),
             nameof(describe),
             nameof(hint)
-            )]
+        )]
         private Void basePropertiesFoldout;
-        
+
         [ReadOnly, HideProperty] public string stepId = string.Empty;
-        
-        [SerializeField, HideInInspector]
-        private Quest quest;
+
+        [SerializeField, HideInInspector] private Quest quest;
 
         public override BaseParentAsset Parent
         {
@@ -41,10 +41,10 @@ namespace Systems.QuestSystem.QuestData
         public string shortName;
         [TextArea(3, 10), HideProperty] public string describe;
         [TextArea(3, 10), HideProperty] public string hint;
-        
+
         #endregion
 
-        public List<StepActionCatching> actionCatchings = new();
+        public List<StepActionRequirement> actionRequirements = new();
 
         [SerializeReference, AbstractSupport(typeof(IBackgroundEffect))]
         private List<IBackgroundEffect> openEffects = new();
@@ -55,52 +55,62 @@ namespace Systems.QuestSystem.QuestData
         public List<IBackgroundEffect> OpenEffects => openEffects;
         public List<IBackgroundEffect> CloseEffects => closedEffects;
 
+        public void HandleOpenBackground()
+        {
+            if (OpenEffects is { Count: > 0 })
+                OpenEffects.ForEach(e => e.Perform());
+
+            foreach (var actionRe in actionRequirements)
+            {
+                if (!actionRe.CheckedValue)
+                {
+                    actionRe.Subscribe();
+                }
+            }
+        }
+
+        public void HandleCloseBackground()
+        {
+            if (CloseEffects == null || CloseEffects.Count == 0) return;
+
+            UnLoadStep();
+            CloseEffects.ForEach(e => e.Perform());
+        }
+
         public void LoadStep()
         {
-            this.HandleOpenBackground();
+            HandleOpenBackground();
 
-            //occur if actionCatching no catching any thing. => call end.
-            if (actionCatchings == null || actionCatchings.Count == 0)
+            //closing step: occur if actionCatching no catching any thing.
+            if (CanCloseStep())
             {
-                this.HandleCloseBackground();
-                return;
-            }
-
-            if (!UpdateStepWithActionCatchings())
-            {
-                //action catching registry
-                foreach (var actionCatching in actionCatchings)
-                {
-                    actionCatching.SubscribeRequirement();
-                }
+                HandleCloseBackground();
             }
         }
 
         public void UnLoadStep()
         {
-            foreach (var actionCatching in actionCatchings)
+            foreach (var actionRe in actionRequirements)
             {
-                actionCatching.UnsubscribeRequirement();
+                actionRe.UnSubscribe();
             }
         }
 
-        public bool UpdateStepWithActionCatchings()
+        public bool CanCloseStep()
         {
-            foreach (var actionCatching in actionCatchings)
-            {
-                if (!actionCatching.CheckedValue)
-                    return false;
-            }
+            if (actionRequirements is null || actionRequirements.Count == 0) return true;
             
-            Debug.Log($"End step: {stepId}");
-            this.HandleCloseBackground();
+            foreach (var actionRe in actionRequirements)
+            {
+                if (!actionRe.CheckedValue) return false;
+            }
             return true;
         }
 
         [Button("Setup Action Catchings")]
         private void SetupActionCatchings()
         {
-            foreach (var actionCatching in actionCatchings)
+            foreach (var actionCatching in actionRequirements)
             {
                 actionCatching.step = this;
             }
@@ -108,22 +118,51 @@ namespace Systems.QuestSystem.QuestData
     }
 
     [Serializable]
-    public class StepActionCatching : ActionRequirement
+    public class StepActionRequirement : ActionRequirement
     {
         public QuestStep step;
 
-        public override void CompleteResult()
+        public override void OnComplete()
         {
             if (step == null) return;
-            
-            Debug.Log("Complete a action catching step");
+
             CheckedValue = true;
-            step.UpdateStepWithActionCatchings();
+            
+            if (step.CanCloseStep())
+            {
+                step.HandleCloseBackground();
+            }
         }
 
-        public override bool Validate(GameActionCommandStaticDto payload)
+        public override bool Validate(object data)
         {
-            return GameActionCommandStaticDto.Matching(payload, ActualValidatedData);
+            if (data is GameActionCommand gameActionCommand)
+            {
+                return ((IGameActionCatcher)ValidatedData).Format(gameActionCommand)
+                       && ((IGameActionCatcher)ValidatedData).Catch(gameActionCommand);
+            }
+
+            return false;
+        }
+
+        public void Subscribe()
+        {
+            if (ValidatedData is IGameActionCatcher gameActionCatcher)
+            {
+                gameActionCatcher.OnCompleted += OnComplete;
+                GameActionCatcherManager.Instance.Registry(gameActionCatcher);
+            }
+        }
+
+        public void UnSubscribe()
+        {
+            if (ValidatedData is IGameActionCatcher gameActionCatcher)
+            {
+                if (GameActionCatcherManager.Instance is null) return;
+
+                GameActionCatcherManager.Instance.UnRegistry(gameActionCatcher);
+                gameActionCatcher.OnCompleted -= OnComplete;
+            }
         }
     }
 }

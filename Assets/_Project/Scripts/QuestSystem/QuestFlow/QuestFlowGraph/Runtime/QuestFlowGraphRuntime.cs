@@ -30,7 +30,7 @@ namespace Systems.QuestSystem.QuestFlow.QuestFlowGraph.Runtime
         }
 
         /// <summary>
-        /// UpdateCloseQuest to nextQuests and update state but not yet call state.Do()
+        /// update QuestFlowGraph when a quest closed.
         /// </summary>
         /// <param name="updatedQuest"></param>
         /// <returns></returns>
@@ -47,7 +47,8 @@ namespace Systems.QuestSystem.QuestFlow.QuestFlowGraph.Runtime
                 {
                     if (GetMap().TryGetValue(nextQuest, out nextQuestNode))
                     {
-                        if (QuestFlowSupport.ValidateEligibilityChecking(nextQuestNode))
+                        if (nextQuest.state is LockState 
+                            && QuestFlowSupport.ValidateEligibilityChecking(nextQuestNode))
                         {
                             BaseQuestState.Transition<CheckingState>(ref nextQuest.state, nextQuest);
                             
@@ -75,18 +76,11 @@ namespace Systems.QuestSystem.QuestFlow.QuestFlowGraph.Runtime
         {
             foreach (var questNode in nodes)
             {
+                if (questNode.quest.state is ClosedState) continue;
                 
-                if (questNode.quest.state is LockState)
+                if (questNode.quest.state is LockState && QuestFlowSupport.ValidateEligibilityChecking(questNode))
                 {
-                    if (QuestFlowSupport.ValidateEligibilityChecking(questNode))
-                    {
-                        BaseQuestState.Transition<CheckingState>(ref questNode.quest.state, questNode.quest);
-                    }
-                    
-                    if (questNode.preQuests == null || questNode.preQuests.Count == 0)
-                    {
-                        BaseQuestState.Transition<CheckingState>(ref questNode.quest.state, questNode.quest);
-                    }
+                    BaseQuestState.Transition<CheckingState>(ref questNode.quest.state, questNode.quest);
                 }
 
                 if (questNode.quest.state is CheckingState)
@@ -102,6 +96,8 @@ namespace Systems.QuestSystem.QuestFlow.QuestFlowGraph.Runtime
     {
         public static bool ValidateEligibilityChecking(QuestNodeRuntime questNode)
         {
+            if (questNode.preQuests == null || questNode.preQuests.Count == 0) return true;
+            
             foreach (var preQuest in questNode.preQuests)
             {
                 if (preQuest.state is not ClosedState)

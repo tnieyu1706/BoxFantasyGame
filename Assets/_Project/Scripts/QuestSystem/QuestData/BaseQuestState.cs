@@ -27,7 +27,7 @@ namespace Systems.QuestSystem.QuestData
         {
             if (typeof(BaseQuestState) == typeof(TState))
             {
-                Debug.LogWarning("can't handle BaseQuestState transition");
+                Debug.LogWarning("Can't handle BaseQuestState transition");
                 return;
             }
 
@@ -86,16 +86,13 @@ namespace Systems.QuestSystem.QuestData
                 QuestFlowGraphDirector.Instance.checkingQuests.Add(quest);
             }
             
-            if (quest.requirements == null || quest.requirements.Count == 0)
-            {
-                quest.OpenQuest(); //ensure
-            }
+            quest.LoadQuestRequirements();
         }
 
         public override void Do()
         {
             //runtime executed
-            quest.LoadQuestRequirements();
+            quest.RegistryRequirement();
         }
 
         public override void Exit()
